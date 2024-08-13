@@ -8,7 +8,7 @@ psql_user=$4
 psql_password=$5
 
 # validate correct number of arguments
-if [ '#?' -ne 5 ]; then
+if [ "$#" -ne 5 ]; then
 	echo "Illegal number of arguments"
 	exit 1
 fi
@@ -36,5 +36,5 @@ insert_stmt="INSERT INTO host_info (hostname, cpu_number, cpu_architecture, cpu_
 
 # execute INSERT statement
 export PGPASSWORD="$psql_password"
-psql -h "$psql_host" -p "$psql_port" -U "$psql_user" -d "$db_name" -c "${insert_stmt}"
+psql -h "$psql_host" -p "$psql_port" -d "$db_name" -U "$psql_user" -c "${insert_stmt}"
 exit $?
