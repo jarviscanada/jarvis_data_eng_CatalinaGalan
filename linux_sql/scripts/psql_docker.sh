@@ -30,7 +30,7 @@ case $cmd in
 	
 	# create container [db_username] [db_password]
 	docker volume create pgdata
-	docker run --name jrvs-psql -e POSTGRESS_USER=$db_username -e POSTGRES_PASSWORD=$db_password -v pgdata/var/lib/postgresql/data -p 5432:5432 -d postgres:9.6-alpine
+	docker run --name jrvs-psql -e POSTGRES_USER=$db_username -e POSTGRES_PASSWORD=$db_password -d -v pgdata/var/lib/postgresql/data -p 5432:5432 postgres:9.6-alpine
 	echo 
 	echo "$(docker ps -f name=jrvs-psql)"
 	exit $?
