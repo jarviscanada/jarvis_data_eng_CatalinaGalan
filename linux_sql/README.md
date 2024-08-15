@@ -38,7 +38,7 @@ crontab -e
 ### Architecture
 
 This is a diagram of a Linux Cluster with three nodes connected through a switch. Each machine sends data to the database when Bash scripts are implemented<br>
-![diagram of a 3 nodes Linux cluster model connected through a switch](https://github.com/jarviscanada/jarvis_data_eng_CatalinaGalan/blob/develop/linux_sql/assets/LinuxCluster.drawio.pngß)
+![diagram of a 3 nodes Linux cluster model connected through a switch](https://github.com/jarviscanada/jarvis_data_eng_CatalinaGalan/blob/develop/linux_sql/assets/LinuxCluster.drawio.png)
 
 ### Script Description and Usage
 **1.** **Database and Table Initialization**
@@ -70,7 +70,7 @@ The `host_usage.sh` can be run on every node manually, or set up with Cronotab f
 We can create a crontab job to run the `host_usage.sh` script automatically in the background at one-minute intervals, taking snapshots of the node's resources usage and inserting them into the database.
 ```bash
 # open the crontab editor
-crontab -eß
+crontab -e
 # make sure to use the full path from /home/ to host_usage.sh file. The output will also be redirected to a log file.
 * * * * * bash [path]/scripts/host_usage.sh [psql_host] [psql_port] [db_name] [psql_username] [pqsl_password] > /tmp/host_usage.log
 # verify that the crontab job is running
