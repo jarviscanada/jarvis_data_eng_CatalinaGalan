@@ -39,7 +39,8 @@ crontab -e
 
 This is a diagram of a Linux Cluster with three nodes connected through a switch. Each machine sends data to the database when Bash scripts are implemented<br>
 ![diagram of a 3 nodes Linux cluster model connected through a switch]
-(./assets/LinuxCluster.drawio.png)
+(https://github.com/jarviscanada/jarvis_data_eng_CatalinaGalan/blob/feature/readme/linux_sql/assets/LinuxCluster.drawio.png)
+
 ### Script Description and Usage
 **1.** **Database and Table Initialization**
 
