@@ -19,61 +19,27 @@
       "school_name": "XYZ university"
     }
   ],
-  "github_repo_root_url": "https://github.com/jarviscanada/jarvis_data_eng_demo",
+  "github_repo_root_url": "https://github.com/jarviscanada/jarvis_data_eng_CatalinaGalan",
   "highlighted_projects": [
     {
-      "description": "Suspendisse a tincidunt odio. Suspendisse posuere luctus aliquet. Quisque magna tellus, tempor vitae arcu sed, volutpat scelerisque lacus. Aliquam varius pulvinar dapibus. Ut a tincidunt sem. Aenean sollicitudin fringilla erat ut imperdiet. Phasellus fermentum, enim vitae laoreet elementum, eros nisl hendrerit lorem.",
-      "git_url": "https://github.com/jarviscanada/jarvis_profile_builder",
-      "name": "Web app for resturant"
+      "description": "Frontrow is a social platform where fans can find, rate and review concerts, as well as interact, follow and connect with other fans. This was the final team project at Le Wagon bootcamp. It was developed in a two week sprint. As a participant in this project I collaborated in building the back-end and databases, created front-end elements and implemented the chat feature in its entirety.",
+      "git_url": "https://github.com/catagalan-mtl/frontrow-cat",
+      "name": "Frontrow"
     },
     {
-      "description": "Suspendisse a tincidunt odio. Suspendisse posuere luctus aliquet. Quisque magna tellus, tempor vitae arcu sed, volutpat scelerisque lacus. Aliquam varius pulvinar dapibus. Ut a tincidunt sem. Aenean sollicitudin fringilla erat ut imperdiet. Phasellus fermentum, enim vitae laoreet elementum, eros nisl hendrerit lorem.",
-      "git_url": null,
-      "name": "Machine Learning"
+      "description": "This website was developed as a personal project to showcase my work. It is a fully responsive website built from a single page template and transformed into a rails app with a PostgreSQL database. I have modified and restructured the original open source code to support my needs and preferences, creating new features such as show pages for my projects.",
+      "git_url": "https://github.com/catagalan-mtl/my-portfolio",
+      "name": "My Portfolio"
     }
   ],
   "jarvis_projects": [
     {
-      "description": "Suspendisse a tincidunt odio. Suspendisse posuere luctus aliquet. Quisque magna tellus, tempor vitae arcu sed, volutpat scelerisque lacus. Aliquam varius pulvinar dapibus. Ut a tincidunt sem. Aenean sollicitudin fringilla erat ut imperdiet. Phasellus fermentum, enim vitae laoreet elementum, eros nisl hendrerit lorem.",
+      "description": "The Linux Cluster Monitoring Agent app is designed to record hardware specifications and usage information from multiple nodes in a Linux Cluster. It collects usage data from each node in real time and stores it in a RDBMS. The app was created for the Jarvis Linux Cluster Administration (LCA), to manage a cluster of 10 nodes internally connected through a switch. The team needs to record information and track the usage of each machine in the network.",
       "git_url": "/linux_sql",
       "name": "Cluster Monitor"
-    },
-    {
-      "description": [
-        "Twitter App: Curabitur laoreet tristique leo, eget suscipit nisi. Sed in sodales ex. Maecenas vitae tincidunt dui, et eleifend quam.",
-        "JDBC App: Curabitur laoreet tristique leo, eget suscipit nisi. Sed in sodales ex. Maecenas vitae tincidunt dui, et eleifend quam.",
-        "Grep App: Curabitur laoreet tristique leo, eget suscipit nisi. Sed in sodales ex. Maecenas vitae tincidunt dui, et eleifend quam."
-      ],
-      "git_url": "/core_java",
-      "name": "Core Java Apps"
-    },
-    {
-      "description": "",
-      "git_url": "/springboot",
-      "name": "Springboot App"
-    },
-    {
-      "description": "",
-      "git_url": "/python_data_anlytics",
-      "name": "Python Data Analytics"
-    },
-    {
-      "description": "",
-      "git_url": "/hadoop",
-      "name": "Hadoop"
-    },
-    {
-      "description": "",
-      "git_url": "/spark",
-      "name": "Spark"
-    },
-    {
-      "description": "",
-      "git_url": "/cloud_devops",
-      "name": "Cloud/DevOps"
     }
   ],
-  "name": "John Smith",
+  "name": "Catalina Galan Vargas",
   "others": [
     {
       "bullets": [
@@ -100,7 +66,7 @@
     {
       "company": "Jarvis",
       "description": "Donec mattis sed justo et sagittis. Vestibulum lacinia nulla ipsum. Curabitur imperdiet nibh vitae leo lacinia laoreet. Nullam accumsan, lectus ut maximus ultricies, augue justo egestas mi, vel bibendum felis.",
-      "duration": "2020-present",
+      "duration": "2024-present",
       "title": "Software Developer"
     },
     {
@@ -112,23 +78,24 @@
   ],
   "skills": {
     "competent": [
-      "Donec",
-      "fermentum",
-      "Donec",
-      "fermentum",
-      "Donec"
+      "JavaScript",
+      "Stimulus",
+      "Bash",
+      "Linux",
+      "PostgreSQL",
+      "Java"
     ],
     "familiar": [
-      "Donec",
-      "fermentum",
-      "fermentum",
-      "fermentum",
-      "fermentum"
+      "Docker",
+      "GCP",
+      "React",
+      "Python",
+      "C"
     ],
     "proficient": [
-      "Java",
-      "Linux/Bash",
-      "RDBMS/SQL",
+      "Ruby",
+      "Ruby on Rails",
+      "HTML/CSS",
       "Agile/Scrum",
       "Git"
     ]
