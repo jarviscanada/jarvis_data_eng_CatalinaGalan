@@ -4,7 +4,7 @@ SQL (Structured Query Language) is a specialized language widely used when handl
 
 The objective of this project is to practice SQL and RDBMS by solving SQL queries.
 
-To load sample data, the `clubdata.sql` file can be run against a psql database instance to create the necessary tables described below:
+To load sample data, the `clubdata.sql` file can be loaded in a psql database instance to create the necessary tables described below:
 ```bash
 # modify for your own database
 psql -h <localhost> -U <username> -d <database> -f clubdata.sql
