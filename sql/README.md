@@ -5,19 +5,19 @@
 ###### Table Setup (DDL)
 
 CREATE TABLE IF NOT EXISTS cd.members (
-  memid SERIAL NOT NULL,
+  memid INTEGER NOT NULL,
   surname VARCHAR(200) NOT NULL,
   firstname VARCHAR(200) NOT NULL,
   address VARCHAR(300) NOT NULL,
   zipcode INTEGER NOT NULL,
   telephone VARCHAR(20) NOT NULL,
-  recommendedby INTEGER NULL,
+  recommendedby INTEGER,
   joindate TIMESTAMP NOT NULL,
   CONSTRAINT members_pk PRIMARY KEY (memid),
   CONSTRAINT members_recommendedby_fk FOREIGN KEY (recommendedby) REFERENCES cd.members(memid)
 );
 CREATE TABLE IF NOT EXISTS cd.facilities (
-  facid SERIAL NOT NULL,
+  facid INTEGER NOT NULL,
   name VARCHAR(100) NOT NULL,
   membercost NUMERIC NOT NULL,
   guestcost NUMERIC NOT NULL,
@@ -26,9 +26,9 @@ CREATE TABLE IF NOT EXISTS cd.facilities (
   CONSTRAINT facilities_pk PRIMARY KEY (facid)
 );
 CREATE TABLE IF NOT EXISTS cd.bookings (
-  bookid SERIAL NOT NULL,
-  facid SERIAL NOT NULL,
-  memid SERIAL NOT NULL,
+  bookid INTEGER NOT NULL,
+  facid INTEGER NOT NULL,
+  memid INTEGER NOT NULL,
   starttime TIMESTAMP NOT NULL,
   slots INTEGER NOT NULL,
   CONSTRAINT bookings_id PRIMARY KEY (bookid),
