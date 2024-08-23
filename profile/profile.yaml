@@ -21,9 +21,9 @@ skills:
   # At least 5 skills
   competent:
     - JavaScript
-    - Stimulus
     - Bash
     - Linux
+    - SQL
     - PostgreSQL
     - Java
 
@@ -42,6 +42,11 @@ jarvis_projects:
     # The project description allows hiring managers to understand your project and technologies you used(e.g. programming languages, libraries, algorithms, hardware, tools, etc.).
     # The project description must start with an action verb (https://bit.ly/3guO98u)
     description: "The Linux Cluster Monitoring Agent app is designed to record hardware specifications and usage information from multiple nodes in a Linux Cluster. It collects usage data from each node in real time and stores it in a RDBMS. The app was created for the Jarvis Linux Cluster Administration (LCA), to manage a cluster of 10 nodes internally connected through a switch. The team needs to record information and track the usage of each machine in the network."
+  - name: "RDBSM and SQL"
+    git_url: "/sql"
+    # The project description allows hiring managers to understand your project and technologies you used(e.g. programming languages, libraries, algorithms, hardware, tools, etc.).
+    # The project description must start with an action verb (https://bit.ly/3guO98u)
+    description: "SQL (Structured Query Language) is a specialized language widely used when handling data. The objective of this project it to practice SQL and RDBMS by solving SQL queries."
   # - name: "Core Java Apps"
   #   git_url: "/core_java"
   #   description:
