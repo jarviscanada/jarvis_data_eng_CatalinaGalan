@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.slf4j.Logger;
@@ -30,9 +31,9 @@ public class JavaGrepImp implements JavaGrep {
       throw new IllegalArgumentException("The specified path does not exist: " + dir);
     }
 
-    if (!dir.isDirectory()) {
-      throw new IllegalArgumentException("The specified path is not a directory: " + dir);
-    }
+//    if (!dir.isDirectory()) {
+//      throw new IllegalArgumentException("The specified path is not a directory: " + dir);
+//    }
 
     if (!dir.canRead()) {
       throw new IllegalArgumentException("The specified directory cannot be read: " + dir);
@@ -42,36 +43,26 @@ public class JavaGrepImp implements JavaGrep {
   @Override
   public List<File> listFiles(String rootDir) {
     File dir = new File(rootDir);
-    File[] fileArray = dir.listFiles();
 
-    return new ArrayList<File>(Arrays.asList(fileArray));
+    if (dir.isFile()) {
+      return new ArrayList<>(Collections.singletonList(dir));
+    } else {
+      File[] fileArray = dir.listFiles();
+      assert fileArray != null;
+      return new ArrayList<File>(Arrays.asList(fileArray));
+    }
   }
 
   @Override
   public List<String> readLines(File inputFile) {
     Path path = Paths.get(String.valueOf(inputFile));
-    if (!inputFile.getName().endsWith(".txt")) {
-      throw new IllegalArgumentException("File must be a .txt file");
-    }
 
     try {
-      // Log the path being read
-      System.out.println("Attempting to read file: " + path.toAbsolutePath());
-
+      return Files.readAllLines(path, StandardCharsets.UTF_8);
       // Read all lines from the file
-      List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
-
-      // Log successful read
-      System.out.println("Successfully read file: " + path.toAbsolutePath());
-
-      return lines;
     } catch (IOException e) {
-      // Log the exception details
-      System.err.println("IOException occurred while reading file: " + path.toAbsolutePath());
-      e.printStackTrace();
-
-      // Rethrow as RuntimeException with additional context
-      throw new RuntimeException("IOException occurred while reading file: " + path.toAbsolutePath(), e);
+      // throw RuntimeException with context
+      throw new IllegalArgumentException("IOException: Failed to read file. " + path.toAbsolutePath()+ " is not a UTF-8 encoded file.", e);
     }
   }
 
@@ -123,9 +114,11 @@ public class JavaGrepImp implements JavaGrep {
   }
 
   public static void main(String[] args) {
+
     if (args.length != 3) {
       throw new IllegalArgumentException("USAGE: JavaGrep regex rootPath outFile");
     }
+
     // use default logger config
     BasicConfigurator.configure();
 
@@ -134,19 +127,23 @@ public class JavaGrepImp implements JavaGrep {
     javaGrepImp.setRootPath(args[1]);
     javaGrepImp.setOutFile(args[2]);
 
-
     List<String> matches = new ArrayList<>();
-    for (File file : javaGrepImp.listFiles(javaGrepImp.getRootPath())) {
-      try {
-        javaGrepImp.process();
-      } catch (IOException e) {
-        throw new RuntimeException(e);
-      }
-      for (String line : javaGrepImp.readLines(file))
-        if (javaGrepImp.containsPattern(line)) {
-          matches.add(line);
-        }
+
+    try {
+      javaGrepImp.process();
+    } catch (IOException ex) {
+      javaGrepImp.logger.error("Error: unable to process", ex);
     }
+
+    for (File file : javaGrepImp.listFiles(javaGrepImp.getRootPath())) {
+      if (file.isFile()) {
+        for (String line : javaGrepImp.readLines(file))
+          if (javaGrepImp.containsPattern(line)) {
+            matches.add(line);
+          }
+      }
+    }
+
     try {
       javaGrepImp.writeToFile(matches);
     } catch (IOException e) {
