@@ -48,9 +48,11 @@ public class JavaGrepImp implements JavaGrep {
       return new ArrayList<>(Collections.singletonList(dir));
     } else {
       File[] fileArray = dir.listFiles();
-      assert fileArray != null;
-      return new ArrayList<File>(Arrays.asList(fileArray));
+      if (fileArray != null) {
+        return new ArrayList<File>(Arrays.asList(fileArray));
+      }
     }
+    return null;
   }
 
   @Override
