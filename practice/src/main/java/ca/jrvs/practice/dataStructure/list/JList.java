@@ -24,13 +24,13 @@ interface JList<E> {
   boolean add(E e);
 
   /**
-   * Returns an array containing all of the elements in this list in proper
+   * Returns an array containing all the elements in this list in proper
    * sequence (from first to last element).
    *
    * <p>This method acts as bridge between array-based and collection-based
    * APIs.
    *
-   * @return an array containing all of the elements in this list in proper
+   * @return an array containing all the elements in this list in proper
    *         sequence
    */
   Object[] toArray();
@@ -93,7 +93,7 @@ interface JList<E> {
   E remove(int index);
 
   /**
-   * Removes all of the elements from this list (optional operation).
+   * Removes all the elements from this list (optional operation).
    * The list will be empty after this call returns.
    */
   void clear();
