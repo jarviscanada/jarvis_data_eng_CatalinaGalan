@@ -44,31 +44,18 @@ public class JavaGrepImp implements JavaGrep {
 
   @Override
   public List<File> listFiles(String rootDir) throws IOException {
-//    Path startPath = Paths.get(rootDir);
-//    List<File> files = new ArrayList<>();
-//
-//    if (Files.isRegularFile(startPath)) {
-//      files.add(startPath.toFile());
-//    } else {
-//      files = Files.walk(startPath)
-//          .filter(Files::isRegularFile)
-//          .map(Path::toFile)
-//          .collect(Collectors.toList());
-//    }
-//    return files;
-//  }
-    File dir = new File(rootDir);
+    Path startPath = Paths.get(rootDir);
+    List<File> files = new ArrayList<>();
 
-    if (dir.isFile()) {
-      return new ArrayList<>(Collections.singletonList(dir));
+    if (Files.isRegularFile(startPath)) {
+      files.add(startPath.toFile());
     } else {
-      File[] fileArray = dir.listFiles();
-      if (fileArray != null) {
-        return new ArrayList<>(Arrays.asList(fileArray));
-      } else {
-        throw new IllegalArgumentException("The given directory is empty or invalid: " + rootDir);
-      }
+      files = Files.walk(startPath)
+          .filter(Files::isRegularFile)
+          .map(Path::toFile)
+          .collect(Collectors.toList());
     }
+    return files;
   }
 
   @Override
