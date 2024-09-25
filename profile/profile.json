@@ -2,21 +2,15 @@
   "education": [
     {
       "awards_achievements": [
-        "Scholarship",
-        "Dean's List (2015, 2016): Ut enim ad minim veniam",
-        "GPA: 3.8/4.0"
+        "Campaign for the New Millenium Scholarship",
+        "Ruth Leith Award in Classical Music Performance",
+        "Graduated with Great Distinction.",
+        "GPA: 4.14/4.30"
       ],
-      "degree": "Bachelor of Applied Sciences",
-      "department": "Electrical and Computer Engineering",
-      "duration": "2012-2016",
-      "school_name": "XYZ university"
-    },
-    {
-      "awards_achievements": null,
-      "degree": "Master of Engineering",
-      "department": "Electrical and Computer Engineering",
-      "duration": "2016-2018",
-      "school_name": "XYZ university"
+      "degree": "Bachelor of Fine Arts, Specialization in Music Composition",
+      "department": "Music Theory and Composition",
+      "duration": "2017-2020",
+      "school_name": "Concordia University, Montreal"
     }
   ],
   "github_repo_root_url": "https://github.com/jarviscanada/jarvis_data_eng_CatalinaGalan",
@@ -37,6 +31,19 @@
       "description": "The Linux Cluster Monitoring Agent app is designed to record hardware specifications and usage information from multiple nodes in a Linux Cluster. It collects usage data from each node in real time and stores it in a RDBMS. The app was created for the Jarvis Linux Cluster Administration (LCA), to manage a cluster of 10 nodes internally connected through a switch. The team needs to record information and track the usage of each machine in the network.",
       "git_url": "/linux_sql",
       "name": "Cluster Monitor"
+    },
+    {
+      "description": "SQL (Structured Query Language) is a specialized language widely used when handling data. The objective of this project it to practice SQL and RDBMS by solving SQL queries.",
+      "git_url": "/sql",
+      "name": "RDBSM and SQL"
+    },
+    {
+      "description": [
+        "Grep App: This Java app mimics the functionality of the Linux command 'grep', which is used to search for a string or regex pattern within a file and returns all lines that contain the match. This app is designed to be run directly in the command line, outputting the results to a given file.",
+        "JDBC App: TBD"
+      ],
+      "git_url": "/core_java",
+      "name": "Core Java Apps"
     }
   ],
   "name": "Catalina Galan Vargas",
@@ -49,56 +56,62 @@
     },
     {
       "bullets": [
-        "Winner"
+        "Winner of the Condordia Composition Competition in 2018."
       ],
       "title": "Awards"
     },
     {
       "bullets": [
-        "Basketball player",
-        "Competitive gaming",
-        "Volunteer, ABC Food bank: Ut enim ad minim veniam"
+        "Member of OPCM classical choir. Contraalto voice.",
+        "Was a member of the organizing committee for the Women in Music Conference in Concordia University, 2018.",
+        "Volunteered as a band coach for Rock Camp Montreal in 2021, a summer camp for female and non-gendered youth."
       ],
       "title": "Activities/Hobbies"
     }
   ],
   "professional_experience": [
     {
-      "company": "Jarvis",
-      "description": "Donec mattis sed justo et sagittis. Vestibulum lacinia nulla ipsum. Curabitur imperdiet nibh vitae leo lacinia laoreet. Nullam accumsan, lectus ut maximus ultricies, augue justo egestas mi, vel bibendum felis.",
-      "duration": "2024-present",
-      "title": "Software Developer"
+      "company": "Bellow Media",
+      "description": "Contributed in building a new SaaS software solution application with Bullet Train and Ruby on Rails. Implemented multiple project features and worked in frontend with Tailwind.",
+      "duration": "2023 - July 2024",
+      "title": "Juior Software Developer"
     },
     {
-      "company": "XYZ Company",
-      "description": "Donec mattis sed justo et sagittis. Vestibulum lacinia nulla ipsum. Curabitur imperdiet nibh vitae leo lacinia laoreet. Nullam accumsan, lectus ut maximus ultricies, augue justo egestas mi, vel bibendum felis.",
-      "duration": "2019",
-      "title": "Tutor"
+      "company": "Studio Artease",
+      "description": "Specialized in designing and executing custom ornamental detail oriented blackwork designs, working one on one with hundreds of clients. Managed independent business as an artist, working on schedules, finances, certifications, client communications and bookings. Created a professional brand and strong online presence with over 1500 followers on Instagram @galantattoo and participated successfully in multiple conventions in Chile and Canada.",
+      "duration": "2016 - 2023",
+      "title": "Tattoo Artist"
+    },
+    {
+      "company": "Independent",
+      "description": "Composed and orchestrated original music. Winner of Concordia Composition Competition, 'Transition' premiered at Oscar Peterson Hall in March 2018. Composed and produced scores for short films and dance performances, and wrote string arrangements collaborating in projects with other musicians, choreographers and directors.",
+      "duration": "2018 - 2022",
+      "title": "Composer, Sound Designer and Orchestrator"
     }
   ],
   "skills": {
     "competent": [
-      "JavaScript",
-      "Stimulus",
-      "Bash",
+      "Java",
       "Linux",
-      "PostgreSQL",
-      "Java"
+      "Python",
+      "JavaScript",
+      "Docker"
     ],
     "familiar": [
-      "Docker",
+      "Maven",
       "GCP",
       "React",
-      "Python",
+      "Kubernetes",
       "C"
     ],
     "proficient": [
       "Ruby",
       "Ruby on Rails",
       "HTML/CSS",
+      "PostgreSQL",
       "Agile/Scrum",
       "Git"
     ]
   },
-  "summary": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed venenatis a orci ac malesuada. Vivamus ligula elit, viverra eu ante porttitor, blandit convallis augue. Aliquam justo justo, mollis at lacus eu, rutrum finibus est. Vestibulum venenatis purus id accumsan pretium. In efficitur magna nec enim laoreet tincidunt. Ut libero metus, scelerisque nec eros vitae, sagittis pellentesque enim. Donec dictum felis volutpat, vehicula magna eu, imperdiet elit. Phasellus ut velit a massa efficitur faucibus. Sed volutpat, lacus sed sagittis luctus, elit."
+  "summary": "I am a deeply curious individual and a dedicated lifelong learner. With a background in the arts and music, I earned my bachelor's degree in Music Composition, graduating with Great Distinction. In 2023 I successfully completed a Web Development bootcamp and have been continuing to learn and collaborate in projects ever since. Fascinated by both the arts and sciences, I continually seek opportunities to challenge my abilities and foster intellectual growth. My interest in software development stems from a strong desire to expand my knowledge and pursue a new, challenging career path. I am enthusiastic about the future of this journey and am eager to grow and excel in this industry."
 }

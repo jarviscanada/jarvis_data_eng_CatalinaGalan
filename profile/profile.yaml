@@ -5,7 +5,7 @@ github_repo_root_url: https://github.com/jarviscanada/jarvis_data_eng_CatalinaGa
 
 # Introduce yourself, your academic and professional background.
 # What excites you about the software industry and your passion. At least 80 words
-summary: "I am a deeply curious individual and a dedicated lifelong learner. With a background in the arts and music, I earned my bachelor's degree in Music Composition, graduating with Great Distinction. Fascinated by both the arts and sciences, I continually seek opportunities to challenge my abilities and foster intellectual growth. My interest in the tech industry and software development stems from a strong desire to expand my knowledge and pursue a new, challenging career path. I am enthusiastic about the future of this journey and am eager to learn and excel as a data engineer"
+summary: "I am a deeply curious individual and a dedicated lifelong learner. With a background in the arts and music, I earned my bachelor's degree in Music Composition, graduating with Great Distinction. In 2023 I successfully completed a Web Development bootcamp and have been continuing to learn and collaborate in projects ever since. Fascinated by both the arts and sciences, I continually seek opportunities to challenge my abilities and foster intellectual growth. My interest in software development stems from a strong desire to expand my knowledge and pursue a new, challenging career path. I am enthusiastic about the future of this journey and am eager to grow and excel in this industry."
 # Group your skills by level.
 # Your skills can be anything software related (e.g. language, frameworks, methodologies, software, etc.).
 skills:
@@ -49,8 +49,8 @@ jarvis_projects:
     git_url: "/core_java"
     description:
   #     - "Twitter App: Curabitur laoreet tristique leo, eget suscipit nisi. Sed in sodales ex. Maecenas vitae tincidunt dui, et eleifend quam."
-  #     - "JDBC App: Curabitur laoreet tristique leo, eget suscipit nisi. Sed in sodales ex. Maecenas vitae tincidunt dui, et eleifend quam."
-      - "Grep App: This Java app mimics the functionality of the Linux command 'grep', which is used to search for a string or regex pattern within a file and returns all lines that contain the match. This app is designed to be run directly in the command line, outputting the results to a given file."
+       - "Grep App: This Java app mimics the functionality of the Linux command 'grep', which is used to search for a string or regex pattern within a file and returns all lines that contain the match. This app is designed to be run directly in the command line, outputting the results to a given file."
+       - "JDBC App: TBD"
   # - name: "Springboot App"
   #   git_url: "/springboot"
   #   description: ""
