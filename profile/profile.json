@@ -16,12 +16,12 @@
   "github_repo_root_url": "https://github.com/jarviscanada/jarvis_data_eng_CatalinaGalan",
   "highlighted_projects": [
     {
-      "description": "Frontrow is a social platform where fans can find, rate and review concerts, as well as interact, follow and connect with other fans. This was the final team project at Le Wagon bootcamp. It was developed in a two week sprint. As a participant in this project I collaborated in building the back-end and databases, created front-end elements and implemented the chat feature in its entirety.",
+      "description": "Frontrow is a social platform where fans can find, rate and review concerts, as well as interact, follow and connect with other fans. This was the final team project at Le Wagon bootcamp. The app was deployed in Heroku and developed with Ruby on Rails in a two week Agile sprint. As a participant in this project I collaborated in building the back-end schema and databases with PostgreSQL; created front-end elements with SCSS and Stimulus; and implemented the chat feature in its entirety.",
       "git_url": "https://github.com/catagalan-mtl/frontrow-cat",
       "name": "Frontrow"
     },
     {
-      "description": "This website was developed as a personal project to showcase my work. It is a fully responsive website built from a single page template and transformed into a rails app with a PostgreSQL database. I have modified and restructured the original open source code to support my needs and preferences, creating new features such as show pages for my projects.",
+      "description": "This website was developed as a personal project to showcase my work. It is a fully responsive website built from a single page template and transformed into a rails app with a PostgreSQL database, deployed in Heroku. I have modified and restructured the original open source code to support my needs and preferences by: creating objects for each project and facilitating any update process; implementing a new custom design with CSS and Stimulus for JavaScript; and adding new features such as show pages and media for each project.",
       "git_url": "https://github.com/catagalan-mtl/my-portfolio",
       "name": "My Portfolio"
     }
@@ -50,19 +50,13 @@
   "others": [
     {
       "bullets": [
-        "Udacity Machine Learning (2019)"
-      ],
-      "title": "Certificates"
-    },
-    {
-      "bullets": [
-        "Winner of the Condordia Composition Competition in 2018."
+        "Winner of the Concordia Composition Competition in 2018."
       ],
       "title": "Awards"
     },
     {
       "bullets": [
-        "Member of OPCM classical choir. Contraalto voice.",
+        "Member of OPCM classical choir. Contralto voice.",
         "Was a member of the organizing committee for the Women in Music Conference in Concordia University, 2018.",
         "Volunteered as a band coach for Rock Camp Montreal in 2021, a summer camp for female and non-gendered youth."
       ],
@@ -71,10 +65,16 @@
   ],
   "professional_experience": [
     {
+      "company": "Le Wagon Montreal",
+      "description": "Conduct occasional introductory programming workshops to teach foundational coding skills to beginners in JavaScript and Ruby.",
+      "duration": "2024 - ongoing",
+      "title": "Guest lecturer"
+    },
+    {
       "company": "Bellow Media",
       "description": "Contributed in building a new SaaS software solution application with Bullet Train and Ruby on Rails. Implemented multiple project features and worked in frontend with Tailwind.",
       "duration": "2023 - July 2024",
-      "title": "Juior Software Developer"
+      "title": "Junior Software Developer"
     },
     {
       "company": "Studio Artease",
@@ -84,7 +84,7 @@
     },
     {
       "company": "Independent",
-      "description": "Composed and orchestrated original music. Winner of Concordia Composition Competition, 'Transition' premiered at Oscar Peterson Hall in March 2018. Composed and produced scores for short films and dance performances, and wrote string arrangements collaborating in projects with other musicians, choreographers and directors.",
+      "description": "Composed and orchestrated original music. Winner of Concordia Composition Competition with 'Transition', premiered at Oscar Peterson Hall, Montreal, by the Orchestre Symphonique de l'Isle (OSI) in March 2018. Composed and produced scores for short films and dance performances collaborating with choreographers and directors. Wrote string arrangements for songwriters and other musicians.",
       "duration": "2018 - 2022",
       "title": "Composer, Sound Designer and Orchestrator"
     }

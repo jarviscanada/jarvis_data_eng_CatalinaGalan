@@ -77,17 +77,22 @@ highlighted_projects:
     #URL is optional
     git_url: "https://github.com/catagalan-mtl/frontrow-cat"
     # The project description must start with an action verb (https://bit.ly/3guO98u)
-    description: "Frontrow is a social platform where fans can find, rate and review concerts, as well as interact, follow and connect with other fans. This was the final team project at Le Wagon bootcamp. It was developed in a two week sprint. As a participant in this project I collaborated in building the back-end and databases, created front-end elements and implemented the chat feature in its entirety."
+    description: "Frontrow is a social platform where fans can find, rate and review concerts, as well as interact, follow and connect with other fans. This was the final team project at Le Wagon bootcamp. The app was deployed in Heroku and developed with Ruby on Rails in a two week Agile sprint. As a participant in this project I collaborated in building the back-end schema and databases with PostgreSQL; created front-end elements with SCSS and Stimulus; and implemented the chat feature in its entirety."
   - name: "My Portfolio"
     git_url: "https://github.com/catagalan-mtl/my-portfolio"
-    description: "This website was developed as a personal project to showcase my work. It is a fully responsive website built from a single page template and transformed into a rails app with a PostgreSQL database. I have modified and restructured the original open source code to support my needs and preferences, creating new features such as show pages for my projects."
+    description: "This website was developed as a personal project to showcase my work. It is a fully responsive website built from a single page template and transformed into a rails app with a PostgreSQL database, deployed in Heroku. I have modified and restructured the original open source code to support my needs and preferences by: creating objects for each project and facilitating any update process; implementing a new custom design with CSS and Stimulus for JavaScript; and adding new features such as show pages and media for each project."
 
 #List of professional experience
 #The job description allows hiring managers to understand your job and the technologies you used(e.g. programming languages, libraries, algorithms, hardware, tools, etc.).
 #The description must be more than 25 words. If your experience is not software related, please focus on soft skills and achievements (e.g. team collaboration, problem-solving, improvements, communication).
 professional_experience:
   #Write your Jarvis role as a professional experience rather than training.
-  - title: "Juior Software Developer"
+  - title: "Guest lecturer"
+    company: "Le Wagon Montreal"
+    duration: "2024 - ongoing"
+      # The project description must start with an action verb (https://bit.ly/3guO98u)
+    description: "Conduct occasional introductory programming workshops to teach foundational coding skills to beginners in JavaScript and Ruby."
+  - title: "Junior Software Developer"
     company: "Bellow Media"
     duration: "2023 - July 2024"
     # The project description must start with an action verb (https://bit.ly/3guO98u)
@@ -99,7 +104,7 @@ professional_experience:
   - title: "Composer, Sound Designer and Orchestrator"
     company: "Independent"
     duration: "2018 - 2022"
-    description: "Composed and orchestrated original music. Winner of Concordia Composition Competition, 'Transition' premiered at Oscar Peterson Hall in March 2018. Composed and produced scores for short films and dance performances, and wrote string arrangements collaborating in projects with other musicians, choreographers and directors."
+    description: "Composed and orchestrated original music. Winner of Concordia Composition Competition with 'Transition', premiered at Oscar Peterson Hall, Montreal, by the Orchestre Symphonique de l'Isle (OSI) in March 2018. Composed and produced scores for short films and dance performances collaborating with choreographers and directors. Wrote string arrangements for songwriters and other musicians."
 
 #List of edcuation
 education:
@@ -117,15 +122,16 @@ education:
 #Optional section
 others:
     #category
-  - title: "Certificates"
+#  - title: "Certificates"
     #list of items
-    bullets:
-      - "Udacity Machine Learning (2019)"
+#    bullets:
+#      - "Udacity Machine Learning (2019)"
   - title: "Awards"
     bullets:
-      - "Winner of the Condordia Composition Competition in 2018."
+      - "Winner of the Concordia Composition Competition in 2018."
   - title: "Activities/Hobbies"
     bullets:
-      - "Member of OPCM classical choir. Contraalto voice."
+#      - "Guest lecturer for introductory workshops in JavaScript and Ruby at Le Wagon Montreal"
+      - "Member of OPCM classical choir. Contralto voice."
       - "Was a member of the organizing committee for the Women in Music Conference in Concordia University, 2018."
       - "Volunteered as a band coach for Rock Camp Montreal in 2021, a summer camp for female and non-gendered youth."
