@@ -14,13 +14,14 @@ skills:
     - Ruby
     - Ruby on Rails
     - HTML/CSS
-    - PostgreSQL
+    - Tailwind
     - Agile/Scrum
-    - Git
+    - Git/GitHub
   # At least 5 skills
   competent:
+    - SQL/PostgreSQL
     - Java
-    - Linux
+    - Linux/Bash
     - Python
     - JavaScript
     - Docker
@@ -29,6 +30,7 @@ skills:
   familiar:
     - Maven
     - GCP
+    - AWS
     - React
     - Kubernetes
     - C
