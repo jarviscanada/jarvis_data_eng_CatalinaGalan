@@ -8,7 +8,7 @@ public interface JavaGrep {
 
   /**
    * Top level search workflow
-   * @throws IOException
+   * @throws IOException Illegal Argument Exception if file path is not valid.
    */
   void process() throws IOException;
 
@@ -16,19 +16,22 @@ public interface JavaGrep {
    * Traverse a given directory and return all files
    * @param rootDir input directory
    * @return files under the rootDir
+   * @throws IOException if given root path is not accessible
    */
-  List<File> listFiles(String rootDir);
+  List<File> listFiles(String rootDir) throws IOException;
 
   /**
    * Read a file and return all the lines
-   *
-   * Explain FileReader, BufferReader and character encoding
+   * This method uses FileReader as a source for BufferReader.
+   * FileReader reads contents of the input file as a stream of characters one at a time,
+   * and will use the environment default character encoding to interpret the contents of the file.
+   * BufferReader buffers the input to provide efficient reading of lines.
    *
    * @param inputFile file to be read
    * @return lines
-   * @throws IllegalArgumentException if given inputFile is not a .txt File
+   * @throws IllegalArgumentException if File is not a readable file
    */
-  List<String> readLines(File inputFile);
+  List<String> readLines(File inputFile) throws IOException;
 
   /**
    * check if a line contains regex pattern (passed by user)
@@ -38,9 +41,7 @@ public interface JavaGrep {
   boolean containsPattern(String line);
 
   /**
-   * Write lines to a file
-   *
-   * Explore: FileOutputStream, OutputStreamWriter, and BufferWriter
+   * Write lines to given output file
    *
    * @param lines matched line
    * @throws IOException if write failed
