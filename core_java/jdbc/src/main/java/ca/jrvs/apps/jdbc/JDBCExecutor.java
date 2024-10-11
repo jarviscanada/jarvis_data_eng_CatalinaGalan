@@ -13,32 +13,45 @@ public class JDBCExecutor {
         "localhost", "hplussport", "postgres", "password");
     try {
       Connection connection = dcm.getConnection();
-      CustomerDAO customerDAO = new CustomerDAO(connection);
+      OrderDAO orderDao = new OrderDAO(connection);
 
-      Customer newCustomer = new Customer();
-      newCustomer.setFirstName("Poop");
-      newCustomer.setLastName("PoopPoop");
-      newCustomer.setEmail("poooopy@poopspoops.poop");
-      newCustomer.setPhone("555-poopy");
-      newCustomer.setAddress("123 The Butt");
-      newCustomer.setCity("Drain");
-      newCustomer.setState("Wasted");
-      newCustomer.setZipcode("9009");
-
-      Customer DBcustomer = customerDAO.create(newCustomer);;
-      System.out.println(DBcustomer);
-
-      DBcustomer = customerDAO.findById(DBcustomer.getId());
-      System.out.println(DBcustomer);
-
-      DBcustomer.setEmail("lalalalalal@lala,lala");
-      DBcustomer = customerDAO.update(DBcustomer);
-      System.out.println(DBcustomer);
-
-      customerDAO.delete(DBcustomer.getId());
-
+      Order order = orderDao.findById(1000);
+      System.out.println(order);
     } catch (SQLException e) {
       e.printStackTrace();
     }
   }
-}
+//  public static void main(String[] args) {
+//    DatabaseConnectionManager dcm = new DatabaseConnectionManager(
+//        "localhost", "hplussport", "postgres", "password");
+//    try {
+//      Connection connection = dcm.getConnection();
+//      CustomerDAO customerDAO = new CustomerDAO(connection);
+//
+//      Customer newCustomer = new Customer();
+//      newCustomer.setFirstName("Poop");
+//      newCustomer.setLastName("PoopPoop");
+//      newCustomer.setEmail("poooopy@poopspoops.poop");
+//      newCustomer.setPhone("555-poopy");
+//      newCustomer.setAddress("123 The Butt");
+//      newCustomer.setCity("Drain");
+//      newCustomer.setState("Wasted");
+//      newCustomer.setZipcode("9009");
+//
+//      Customer DBcustomer = customerDAO.create(newCustomer);;
+//      System.out.println(DBcustomer);
+//
+//      DBcustomer = customerDAO.findById(DBcustomer.getId());
+//      System.out.println(DBcustomer);
+//
+//      DBcustomer.setEmail("lalalalalal@lala,lala");
+//      DBcustomer = customerDAO.update(DBcustomer);
+//      System.out.println(DBcustomer);
+//
+//      customerDAO.delete(DBcustomer.getId());
+//
+//    } catch (SQLException e) {
+//      e.printStackTrace();
+//    }
+  }
+
