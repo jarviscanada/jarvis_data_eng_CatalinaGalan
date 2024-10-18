@@ -17,7 +17,7 @@ public class AlphaVantageAPI {
 
     HttpRequest request = HttpRequest.newBuilder()
         .uri(URI.create("https://alpha-vantage.p.rapidapi.com/query?function=GLOBAL_QUOTE&symbol="
-            +dotenv.get("SYMBOL")+"&datatype=json"))
+            + "AAPL&datatype=json"))
         .header("X-RapidAPI-Key", dotenv.get("X_RAPID_API_KEY"))
         .header("X-RapidAPI-Host", "alpha-vantage.p.rapidapi.com")
         .method("GET", HttpRequest.BodyPublishers.noBody())
