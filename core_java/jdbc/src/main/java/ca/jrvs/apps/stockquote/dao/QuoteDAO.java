@@ -42,7 +42,12 @@ public class QuoteDAO implements CrudDAO<Quote, String>{
       statement.setTimestamp(11, entity.getTimestamp());
       statement.execute();
       System.out.println("CREATED");
-      return null;
+      Optional<Quote> result = this.findById(entity.getTicker());
+//      if (result.isPresent()) {
+        return result.get();
+//      } else {
+//        return null;
+//      }
     } catch (SQLException e) {
       try (PreparedStatement statement = this.connection.prepareStatement(UPDATE)) {
         statement.setDouble(1, entity.getOpen());
@@ -58,7 +63,12 @@ public class QuoteDAO implements CrudDAO<Quote, String>{
         statement.setString(11, entity.getTicker());
         statement.execute();
         System.out.println("UPDATED");
-        return null;
+        Optional<Quote> result = this.findById(entity.getTicker());
+//        if (result.isPresent()) {
+          return result.get();
+//        } else {
+//          return null;
+//        }
       } catch (SQLException d) {
         throw new IllegalArgumentException(e);
       }
