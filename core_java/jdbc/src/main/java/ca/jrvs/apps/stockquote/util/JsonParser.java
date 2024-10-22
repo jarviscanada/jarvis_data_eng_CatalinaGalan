@@ -2,6 +2,7 @@ package ca.jrvs.apps.stockquote.util;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import java.io.IOException;
@@ -39,9 +40,10 @@ public class JsonParser {
    * @return Object
    * @throws IOException
    */
-  public static <T> T toObjectFromJson(String json, Class clazz) throws IOException {
+  public static <T> T toObjectFromJson(String json, Class<T> clazz) throws IOException {
 
     ObjectMapper mapper = new ObjectMapper();
+    mapper.configure(DeserializationFeature.UNWRAP_ROOT_VALUE, true);
     return (T) mapper.readValue(json, clazz);
   }
 }
