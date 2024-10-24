@@ -21,7 +21,6 @@ public class Quote {
   private String changePercent;
   private Timestamp timestamp;
 
-
   public String getTicker() {
     return ticker;
   }

@@ -6,7 +6,6 @@ import io.github.cdimascio.dotenv.Dotenv;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.Date;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -36,24 +35,19 @@ public class QuoteHttpHelper {
         .build();
     try (Response response = client.newCall(request).execute()) {
       String body = response.body().string();
-//      System.out.println(body);
       Quote quote = JsonParser.toObjectFromJson(body, Quote.class);
-      if (quote != null && symbol.equals(quote.getTicker())) {
-        Date date = new Date();
+      if (quote != null) {
         quote.setTimestamp(Timestamp.from(Instant.now()));
-        return quote;
-      } else {
-        System.out.println("The symbol passed didn't return a valid quote");
-        return null;
       }
+      return quote;
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
   }
 
-  public static void main(String[] args) {
-    QuoteHttpHelper quoteHttpHelper = new QuoteHttpHelper();
-    Quote quote = quoteHttpHelper.fetchQuoteInfo("MSFT");
-//    System.out.println(quote.toString());
-  }
+//  public static void main(String[] args) {
+//    QuoteHttpHelper quoteHttpHelper = new QuoteHttpHelper();
+//    Quote quote = quoteHttpHelper.fetchQuoteInfo("MSFT");
+////    System.out.println(quote.toString());
+//  }
 }

@@ -1,2 +1,5 @@
-package ca.jrvs.apps.stockquote.service;public class PositionService {
+package ca.jrvs.apps.stockquote.service;
+
+public class PositionService {
+
 }

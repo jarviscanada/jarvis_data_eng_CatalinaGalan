@@ -1,46 +1,39 @@
 package ca.jrvs.apps.stockquote.dao;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 import ca.jrvs.apps.stockquote.model.Quote;
 import ca.jrvs.apps.stockquote.util.DatabaseConnectionManager;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Optional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 
-@ExtendWith(MockitoExtension.class)
 class QuoteDAOTest {
 
-  @Mock
-  QuoteDAO quoteDAOMock;
-
+  Connection connection;
+  QuoteDAO quoteDAO;
+  QuoteHttpHelper quoteHttpHelper;
+  DatabaseConnectionManager dcm;
   Quote quote;
   String id;
-  Connection connection;
-  QuoteHttpHelper quoteHttpHelper = new QuoteHttpHelper();
-  DatabaseConnectionManager dcm = new DatabaseConnectionManager("localhost",
-    "stock_quote", "postgres", "password");
 
   @BeforeEach
-  public void init() {
+  public void init() throws SQLException {
+    quoteHttpHelper = new QuoteHttpHelper();
     quote = quoteHttpHelper.fetchQuoteInfo("MSFT");
+    dcm = new DatabaseConnectionManager("localhost",
+        "stock_quote", "postgres", "password");
+    connection = dcm.getConnection();
+    quoteDAO = new QuoteDAO(connection);
     id = quote.getTicker();
-    try {
-      connection = dcm.getConnection();
-    } catch (SQLException e) {
-      throw new RuntimeException(e);
-    }
   }
 
   @AfterEach
-  public void closeConnection() throws SQLException {
+  public void tearDown() throws SQLException {
     if (connection != null) {
       connection.close();
     }
@@ -48,29 +41,46 @@ class QuoteDAOTest {
 
   @Test
   void TestNewQuoteDAO() throws SQLException {
-    QuoteDAO quoteDAO = new QuoteDAO(connection);
     assertNotNull(quoteDAO);
   }
 
   @Test
   void TestSave() {
-    quoteDAOMock.save(quote);
-    verify(quoteDAOMock, times(1)).save(quote);
+    Quote newQuote = quoteDAO.save(quote);
+    assertEquals(id, newQuote.getTicker());
   }
 
   @Test
-  void TestFindById() {
-    assertNotNull(quoteDAOMock.findById(id));
+  void TestFindByIdValid() {
+    Optional<Quote> found = quoteDAO.findById(id);
+    assertEquals(id, found.get().getTicker());
   }
 
   @Test
-  void TestDeleteById() {
-    quoteDAOMock.deleteById(id);
-    assert(quoteDAOMock.findById(id).isEmpty());
+  void TestFindByIdNotValid() {
+    assertEquals(Optional.empty(), quoteDAO.findById("_"));
   }
 
-//  @Test
-//  void TestDeleteAll() {
-//
-//  }
+  @Test
+  void TestDeleteByIdNotValid() {
+    quoteDAO.deleteById("-");
+    assertEquals(Optional.empty(), quoteDAO.findById("-"));
+  }
+
+  @Test
+  void TestFindAll() {
+    assertInstanceOf(ArrayList.class, quoteDAO.findAll());
+  }
+
+  @Test
+  void TestDeleteAll() {
+    quoteDAO.deleteAll();
+    assertFalse(quoteDAO.findAll().iterator().hasNext());
+  }
+
+  @Test
+  void TestDeleteByIdValid() {
+    quoteDAO.deleteById(id);
+    assertEquals(Optional.empty(), quoteDAO.findById(id));
+  }
 }

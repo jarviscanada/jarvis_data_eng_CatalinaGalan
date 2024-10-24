@@ -13,10 +13,19 @@ public class JDBCExecutor {
         "localhost", "hplussport", "postgres", "password");
     try {
       Connection connection = dcm.getConnection();
-      OrderDAO orderDao = new OrderDAO(connection);
 
+      OrderDAO orderDao = new OrderDAO(connection);
       Order order = orderDao.findById(1000);
       System.out.println(order);
+
+      CustomerDAO customerDAO = new CustomerDAO(connection);
+      Customer customer = customerDAO.findById(1000);
+      System.out.println(customer);
+      customer.setEmail("lalalalalala@lalalalalala.lala");
+      Customer updateCustomer = customerDAO.update(customer);
+      System.out.println(updateCustomer);
+
+
     } catch (SQLException e) {
       e.printStackTrace();
     }
