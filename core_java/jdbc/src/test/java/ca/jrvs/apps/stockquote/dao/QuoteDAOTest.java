@@ -41,6 +41,7 @@ class QuoteDAOTest {
 
   @BeforeEach
   public void init() throws SQLException, IOException {
+    System.out.println("Init...");
     quote = JsonParser.toObjectFromJson(jsonString, Quote.class);
     quote.setTimestamp(Timestamp.from(Instant.now()));
     dcm = new DatabaseConnectionManager("localhost",
@@ -55,51 +56,60 @@ class QuoteDAOTest {
   public static void closeConnection() throws SQLException {
     if (connection != null) {
       connection.close();
+      System.out.println("CONNECTION CLOSED");
     }
   }
 
   @Test
   void TestNewQuoteDAO() throws SQLException {
+    System.out.println("Testing NewQuoteDAO");
     assertNotNull(quoteDAO);
   }
 
   @Test
   void TestSave() {
+    System.out.println("Testing Save");
     Quote newQuote = quoteDAO.save(quote);
     assertEquals(id, newQuote.getTicker());
   }
 
   @Test
   void TestFindByIdValid() {
+    System.out.println("Testing FindByValidId");
     Optional<Quote> found = quoteDAO.findById(id);
     assertEquals(id, found.get().getTicker());
   }
 
   @Test
   void TestFindByIdNotValid() {
+    System.out.println("Testing FindByNotValidId");
     assertEquals(Optional.empty(), quoteDAO.findById("_"));
   }
 
   @Test
+  void TestFindAll() {
+    System.out.println("Testing FindAll");
+    assertInstanceOf(ArrayList.class, quoteDAO.findAll());
+  }
+
+  @Test
   void TestDeleteByIdNotValid() {
+    System.out.println("Testing DeleteByNotValidId");
     quoteDAO.deleteById("-");
     assertEquals(Optional.empty(), quoteDAO.findById("-"));
   }
 
   @Test
-  void TestFindAll() {
-    assertInstanceOf(ArrayList.class, quoteDAO.findAll());
+  void TestDeleteByIdValid() {
+    System.out.println("Testing DeleteByValidId");
+    quoteDAO.deleteById(id);
+    assertEquals(Optional.empty(), quoteDAO.findById(id));
   }
 
   @Test
   void TestDeleteAll() {
+    System.out.println("Testing DeleteAll");
     quoteDAO.deleteAll();
     assertFalse(quoteDAO.findAll().iterator().hasNext());
-  }
-
-  @Test
-  void TestDeleteByIdValid() {
-    quoteDAO.deleteById(id);
-    assertEquals(Optional.empty(), quoteDAO.findById(id));
   }
 }
