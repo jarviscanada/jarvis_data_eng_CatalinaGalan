@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-//
+
 //  public static void main(String[] args) {
 //    QuoteHttpHelper quoteHttpHelper = new QuoteHttpHelper();
 //
@@ -19,15 +19,15 @@ public class Main {
 //    try {
 //      Connection connection = dcm.getConnection();
 //      QuoteDAO quoteDAO = new QuoteDAO(connection);
-////      Quote quote = quoteHttpHelper.fetchQuoteInfo("MSFT");
-////      Quote quote2 = quoteHttpHelper.fetchQuoteInfo("MSF");
-////
-////      Quote update = quoteDAO.save(quote);
-////      Quote update2 = quoteDAO.save(quote2);
-////      System.out.println(update);
-////      System.out.println(update2);
-////      Quote found = quoteDAO.findById("MSF").get();
-////      System.out.println(found);
+//      Quote quote = quoteHttpHelper.fetchQuoteInfo("MSFT");
+//      Quote quote2 = quoteHttpHelper.fetchQuoteInfo("MSF");
+//
+//      Quote update = quoteDAO.save(quote);
+//      Quote update2 = quoteDAO.save(quote2);
+//      System.out.println(update);
+//      System.out.println(update2);
+//      Quote found = quoteDAO.findById("MSF").get();
+//      System.out.println(found);
 //        Iterable<Quote> all = quoteDAO.findAll();
 //        for (Quote q : all) {
 //          System.out.println(q);

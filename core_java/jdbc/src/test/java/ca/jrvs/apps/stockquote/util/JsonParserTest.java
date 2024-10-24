@@ -1,6 +1,7 @@
 package ca.jrvs.apps.stockquote.util;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import ca.jrvs.apps.stockquote.model.Quote;
 import java.io.IOException;

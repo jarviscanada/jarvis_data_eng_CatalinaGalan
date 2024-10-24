@@ -1,7 +1,5 @@
 package ca.jrvs.apps.stockquote.dao;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import ca.jrvs.apps.stockquote.model.Position;
 import ca.jrvs.apps.stockquote.util.DatabaseConnectionManager;
 import java.sql.Connection;

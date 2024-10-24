@@ -1,7 +1,6 @@
 package ca.jrvs.apps.stockquote.service;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import ca.jrvs.apps.stockquote.dao.QuoteDAO;
 import ca.jrvs.apps.stockquote.dao.QuoteHttpHelper;
@@ -28,6 +27,7 @@ class QuoteServiceTest {
   void init() {
     quoteHttpHelper = new QuoteHttpHelper();
   }
+
   @Test
   void TestFetchQuoteDataFromApiValidTicket() {
     validTicker = "MSFT";
@@ -39,6 +39,6 @@ class QuoteServiceTest {
   void TestFetchQuoteDataFromApiInvalidTicker() {
     invalidTicker = " ";
     quote = quoteHttpHelper.fetchQuoteInfo(invalidTicker);
-    assert((Optional.of(quote).isEmpty()));
+    assert ((Optional.of(quote).isEmpty()));
   }
 }

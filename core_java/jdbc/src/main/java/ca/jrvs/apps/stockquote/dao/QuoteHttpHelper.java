@@ -44,10 +44,4 @@ public class QuoteHttpHelper {
       throw new RuntimeException(e);
     }
   }
-
-//  public static void main(String[] args) {
-//    QuoteHttpHelper quoteHttpHelper = new QuoteHttpHelper();
-//    Quote quote = quoteHttpHelper.fetchQuoteInfo("MSFT");
-////    System.out.println(quote.toString());
-//  }
 }
