@@ -1,5 +1,7 @@
 package ca.jrvs.apps.stockquote.model;
 
+import com.fasterxml.jackson.annotation.JsonSetter;
+
 public class Position {
 
   private String ticker;

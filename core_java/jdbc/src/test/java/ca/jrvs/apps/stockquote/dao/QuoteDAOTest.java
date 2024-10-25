@@ -13,7 +13,6 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Optional;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,20 +23,20 @@ class QuoteDAOTest {
   DatabaseConnectionManager dcm;
   Quote quote;
   String id;
-    String jsonString = "{\n"
-        + "  \"Global Quote\": {\n"
-        + "    \"01. symbol\": \"MSFT\",\n"
-        + "    \"02. open\": \"332.3800\",\n"
-        + "    \"03. high\": \"333.8300\",\n"
-        + "    \"04. low\": \"326.3600\",\n"
-        + "    \"05. price\": \"327.7300\",\n"
-        + "    \"06. volume\": \"21085695\",\n"
-        + "    \"07. latest trading day\": \"2023-10-13\",\n"
-        + "    \"08. previous close\": \"331.1600\",\n"
-        + "    \"09. change\": \"-3.4300\",\n"
-        + "    \"10. change percent\": \"-1.0358%\"\n"
-        + "  }\n"
-        + "}";
+  String jsonString = "{\n"
+      + "  \"Global Quote\": {\n"
+      + "    \"01. symbol\": \"MSFT\",\n"
+      + "    \"02. open\": \"332.3800\",\n"
+      + "    \"03. high\": \"333.8300\",\n"
+      + "    \"04. low\": \"326.3600\",\n"
+      + "    \"05. price\": \"327.7300\",\n"
+      + "    \"06. volume\": \"21085695\",\n"
+      + "    \"07. latest trading day\": \"2023-10-13\",\n"
+      + "    \"08. previous close\": \"331.1600\",\n"
+      + "    \"09. change\": \"-3.4300\",\n"
+      + "    \"10. change percent\": \"-1.0358%\"\n"
+      + "  }\n"
+      + "}";
 
   @BeforeEach
   public void init() throws SQLException, IOException {

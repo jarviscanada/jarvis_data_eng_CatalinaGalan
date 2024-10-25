@@ -1,6 +1,7 @@
 package ca.jrvs.apps.stockquote.dao;
 
 import ca.jrvs.apps.stockquote.model.Position;
+import ca.jrvs.apps.stockquote.model.Quote;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,6 +27,16 @@ public class PositionDAO implements CrudDAO<Position, String> {
   private static final String GET_ALL = "SELECT symbol, num_of_shares, value_paid FROM position";
   private static final String DELETE = "DELETE FROM position WHERE symbol = ?";
   private static final String DELETE_ALL = "TRUNCATE position";
+
+  public Position create(int numOfShares, Quote quote) {
+    Position position = new Position();
+    double valuePaid = quote.getPrice() * numOfShares;
+    String ticker = quote.getTicker();
+    position.setTicker(ticker);
+    position.setNumOfShares(numOfShares);
+    position.setValuePaid(valuePaid);
+    return position;
+  }
 
   @Override
   public Position save(Position entity) throws IllegalArgumentException {
