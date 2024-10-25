@@ -135,7 +135,7 @@ public class QuoteDAO implements CrudDAO<Quote, String>{
       try (PreparedStatement statement = this.connection.prepareStatement(DELETE)) {
         statement.setString(1, s);
         statement.execute();
-        System.out.println("Quote with symbol: " + s + " has been deleted");
+        System.out.println("Quote " + s + " has been deleted");
       } catch (SQLException e) {
         throw new IllegalArgumentException(e);
       }

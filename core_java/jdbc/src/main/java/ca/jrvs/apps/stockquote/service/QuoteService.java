@@ -19,20 +19,22 @@ public class QuoteService {
    * @return Latest quote information or empty optional if ticker symbol not found
    */
   public Optional<Quote> fetchQuoteDataFromAPI(String ticker) {
-    quoteHttpHelper = new QuoteHttpHelper();
 
+    quoteHttpHelper = new QuoteHttpHelper();
+    Quote quote = quoteHttpHelper.fetchQuoteInfo(ticker);
     DatabaseConnectionManager dcm = new DatabaseConnectionManager("localhost",
         "stock_quote", "postgres", "password");
+
     try {
       Connection connection = dcm.getConnection();
       quoteDAO = new QuoteDAO(connection);
-      Quote quote = quoteHttpHelper.fetchQuoteInfo(ticker);
       quoteDAO.save(quote);
-      if (ticker.equals(quote.getTicker())) {
-        return Optional.of(quote);
-      } else {
-        return Optional.of(new Quote());
-      }
+      return quoteDAO.findById(ticker);
+//      if (ticker.equals(quote.getTicker())) {
+//        return Optional.of(quote);
+//      } else {
+//        return Optional.of(new Quote());
+//      }
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }
