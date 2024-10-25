@@ -28,6 +28,6 @@ class JsonParserTest {
 
     Quote quote = JsonParser.toObjectFromJson(jsonString, Quote.class);
     assertNotNull(quote);
-    assertEquals(quote.getTicker(), "MSFT");
+    assertEquals("MSFT", quote.getTicker());
   }
 }

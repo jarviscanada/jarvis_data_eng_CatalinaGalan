@@ -1,27 +1,37 @@
 package ca.jrvs.apps.stockquote.service;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
+import ca.jrvs.apps.stockquote.dao.QuoteHttpHelper;
 import ca.jrvs.apps.stockquote.model.Quote;
-import java.io.IOException;
-import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class QuoteServiceUnitTest {
 
-  QuoteService quoteService;
-  String ticker;
+  private QuoteHttpHelper quoteHttpHelper;
+  private Quote quote;
+  private String validTicker;
+  private String invalidTicker;
 
   @BeforeEach
-  void init() throws IOException {
-    quoteService = new QuoteService();
-    ticker = "MSFT";
+  void init() {
+    quoteHttpHelper = new QuoteHttpHelper();
+    quote = new Quote();
   }
 
   @Test
-  void Test_fetchQuoteDataFromApi() {
-    Optional<Quote> result = quoteService.fetchQuoteDataFromAPI(ticker);
-    assertTrue(result.isPresent());
+  void Test_quoteServiceFetchDataFromApiValidId() {
+    validTicker = "MSFT";
+    quote = quoteHttpHelper.fetchQuoteInfo(validTicker);
+    assertEquals(validTicker, quote.getTicker());
+  }
+
+  @Test
+  void Test_quoteServiceFetchDataFromApiInvalidId() {
+    invalidTicker = " ";
+    quote = quoteHttpHelper.fetchQuoteInfo(invalidTicker);
+    assertNull(quote.getTicker());
   }
 }

@@ -34,38 +34,40 @@ public class QuoteDAO implements CrudDAO<Quote, String>{
   @Override
   public Quote save(Quote entity) throws IllegalArgumentException {
     Optional<Quote> optionalQuote;
-    try (PreparedStatement statement = this.connection.prepareStatement(INSERT)) {
-      statement.setString(1, entity.getTicker());
-      statement.setDouble(2, entity.getOpen());
-      statement.setDouble(3, entity.getHigh());
-      statement.setDouble(4, entity.getLow());
-      statement.setDouble(5, entity.getPrice());
-      statement.setInt(6, entity.getVolume());
-      statement.setDate(7, entity.getLatestTradingDay());
-      statement.setDouble(8, entity.getPreviousClose());
-      statement.setDouble(9, entity.getChange());
-      statement.setString(10, entity.getChangePercent());
-      statement.setTimestamp(11, entity.getTimestamp());
-      statement.execute();
-      System.out.println("quote SAVED");
-    } catch (SQLException e) {
-      try (PreparedStatement statement = this.connection.prepareStatement(UPDATE)) {
-        statement.setDouble(1, entity.getOpen());
-        statement.setDouble(2, entity.getHigh());
-        statement.setDouble(3, entity.getLow());
-        statement.setDouble(4, entity.getPrice());
-        statement.setInt(5, entity.getVolume());
-        statement.setDate(6, entity.getLatestTradingDay());
-        statement.setDouble(7, entity.getPreviousClose());
-        statement.setDouble(8, entity.getChange());
-        statement.setString(9, entity.getChangePercent());
-        statement.setTimestamp(10, entity.getTimestamp());
-        statement.setString(11, entity.getTicker());
+    if (entity.getTicker() != null) {
+      try (PreparedStatement statement = this.connection.prepareStatement(INSERT)) {
+        statement.setString(1, entity.getTicker());
+        statement.setDouble(2, entity.getOpen());
+        statement.setDouble(3, entity.getHigh());
+        statement.setDouble(4, entity.getLow());
+        statement.setDouble(5, entity.getPrice());
+        statement.setInt(6, entity.getVolume());
+        statement.setDate(7, entity.getLatestTradingDay());
+        statement.setDouble(8, entity.getPreviousClose());
+        statement.setDouble(9, entity.getChange());
+        statement.setString(10, entity.getChangePercent());
+        statement.setTimestamp(11, entity.getTimestamp());
         statement.execute();
-        System.out.println("quote UPDATED");
-      } catch (SQLException d) {
-        throw new IllegalArgumentException(e);
-      }
+        System.out.println("quote SAVED");
+      } catch (SQLException e) {
+        try (PreparedStatement statement = this.connection.prepareStatement(UPDATE)) {
+          statement.setDouble(1, entity.getOpen());
+          statement.setDouble(2, entity.getHigh());
+          statement.setDouble(3, entity.getLow());
+          statement.setDouble(4, entity.getPrice());
+          statement.setInt(5, entity.getVolume());
+          statement.setDate(6, entity.getLatestTradingDay());
+          statement.setDouble(7, entity.getPreviousClose());
+          statement.setDouble(8, entity.getChange());
+          statement.setString(9, entity.getChangePercent());
+          statement.setTimestamp(10, entity.getTimestamp());
+          statement.setString(11, entity.getTicker());
+          statement.execute();
+          System.out.println("quote UPDATED");
+        } catch (SQLException d) {
+          throw new IllegalArgumentException(e);
+        }
+     }
     }
     optionalQuote = this.findById(entity.getTicker());
     return optionalQuote.orElse(null);

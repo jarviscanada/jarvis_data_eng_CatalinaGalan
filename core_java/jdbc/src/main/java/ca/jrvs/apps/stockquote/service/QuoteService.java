@@ -30,11 +30,6 @@ public class QuoteService {
       quoteDAO = new QuoteDAO(connection);
       quoteDAO.save(quote);
       return quoteDAO.findById(ticker);
-//      if (ticker.equals(quote.getTicker())) {
-//        return Optional.of(quote);
-//      } else {
-//        return Optional.of(new Quote());
-//      }
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }

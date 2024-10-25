@@ -1,6 +1,7 @@
 package ca.jrvs.apps.stockquote.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import ca.jrvs.apps.stockquote.dao.QuoteDAO;
 import ca.jrvs.apps.stockquote.dao.QuoteHttpHelper;
@@ -12,33 +13,31 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-@ExtendWith(MockitoExtension.class)
-class QuoteServiceTest {
+class QuoteServiceIntTest {
 
+  private QuoteHttpHelper quoteHttpHelper;
+  private Quote quote;
+  private QuoteService quoteService;
   private String validTicker;
   private String invalidTicker;
-  private Quote quote;
-  private QuoteHttpHelper quoteHttpHelper;
-
-  @Mock
-  private QuoteDAO mockQuoteDAO;
 
   @BeforeEach
   void init() {
     quoteHttpHelper = new QuoteHttpHelper();
+    quoteService = new QuoteService();
   }
 
   @Test
-  void TestFetchQuoteDataFromApiValidTicket() {
+  void Test_fetchQuoteDataFromApiValidTicker() {
     validTicker = "MSFT";
-    quote = quoteHttpHelper.fetchQuoteInfo(validTicker);
-    assertEquals(validTicker, quote.getTicker());
+    Optional<Quote> result = quoteService.fetchQuoteDataFromAPI(validTicker);
+    assertTrue(result.isPresent());
   }
 
   @Test
-  void TestFetchQuoteDataFromApiInvalidTicker() {
+  void Test_fetchQuoteDataFromApiInValidTicker() {
     invalidTicker = " ";
-    quote = quoteHttpHelper.fetchQuoteInfo(invalidTicker);
-    assert ((Optional.of(quote).isEmpty()));
+    Optional<Quote> result = quoteService.fetchQuoteDataFromAPI(invalidTicker);
+    assertTrue(result.isEmpty());
   }
 }
