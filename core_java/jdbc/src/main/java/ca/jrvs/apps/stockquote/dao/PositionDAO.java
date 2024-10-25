@@ -41,17 +41,24 @@ public class PositionDAO implements CrudDAO<Position, String> {
   @Override
   public Position save(Position entity) throws IllegalArgumentException {
     Optional<Position> optionalPosition;
+    QuoteDAO quoteDAO = new QuoteDAO(connection);
+    if (quoteDAO.findById(entity.getTicker()).isEmpty()) {
+      System.out.println("The quote for this symbol has not been saved");
+      return null;
+    }
     try(PreparedStatement statement = this.connection.prepareStatement(INSERT)) {
       statement.setString(1, entity.getTicker());
       statement.setInt(2, entity.getNumOfShares());
       statement.setDouble(3, entity.getValuePaid());
       statement.execute();
+      System.out.println("Position SAVED");
     } catch (SQLException e) {
       try (PreparedStatement statement = this.connection.prepareStatement(UPDATE)) {
         statement.setInt(1, entity.getNumOfShares());
         statement.setDouble(2, entity.getValuePaid());
         statement.setString(3, entity.getTicker());
         statement.execute();
+        System.out.println("Position UPDATED");
       } catch (SQLException ex) {
         throw new RuntimeException(ex);
       }
@@ -106,12 +113,16 @@ public class PositionDAO implements CrudDAO<Position, String> {
 
   @Override
   public void deleteById(String s) throws IllegalArgumentException {
-    try (PreparedStatement statement = this.connection.prepareStatement(DELETE)){
-      statement.setString(1, s);
-      statement.execute();
-      System.out.println("Position with symbol: " + s + " has been deleted");
-    } catch (SQLException e) {
-      throw new RuntimeException(e);
+    if (this.findById(s).isEmpty()) {
+      System.out.println("There is no record for the given symbol");
+    } else {
+      try (PreparedStatement statement = this.connection.prepareStatement(DELETE)) {
+        statement.setString(1, s);
+        statement.execute();
+        System.out.println("Position with symbol: " + s + " has been deleted");
+      } catch (SQLException e) {
+        throw new RuntimeException(e);
+      }
     }
   }
 

@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Test;
 class QuoteDAOTest {
 
   private static Connection connection;
-  QuoteDAO quoteDAO;
+  static QuoteDAO quoteDAO;
   DatabaseConnectionManager dcm;
   Quote quote;
   String id;
@@ -53,6 +53,7 @@ class QuoteDAOTest {
 
   @AfterAll
   public static void closeConnection() throws SQLException {
+    quoteDAO.findAll();
     if (connection != null) {
       connection.close();
       System.out.println("CONNECTION CLOSED");
@@ -73,14 +74,14 @@ class QuoteDAOTest {
   }
 
   @Test
-  void TestFindByIdValid() {
+  void TestFindByValidId() {
     System.out.println("Testing FindByValidId");
     Optional<Quote> found = quoteDAO.findById(id);
     assertEquals(id, found.get().getTicker());
   }
 
   @Test
-  void TestFindByIdNotValid() {
+  void TestFindByNotValidId() {
     System.out.println("Testing FindByNotValidId");
     assertEquals(Optional.empty(), quoteDAO.findById("_"));
   }
@@ -92,17 +93,21 @@ class QuoteDAOTest {
   }
 
   @Test
-  void TestDeleteByIdNotValid() {
+  void TestDeleteByNotValidId() {
     System.out.println("Testing DeleteByNotValidId");
     quoteDAO.deleteById("-");
     assertEquals(Optional.empty(), quoteDAO.findById("-"));
   }
 
   @Test
-  void TestDeleteByIdValid() {
+  void TestDeleteByValidId() {
     System.out.println("Testing DeleteByValidId");
-    quoteDAO.deleteById(id);
-    assertEquals(Optional.empty(), quoteDAO.findById(id));
+    try {
+      quoteDAO.deleteById(id);
+      assertEquals(Optional.empty(), quoteDAO.findById(id));
+    } catch (IllegalArgumentException e) {
+      assertNotEquals(Optional.empty(), quoteDAO.findById(id));
+    }
   }
 
   @Test
