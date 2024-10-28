@@ -1,6 +1,7 @@
 package ca.jrvs.apps.stockquote.service;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
@@ -16,6 +17,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.internal.matchers.Any;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
@@ -25,7 +27,7 @@ class QuoteServiceUnitTest {
   QuoteHttpHelper mockQuoteHttpHelper;
 
   @Mock
-  QuoteDAO mockQuoteDAQ;
+  QuoteDAO mockQuoteDAO;
 
   private Quote quote;
   private String validTicker;
@@ -35,6 +37,7 @@ class QuoteServiceUnitTest {
 
   @BeforeEach
   void init() {
+    quoteService = new QuoteService(mockQuoteDAO, mockQuoteHttpHelper);
     quote = new Quote();
     quote.setTicker("MSFT");
     quote.setOpen(332.38);
@@ -46,20 +49,19 @@ class QuoteServiceUnitTest {
     quote.setChange(-3.43);
     quote.setChangePercent("-1.0358%");
     quote.setTimestamp(Timestamp.from(Instant.now()));
-    quoteService = new QuoteService(mockQuoteDAQ, mockQuoteHttpHelper);
   }
 
   @Test
   void Test_quoteServiceFetchDataFromApiValidId() {
     validTicker = "MSFT";
-    System.out.println(quoteService);
-//    doReturn(quote).when(mockQuoteHttpHelper.fetchQuoteInfo("MSFT"));
-//    when(mockQuoteDAQ.save(quote)).thenReturn(quote);
-//
-//    optQuote = quoteService.fetchQuoteDataFromAPI("validTicker");
-//
-//    assertTrue(optQuote.isPresent());
-//    assertEquals(validTicker, optQuote.get().getTicker());
+
+    when(mockQuoteHttpHelper.fetchQuoteInfo(validTicker)).thenReturn(quote);
+    when(mockQuoteDAO.save(any())).thenReturn(quote);
+
+    optQuote = quoteService.fetchQuoteDataFromAPI(validTicker);
+
+    assertTrue(optQuote.isPresent());
+    assertEquals(validTicker, optQuote.get().getTicker());
   }
 
 //  @Test

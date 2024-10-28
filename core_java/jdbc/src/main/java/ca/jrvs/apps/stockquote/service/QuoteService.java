@@ -26,8 +26,7 @@ public class QuoteService {
   public Optional<Quote> fetchQuoteDataFromAPI(String ticker) {
 
     Quote quote = quoteHttpHelper.fetchQuoteInfo(ticker);
-    quoteDAO.save(quote);
-
-    return quoteDAO.findById(ticker);
+    Quote quoteSave = quoteDAO.save(quote);
+    return Optional.of(quoteSave);
   }
 }
