@@ -58,9 +58,9 @@ class PositionDAOTest {
   @BeforeEach
   void setUp() throws SQLException {
     positionDAO = new PositionDAO(connection);
-    position = positionDAO.create(5695, quote);
-    id = position.getTicker();
-    position1 = positionDAO.save(position);
+//    position = positionDAO.create(5695, quote);
+//    id = position.getTicker();
+//    position1 = positionDAO.save(position);
   }
 
   @AfterAll

@@ -7,8 +7,8 @@ import java.util.Properties;
 
 public class DatabaseConnectionManager {
 
-  private final String url;
-  private final Properties properties;
+  private String url;
+  private Properties properties;
 
   public DatabaseConnectionManager(String host, String database, String username, String password) {
     this.url = "jdbc:postgresql://" + host + "/" + database;

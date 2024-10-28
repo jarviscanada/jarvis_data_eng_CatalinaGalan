@@ -24,8 +24,8 @@ class PositionServiceIntTest {
   void init() {
     Optional<Quote> quoteOptional = quoteService.fetchQuoteDataFromAPI(validTicker);
     quote = quoteOptional.get();
-    positionService = new PositionService();
-    quoteService = new QuoteService();
+//    positionService = new PositionService();
+//    quoteService = new QuoteService();
   }
 
   @Test

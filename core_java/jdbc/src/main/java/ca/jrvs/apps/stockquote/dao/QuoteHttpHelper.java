@@ -12,8 +12,13 @@ import okhttp3.Response;
 
 public class QuoteHttpHelper {
 
-  private String apiKey;
-  private OkHttpClient client;
+  private final String apiKey;
+  private final OkHttpClient client;
+
+  public QuoteHttpHelper(String apiKey, OkHttpClient client) {
+    this.apiKey = apiKey;
+    this.client = client;
+  }
 
   /**
    * Fetch the latest quote data from Alpha Vantage endpoint
@@ -22,10 +27,6 @@ public class QuoteHttpHelper {
    * @throws IllegalArgumentException - if no data was given for the symbol
    */
   public Quote fetchQuoteInfo(String symbol) throws IllegalArgumentException {
-
-    Dotenv dotenv = Dotenv.load();
-    apiKey = dotenv.get("X_RAPID_API_KEY");
-    client = new OkHttpClient();
 
     Request request = new Request.Builder()
         .url("https://alpha-vantage.p.rapidapi.com/query?function=GLOBAL_QUOTE&symbol=" + symbol

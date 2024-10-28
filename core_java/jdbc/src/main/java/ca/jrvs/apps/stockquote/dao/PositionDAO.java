@@ -28,16 +28,6 @@ public class PositionDAO implements CrudDAO<Position, String> {
   private static final String DELETE = "DELETE FROM position WHERE symbol = ?";
   private static final String DELETE_ALL = "TRUNCATE position";
 
-  public Position create(int numOfShares, Quote quote) {
-    Position position = new Position();
-    double valuePaid = quote.getPrice() * numOfShares;
-    String ticker = quote.getTicker();
-    position.setTicker(ticker);
-    position.setNumOfShares(numOfShares);
-    position.setValuePaid(valuePaid);
-    return position;
-  }
-
   @Override
   public Position save(Position entity) throws IllegalArgumentException {
     Optional<Position> optionalPosition;
@@ -114,7 +104,7 @@ public class PositionDAO implements CrudDAO<Position, String> {
   @Override
   public void deleteById(String s) throws IllegalArgumentException {
     if (this.findById(s).isEmpty()) {
-      System.out.println("There is no record for the given symbol");
+      System.out.println("There is no record for the ticker provided");
     } else {
       try (PreparedStatement statement = this.connection.prepareStatement(DELETE)) {
         statement.setString(1, s);

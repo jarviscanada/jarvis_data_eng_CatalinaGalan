@@ -13,6 +13,11 @@ public class QuoteService {
   private QuoteDAO quoteDAO;
   private QuoteHttpHelper quoteHttpHelper;
 
+  public QuoteService(QuoteDAO quoteDAO, QuoteHttpHelper quoteHttpHelper) {
+    this.quoteDAO = quoteDAO;
+    this.quoteHttpHelper = quoteHttpHelper;
+  }
+
   /**
    * Fetches latest quote data from endpoint
    * @param ticker
@@ -20,18 +25,9 @@ public class QuoteService {
    */
   public Optional<Quote> fetchQuoteDataFromAPI(String ticker) {
 
-    quoteHttpHelper = new QuoteHttpHelper();
     Quote quote = quoteHttpHelper.fetchQuoteInfo(ticker);
-    DatabaseConnectionManager dcm = new DatabaseConnectionManager("localhost",
-        "stock_quote", "postgres", "password");
+    quoteDAO.save(quote);
 
-    try {
-      Connection connection = dcm.getConnection();
-      quoteDAO = new QuoteDAO(connection);
-      quoteDAO.save(quote);
-      return quoteDAO.findById(ticker);
-    } catch (SQLException e) {
-      throw new RuntimeException(e);
-    }
+    return quoteDAO.findById(ticker);
   }
 }
