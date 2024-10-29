@@ -2,7 +2,6 @@ package ca.jrvs.apps.stockquote.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
 import ca.jrvs.apps.stockquote.dao.QuoteDAO;
@@ -17,7 +16,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.internal.matchers.Any;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
@@ -37,6 +35,11 @@ class QuoteServiceUnitTest {
   @BeforeEach
   void init() {
     quoteService = new QuoteService(mockQuoteDAO, mockQuoteHttpHelper);
+  }
+
+  @Test
+  void Test_quoteServiceFetchDataFromApiValidId() {
+    validTicker = "MSFT";
     quote = new Quote();
     quote.setTicker("MSFT");
     quote.setOpen(332.38);
@@ -48,14 +51,9 @@ class QuoteServiceUnitTest {
     quote.setChange(-3.43);
     quote.setChangePercent("-1.0358%");
     quote.setTimestamp(Timestamp.from(Instant.now()));
-  }
-
-  @Test
-  void Test_quoteServiceFetchDataFromApiValidId() {
-    validTicker = "MSFT";
 
     when(mockQuoteHttpHelper.fetchQuoteInfo(validTicker)).thenReturn(quote);
-    when(mockQuoteDAO.save(any())).thenReturn(quote);
+    when(mockQuoteDAO.save(any(Quote.class))).thenReturn(quote);
     when(mockQuoteDAO.findById(validTicker)).thenReturn(Optional.of(quote));
 
     Optional<Quote> optQuote = quoteService.fetchQuoteDataFromAPI(validTicker);
@@ -67,7 +65,6 @@ class QuoteServiceUnitTest {
   @Test
   void Test_quoteServiceFetchDataFromApiInvalidId() {
     invalidTicker = " ";
-    quoteService = new QuoteService(mockQuoteDAO, mockQuoteHttpHelper);
     quote = new Quote();
     quote.setTicker(null);
     quote.setOpen(0.0);
@@ -81,7 +78,7 @@ class QuoteServiceUnitTest {
     quote.setTimestamp(null);
 
     when(mockQuoteHttpHelper.fetchQuoteInfo(invalidTicker)).thenReturn(quote);
-    when(mockQuoteDAO.save(any())).thenReturn(quote);
+    when(mockQuoteDAO.save(any(Quote.class))).thenReturn(quote);
 
     Optional<Quote> result = quoteService.fetchQuoteDataFromAPI(invalidTicker);
 

@@ -7,14 +7,11 @@ import ca.jrvs.apps.stockquote.dao.QuoteHttpHelper;
 import ca.jrvs.apps.stockquote.model.Quote;
 import ca.jrvs.apps.stockquote.util.DatabaseConnectionManager;
 import io.github.cdimascio.dotenv.Dotenv;
-import io.github.cdimascio.dotenv.DotenvEntry;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Optional;
-import java.util.Set;
 import okhttp3.OkHttpClient;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class QuoteServiceIntTest {
@@ -31,19 +28,19 @@ class QuoteServiceIntTest {
 
   @BeforeAll
   static void init() {
-    Dotenv dotenv = Dotenv.load();
-    String apiKey = dotenv.get("X_RAPID_API_KEY");
-    client = new OkHttpClient();
-    quoteHttpHelper = new QuoteHttpHelper(apiKey, client);
     dcm = new DatabaseConnectionManager("localhost",
         "stock_quote", "postgres", "password");
     try {
       connection = dcm.getConnection();
-      quoteDAO = new QuoteDAO(connection);
-      quoteService = new QuoteService(quoteDAO, quoteHttpHelper);
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }
+    Dotenv dotenv = Dotenv.load();
+    String apiKey = dotenv.get("X_RAPID_API_KEY");
+    client = new OkHttpClient();
+    quoteHttpHelper = new QuoteHttpHelper(apiKey, client);
+    quoteDAO = new QuoteDAO(connection);
+    quoteService = new QuoteService(quoteDAO, quoteHttpHelper);
   }
 
   @Test
