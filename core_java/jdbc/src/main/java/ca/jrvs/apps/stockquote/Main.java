@@ -1,41 +1,58 @@
 package ca.jrvs.apps.stockquote;
 
+import ca.jrvs.apps.stockquote.controller.StockQuoteController;
+import ca.jrvs.apps.stockquote.dao.PositionDAO;
 import ca.jrvs.apps.stockquote.dao.QuoteDAO;
 import ca.jrvs.apps.stockquote.dao.QuoteHttpHelper;
-import ca.jrvs.apps.stockquote.model.Quote;
+import ca.jrvs.apps.stockquote.service.PositionService;
+import ca.jrvs.apps.stockquote.service.QuoteService;
 import ca.jrvs.apps.stockquote.util.DatabaseConnectionManager;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import okhttp3.OkHttpClient;
 
 public class Main {
 
-//  public static void main(String[] args) {
-//    QuoteHttpHelper quoteHttpHelper = new QuoteHttpHelper();
-//
-//    DatabaseConnectionManager dcm = new DatabaseConnectionManager("localhost",
-//        "stock_quote", "postgres", "password");
-//    try {
-//      Connection connection = dcm.getConnection();
-//      QuoteDAO quoteDAO = new QuoteDAO(connection);
-//      Quote quote = quoteHttpHelper.fetchQuoteInfo("MSFT");
-//      Quote quote2 = quoteHttpHelper.fetchQuoteInfo("MSF");
-//
-//      Quote update = quoteDAO.save(quote);
-//      Quote update2 = quoteDAO.save(quote2);
-//      System.out.println(update);
-//      System.out.println(update2);
-//      Quote found = quoteDAO.findById("MSF").get();
-//      System.out.println(found);
-//        Iterable<Quote> all = quoteDAO.findAll();
-//        for (Quote q : all) {
-//          System.out.println(q);
-//        }
-//
-//
-//    } catch (SQLException e) {
-//      throw new RuntimeException(e);
-//    }
-//  }
+  public static void main(String[] args) {
+
+    Map<String, String> properties = new HashMap<>();
+    BufferedReader bufferedReader;
+
+    try {
+      bufferedReader = new BufferedReader(
+          new FileReader("src/main/resources/properties.txt"));
+          String line;
+          while ((line = bufferedReader.readLine()) != null) {
+            String[] tokens = line.split(":");
+            properties.put(tokens[0], tokens[1]);
+          }
+    } catch (FileNotFoundException e) {
+      throw new IllegalArgumentException(e);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+
+    DatabaseConnectionManager dcm = new DatabaseConnectionManager(properties.get("server"),
+        properties.get("database"), properties.get("username"), properties.get("password"));
+    try {
+      Connection connection = dcm.getConnection();
+      QuoteDAO quoteDAO = new QuoteDAO(connection);
+      PositionDAO positionDAO = new PositionDAO(connection);
+      OkHttpClient client = new OkHttpClient();
+      QuoteHttpHelper quoteHttpHelper = new QuoteHttpHelper(properties.get("api-key"), client);
+      QuoteService quoteService = new QuoteService(quoteDAO, quoteHttpHelper);
+      PositionService positionService = new PositionService(positionDAO, quoteService);
+      StockQuoteController controller = new StockQuoteController(quoteService, positionService);
+      controller.initClient();
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+
+  }
 }
