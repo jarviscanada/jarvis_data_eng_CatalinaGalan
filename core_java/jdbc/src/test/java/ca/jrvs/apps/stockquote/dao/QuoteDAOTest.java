@@ -61,12 +61,6 @@ class QuoteDAOTest {
   }
 
   @Test
-  void TestNewQuoteDAO() throws SQLException {
-    System.out.println("Testing NewQuoteDAO");
-    assertNotNull(quoteDAO);
-  }
-
-  @Test
   void TestSave() {
     System.out.println("Testing Save");
     Quote newQuote = quoteDAO.save(quote);

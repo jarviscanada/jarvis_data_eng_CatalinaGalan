@@ -32,7 +32,6 @@ class QuoteServiceUnitTest {
   private Quote quote;
   private String validTicker;
   private String invalidTicker;
-  private Optional<Quote> optQuote;
   private QuoteService quoteService;
 
   @BeforeEach
@@ -57,17 +56,35 @@ class QuoteServiceUnitTest {
 
     when(mockQuoteHttpHelper.fetchQuoteInfo(validTicker)).thenReturn(quote);
     when(mockQuoteDAO.save(any())).thenReturn(quote);
+    when(mockQuoteDAO.findById(validTicker)).thenReturn(Optional.of(quote));
 
-    optQuote = quoteService.fetchQuoteDataFromAPI(validTicker);
+    Optional<Quote> optQuote = quoteService.fetchQuoteDataFromAPI(validTicker);
 
     assertTrue(optQuote.isPresent());
     assertEquals(validTicker, optQuote.get().getTicker());
   }
 
-//  @Test
-//  void Test_quoteServiceFetchDataFromApiInvalidId() {
-//    invalidTicker = " ";
-//
-//    quote =
-//  }
+  @Test
+  void Test_quoteServiceFetchDataFromApiInvalidId() {
+    invalidTicker = " ";
+    quoteService = new QuoteService(mockQuoteDAO, mockQuoteHttpHelper);
+    quote = new Quote();
+    quote.setTicker(null);
+    quote.setOpen(0.0);
+    quote.setHigh(0.0);
+    quote.setPrice(0.0);
+    quote.setVolume(0);
+    quote.setLatestTradingDay(null);
+    quote.setPreviousClose(0.0);
+    quote.setChange(0.0);
+    quote.setChangePercent(null);
+    quote.setTimestamp(null);
+
+    when(mockQuoteHttpHelper.fetchQuoteInfo(invalidTicker)).thenReturn(quote);
+    when(mockQuoteDAO.save(any())).thenReturn(quote);
+
+    Optional<Quote> result = quoteService.fetchQuoteDataFromAPI(invalidTicker);
+
+    assertTrue(result.isEmpty());
+  }
 }

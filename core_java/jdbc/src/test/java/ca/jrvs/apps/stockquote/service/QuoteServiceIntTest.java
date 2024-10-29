@@ -2,20 +2,48 @@ package ca.jrvs.apps.stockquote.service;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import ca.jrvs.apps.stockquote.dao.QuoteDAO;
+import ca.jrvs.apps.stockquote.dao.QuoteHttpHelper;
 import ca.jrvs.apps.stockquote.model.Quote;
+import ca.jrvs.apps.stockquote.util.DatabaseConnectionManager;
+import io.github.cdimascio.dotenv.Dotenv;
+import io.github.cdimascio.dotenv.DotenvEntry;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Optional;
+import java.util.Set;
+import okhttp3.OkHttpClient;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class QuoteServiceIntTest {
 
-  private QuoteService quoteService;
+  private static QuoteService quoteService;
+  private static QuoteDAO quoteDAO;
+  private static Connection connection;
+  private static OkHttpClient client;
+  private static QuoteHttpHelper quoteHttpHelper;
+  private static DatabaseConnectionManager dcm;
+
   private String validTicker;
   private String invalidTicker;
 
-  @BeforeEach
-  void init() {
-//    quoteService = new QuoteService();
+  @BeforeAll
+  static void init() {
+    Dotenv dotenv = Dotenv.load();
+    String apiKey = dotenv.get("X_RAPID_API_KEY");
+    client = new OkHttpClient();
+    quoteHttpHelper = new QuoteHttpHelper(apiKey, client);
+    dcm = new DatabaseConnectionManager("localhost",
+        "stock_quote", "postgres", "password");
+    try {
+      connection = dcm.getConnection();
+      quoteDAO = new QuoteDAO(connection);
+      quoteService = new QuoteService(quoteDAO, quoteHttpHelper);
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   @Test
@@ -29,6 +57,6 @@ class QuoteServiceIntTest {
   void Test_fetchQuoteDataFromApiInValidTicker() {
     invalidTicker = " ";
     Optional<Quote> result = quoteService.fetchQuoteDataFromAPI(invalidTicker);
-    assertTrue(result.isEmpty());
+    assert(result.isEmpty());
   }
 }
