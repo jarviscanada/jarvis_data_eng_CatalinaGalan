@@ -4,6 +4,7 @@ import ca.jrvs.apps.stockquote.dao.PositionDAO;
 import ca.jrvs.apps.stockquote.model.Position;
 import ca.jrvs.apps.stockquote.model.Quote;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Optional;
 
 public class PositionService {
@@ -53,5 +54,14 @@ public class PositionService {
    */
   public void sell(String ticker) {
     positionDAO.deleteById(ticker);
+  }
+
+  public Iterable<Position> listAll() {
+    Iterable<Position> allPositions = positionDAO.findAll();
+    if (!allPositions.iterator().hasNext()) {
+      System.out.println("You don't have any stocks in your portfolio at the moment");
+      return null;
+    }
+    return allPositions;
   }
 }

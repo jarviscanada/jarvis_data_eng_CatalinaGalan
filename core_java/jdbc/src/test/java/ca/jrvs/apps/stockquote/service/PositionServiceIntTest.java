@@ -1,6 +1,7 @@
 package ca.jrvs.apps.stockquote.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -59,7 +60,7 @@ class PositionServiceIntTest {
   }
 
   @Test
-  void buyValidInput() throws SQLException {
+  void Test_buyValidInput() throws SQLException {
     validTicker = "MSFT";
     validNumOfShares = 1;
     validPrice = quote.get().getPrice();
@@ -72,7 +73,7 @@ class PositionServiceIntTest {
   }
 
   @Test
-  void buyInvalidTicker() throws SQLException {
+  void Test_buyInvalidTicker() throws SQLException {
     invalidTicker = " ";
     validNumOfShares = 1;
     validPrice = 327.73;
@@ -84,7 +85,7 @@ class PositionServiceIntTest {
   }
 
   @Test
-  void buyInvalidNumOfShares() throws SQLException {
+  void Test_buyInvalidNumOfShares() throws SQLException {
     validTicker = "MSFT";
     invalidNumOfShares = 0;
     validPrice = quote.get().getPrice();
@@ -96,7 +97,7 @@ class PositionServiceIntTest {
   }
 
   @Test
-  void buyInvalidPrice() throws SQLException {
+  void Test_buyInvalidPrice() throws SQLException {
     validTicker = "MSFT";
     validNumOfShares = 1;
     invalidPrice = 0.0;
@@ -108,7 +109,7 @@ class PositionServiceIntTest {
   }
 
   @Test
-  void sellInvalidTicker() {
+  void Test_sellInvalidTicker() {
     invalidTicker = " ";
     positionService.sell(invalidTicker);
 
@@ -116,10 +117,31 @@ class PositionServiceIntTest {
   }
 
   @Test
-  void sellvalidTicker() {
+  void Test_sellValidTicker() {
     validTicker = "MSFT";
     positionService.sell(validTicker);
 
     assertTrue(positionDAO.findById(invalidTicker).isEmpty());
+  }
+
+  @Test
+  void Test_listAllEmpty() {
+    positionDAO.deleteAll();
+    Iterable<Position> result = positionService.listAll();
+
+    assertNull(result);
+  }
+
+  @Test
+  void Test_listAll() {
+    Position position = new Position();
+    position.setTicker("MSFT");
+    position.setNumOfShares(1);
+    position.setValuePaid(300.00);
+    positionDAO.save(position);
+
+    Iterable<Position> result = positionService.listAll();
+
+    assertTrue(result.iterator().hasNext());
   }
 }

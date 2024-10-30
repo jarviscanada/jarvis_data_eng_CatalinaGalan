@@ -31,11 +31,6 @@ public class PositionDAO implements CrudDAO<Position, String> {
   @Override
   public Position save(Position entity) throws IllegalArgumentException {
     Optional<Position> optionalPosition;
-//    QuoteDAO quoteDAO = new QuoteDAO(connection);
-//    if (quoteDAO.findById(entity.getTicker()).isEmpty()) {
-//      System.out.println("The quote for this symbol has not been saved");
-//      return null;
-//    }
     try(PreparedStatement statement = this.connection.prepareStatement(INSERT)) {
       statement.setString(1, entity.getTicker());
       statement.setInt(2, entity.getNumOfShares());

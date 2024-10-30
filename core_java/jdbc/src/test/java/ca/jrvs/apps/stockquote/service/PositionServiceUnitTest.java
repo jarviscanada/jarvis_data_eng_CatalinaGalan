@@ -1,7 +1,9 @@
 package ca.jrvs.apps.stockquote.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -13,9 +15,12 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -63,8 +68,8 @@ class PositionServiceUnitTest {
     invalidTicker = " ";
 
     when(mockQuoteService.fetchQuoteDataFromAPI(invalidTicker)).thenReturn(Optional.empty());
-
     Position result = positionService.buy(invalidTicker, validNumOfShares, validPrice);
+
     assertNull(result);
   }
 
@@ -83,14 +88,13 @@ class PositionServiceUnitTest {
     invalidPrice = 325.76;
 
     when(mockQuoteService.fetchQuoteDataFromAPI(validTicker)).thenReturn(Optional.of(quote));
-
     Position result = positionService.buy(validTicker, validNumOfShares, invalidPrice);
+
     assertNull(result);
   }
 
   @Test
   void Test_positionServiceBuyValidInputs() throws SQLException {
-
     Position position = new Position();
     position.setTicker(validTicker);
     position.setNumOfShares(validNumOfShares);
@@ -104,5 +108,29 @@ class PositionServiceUnitTest {
     assertEquals(validTicker, result.getTicker());
     assertEquals(validNumOfShares, result.getNumOfShares());
     assertEquals(validPrice * validNumOfShares, result.getValuePaid());
+  }
+
+  @Test
+  void Test_listAllEmpty() {
+    Iterable<Position> allPositions = new ArrayList<>();
+    when(mockPositionDAO.findAll()).thenReturn(allPositions);
+    Iterable<Position> result = positionService.listAll();
+
+    assertNull(result);
+  }
+
+  @Test
+  void Test_listAll() {
+    List<Position> allPositions = new ArrayList<>();
+    Position position = new Position();
+    position.setTicker(validTicker);
+    position.setNumOfShares(validNumOfShares);
+    position.setValuePaid(validPrice * validNumOfShares);
+    allPositions.add(position);
+
+    when(mockPositionDAO.findAll()).thenReturn(allPositions);
+    Iterable<Position> result = positionService.listAll();
+
+    assertTrue(result.iterator().hasNext());
   }
 }
