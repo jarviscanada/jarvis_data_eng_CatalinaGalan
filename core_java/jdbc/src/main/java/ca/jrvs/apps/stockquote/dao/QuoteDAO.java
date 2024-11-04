@@ -131,12 +131,11 @@ public class QuoteDAO implements CrudDAO<Quote, String>{
   @Override
   public void deleteById(String s) throws IllegalArgumentException {
     if (this.findById(s).isEmpty()) {
-      System.out.println("There is no record for the given symbol");
+      throw new IllegalArgumentException("There is no quote record for the given symbol");
     } else {
       try (PreparedStatement statement = this.connection.prepareStatement(DELETE)) {
         statement.setString(1, s);
         statement.execute();
-        System.out.println("Quote " + s + " has been deleted");
       } catch (SQLException e) {
         throw new IllegalArgumentException(e);
       }

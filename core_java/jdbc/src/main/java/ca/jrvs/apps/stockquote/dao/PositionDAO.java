@@ -92,12 +92,13 @@ public class PositionDAO implements CrudDAO<Position, String> {
   }
 
   @Override
-  public void deleteById(String s) throws IllegalArgumentException {
-    if (this.findById(s).isEmpty()) {
-      throw new IllegalArgumentException("\n There is no record for the ticker provided");
+  public void deleteById(String ticker) throws IllegalArgumentException {
+    if (this.findById(ticker).isEmpty()) {
+      throw new IllegalArgumentException("\n Invalid input. "
+          + "There is no record for the ticker provided.");
     } else {
       try (PreparedStatement statement = this.connection.prepareStatement(DELETE)) {
-        statement.setString(1, s);
+        statement.setString(1, ticker);
         statement.execute();
       } catch (SQLException e) {
         throw new IllegalArgumentException(e);

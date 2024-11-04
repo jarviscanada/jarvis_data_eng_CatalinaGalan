@@ -1,6 +1,5 @@
 package ca.jrvs.apps.stockquote.controller;
 
-import ca.jrvs.apps.stockquote.dao.PositionDAO;
 import ca.jrvs.apps.stockquote.model.Position;
 import ca.jrvs.apps.stockquote.model.Quote;
 import ca.jrvs.apps.stockquote.service.PositionService;
@@ -8,8 +7,6 @@ import ca.jrvs.apps.stockquote.service.QuoteService;
 import ca.jrvs.apps.stockquote.util.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -31,6 +28,9 @@ public class StockQuoteController {
     displayChoices();
   }
 
+  /**
+   * This menu will display possible actions for the user and call necessary methods.
+   */
   public void displayChoices() {
     Scanner scanner = new Scanner(System.in);
     System.out.println("\n What would you like to do? \n");
@@ -52,6 +52,10 @@ public class StockQuoteController {
     }
   }
 
+  /**
+   * Display a list of all current stocks in user's database, along with the
+   * current price of set stock.
+   */
   public void listAllPositions() {
     Iterable<Position> allPositions = positionService.listAll();
     String ticker;
@@ -78,7 +82,6 @@ public class StockQuoteController {
               "\n - Current price per share: $" + newPrice
           );
       }
-
       displayChoices();
     } catch (NullPointerException e) {
       System.out.println("\nPlease choose another option: \n");
@@ -86,6 +89,10 @@ public class StockQuoteController {
     }
   }
 
+  /**
+   * Take user input to fetch stock info from API and simulate the "buy" action by saving a
+   * new position object in the user's database.
+   */
   public void buyStock() {
     Scanner scanner = new Scanner(System.in);
     System.out.println("\nPlease provide the symbol for the stock you would like to buy:");
@@ -107,16 +114,15 @@ public class StockQuoteController {
           positionService.buy(ticker, numOfShares, price);
           System.out.println("\n Purchase successful");
       }
-    } catch (JsonProcessingException e) {
-      System.out.println("\n\n --- ERROR ---");
-    } catch (IllegalArgumentException e) {
+    } catch (IllegalArgumentException | JsonProcessingException | SQLException e) {
       System.out.println(e.getMessage());
-    } catch (SQLException e) {
-      System.out.println("SQL ERROR");
     }
     displayChoices();
   }
 
+  /**
+   * Find a specific position in the user's database and simulate "sell" action by deleting it.
+   */
   public void sellStock() {
     Scanner scanner = new Scanner(System.in);
     System.out.println("\n Please enter the symbol of the stock you would like to sell:");

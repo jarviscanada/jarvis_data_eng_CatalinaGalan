@@ -26,12 +26,12 @@ public class QuoteService {
    * @return Latest quote information or empty optional if ticker symbol not found
    */
   public Optional<Quote> fetchQuoteDataFromAPI(String ticker) {
-    try {
+//    try {
       Quote quote = quoteHttpHelper.fetchQuoteInfo(ticker);
       return Optional.of(quote);
-    } catch (IllegalArgumentException e) {
-      throw new IllegalArgumentException("*** Invalid input ***");
-    }
+//    } catch (IllegalArgumentException e) {
+//      throw new IllegalArgumentException(e);
+//    }
   }
 
   public QuoteDAO getQuoteDAO() {

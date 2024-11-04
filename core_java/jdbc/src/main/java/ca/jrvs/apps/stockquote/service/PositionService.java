@@ -49,6 +49,7 @@ public class PositionService {
    */
   public void sell(String ticker) {
     positionDAO.deleteById(ticker);
+    quoteService.getQuoteDAO().deleteById(ticker);
   }
 
   public Iterable<Position> listAll() {

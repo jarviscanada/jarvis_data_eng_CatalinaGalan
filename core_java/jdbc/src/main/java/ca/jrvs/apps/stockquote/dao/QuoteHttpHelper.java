@@ -34,6 +34,7 @@ public class QuoteHttpHelper {
         .header("X-RapidAPI-Key", apiKey)
         .header("X-RapidAPI-Host", "alpha-vantage.p.rapidapi.com")
         .build();
+
     try (Response response = client.newCall(request).execute()) {
       String body = response.body().string();
       Quote quote = JsonParser.toObjectFromJson(body, Quote.class);
@@ -42,7 +43,7 @@ public class QuoteHttpHelper {
       }
       return quote;
     } catch (IOException e) {
-      throw new IllegalArgumentException("\n *** Invalid symbol ***");
+      throw new IllegalArgumentException("\n Invalid input.");
     }
   }
 }
