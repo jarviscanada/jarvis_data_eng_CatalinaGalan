@@ -42,7 +42,7 @@ public class QuoteHttpHelper {
       }
       return quote;
     } catch (IOException e) {
-      throw new RuntimeException(e);
+      throw new IllegalArgumentException("\n *** Invalid symbol ***");
     }
   }
 }

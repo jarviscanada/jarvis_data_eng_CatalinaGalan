@@ -36,14 +36,12 @@ public class PositionDAO implements CrudDAO<Position, String> {
       statement.setInt(2, entity.getNumOfShares());
       statement.setDouble(3, entity.getValuePaid());
       statement.execute();
-      System.out.println("Position SAVED");
     } catch (SQLException e) {
       try (PreparedStatement statement = this.connection.prepareStatement(UPDATE)) {
         statement.setInt(1, entity.getNumOfShares());
         statement.setDouble(2, entity.getValuePaid());
         statement.setString(3, entity.getTicker());
         statement.execute();
-        System.out.println("Position UPDATED");
       } catch (SQLException ex) {
         throw new RuntimeException(ex);
       }
@@ -81,12 +79,9 @@ public class PositionDAO implements CrudDAO<Position, String> {
       if (resultSet.isBeforeFirst()) {
         while (resultSet.next()){
           Position position = new Position();
-          ResultSet resultSet1 = statement.getResultSet();
-          while (resultSet1.next()) {
-            position.setTicker(resultSet1.getString("symbol"));
-            position.setNumOfShares(resultSet1.getInt("num_of_shares"));
-            position.setValuePaid(resultSet1.getDouble("value_paid"));
-          }
+          position.setTicker(resultSet.getString("symbol"));
+          position.setNumOfShares(resultSet.getInt("num_of_shares"));
+          position.setValuePaid(resultSet.getDouble("value_paid"));
           allPositions.add(position);
         }
       }
@@ -99,14 +94,13 @@ public class PositionDAO implements CrudDAO<Position, String> {
   @Override
   public void deleteById(String s) throws IllegalArgumentException {
     if (this.findById(s).isEmpty()) {
-      System.out.println("There is no record for the ticker provided");
+      throw new IllegalArgumentException("\n There is no record for the ticker provided");
     } else {
       try (PreparedStatement statement = this.connection.prepareStatement(DELETE)) {
         statement.setString(1, s);
         statement.execute();
-        System.out.println("Position with symbol: " + s + " has been deleted");
       } catch (SQLException e) {
-        throw new RuntimeException(e);
+        throw new IllegalArgumentException(e);
       }
     }
   }

@@ -30,18 +30,13 @@ public class PositionService {
     Optional<Quote> quote = quoteService.fetchQuoteDataFromAPI(ticker);
 
     if (quote.isEmpty()) {
-      System.out.println("The ticker provided is not valid");
+      System.out.println("\n The ticker provided is not valid");
       return null;
     }
     if (quote.get().getVolume() < numberOfShares || numberOfShares < 1) {
-      System.out.println("Invalid number of shares");
+      System.out.println("\n Invalid number of shares");
       return null;
     }
-    if (quote.get().getPrice() != price) {
-      System.out.println("The price entered is incorrect");
-      return null;
-    }
-
     position.setTicker(ticker);
     position.setNumOfShares(numberOfShares);
     position.setValuePaid(price * numberOfShares);
@@ -59,7 +54,7 @@ public class PositionService {
   public Iterable<Position> listAll() {
     Iterable<Position> allPositions = positionDAO.findAll();
     if (!allPositions.iterator().hasNext()) {
-      System.out.println("You don't have any stocks in your portfolio at the moment");
+      System.out.println("\n You don't have any stocks in your portfolio at the moment");
       return null;
     }
     return allPositions;

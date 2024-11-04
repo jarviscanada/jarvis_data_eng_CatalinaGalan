@@ -7,6 +7,7 @@ import ca.jrvs.apps.stockquote.dao.QuoteHttpHelper;
 import ca.jrvs.apps.stockquote.service.PositionService;
 import ca.jrvs.apps.stockquote.service.QuoteService;
 import ca.jrvs.apps.stockquote.util.DatabaseConnectionManager;
+import io.github.cdimascio.dotenv.Dotenv;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -45,7 +46,8 @@ public class Main {
       QuoteDAO quoteDAO = new QuoteDAO(connection);
       PositionDAO positionDAO = new PositionDAO(connection);
       OkHttpClient client = new OkHttpClient();
-      QuoteHttpHelper quoteHttpHelper = new QuoteHttpHelper(properties.get("api-key"), client);
+      Dotenv dotenv = Dotenv.load();
+      QuoteHttpHelper quoteHttpHelper = new QuoteHttpHelper(dotenv.get("X_RAPID_API_KEY"), client);
       QuoteService quoteService = new QuoteService(quoteDAO, quoteHttpHelper);
       PositionService positionService = new PositionService(positionDAO, quoteService);
       StockQuoteController controller = new StockQuoteController(quoteService, positionService);

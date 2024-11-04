@@ -48,7 +48,6 @@ public class QuoteDAO implements CrudDAO<Quote, String>{
         statement.setString(10, entity.getChangePercent());
         statement.setTimestamp(11, entity.getTimestamp());
         statement.execute();
-        System.out.println("quote SAVED");
       } catch (SQLException e) {
         try (PreparedStatement statement = this.connection.prepareStatement(UPDATE)) {
           statement.setDouble(1, entity.getOpen());
@@ -63,7 +62,7 @@ public class QuoteDAO implements CrudDAO<Quote, String>{
           statement.setTimestamp(10, entity.getTimestamp());
           statement.setString(11, entity.getTicker());
           statement.execute();
-          System.out.println("quote UPDATED");
+          System.out.println("UPDATED QUOTE");
         } catch (SQLException d) {
           throw new IllegalArgumentException(e);
         }
