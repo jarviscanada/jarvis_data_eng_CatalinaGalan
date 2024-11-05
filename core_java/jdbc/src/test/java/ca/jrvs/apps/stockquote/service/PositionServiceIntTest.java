@@ -1,9 +1,6 @@
 package ca.jrvs.apps.stockquote.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import ca.jrvs.apps.stockquote.dao.PositionDAO;
 import ca.jrvs.apps.stockquote.dao.QuoteDAO;
@@ -17,6 +14,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 import okhttp3.OkHttpClient;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class PositionServiceIntTest {
@@ -38,6 +36,7 @@ class PositionServiceIntTest {
   private int invalidNumOfShares;
   private double validPrice;
   private double invalidPrice;
+  private Quote quote1;
 
   @BeforeAll
   static void init() {
@@ -59,6 +58,11 @@ class PositionServiceIntTest {
     quote = quoteService.fetchQuoteDataFromAPI("MSFT");
   }
 
+  @BeforeEach
+  void createQuote() {
+    quote1 = quoteDAO.save(quote.get());
+  }
+
   @Test
   void Test_buyValidInput() throws SQLException {
     validTicker = "MSFT";
@@ -74,14 +78,12 @@ class PositionServiceIntTest {
 
   @Test
   void Test_buyInvalidTicker() throws SQLException {
-    invalidTicker = " ";
+    invalidTicker = "-";
     validNumOfShares = 1;
     validPrice = 327.73;
 
-    result = new Position();
-    result = positionService.buy(invalidTicker, validNumOfShares, validPrice);
-
-    assertNull(result);
+    assertThrows(IllegalArgumentException.class,
+        () -> positionService.buy(validTicker, invalidNumOfShares, validPrice));
   }
 
   @Test
@@ -90,30 +92,16 @@ class PositionServiceIntTest {
     invalidNumOfShares = 0;
     validPrice = quote.get().getPrice();
 
-    result = new Position();
-    result = positionService.buy(validTicker, invalidNumOfShares, validPrice);
-
-    assertNull(result);
+    assertThrows(IllegalArgumentException.class,
+        () -> positionService.buy(validTicker, invalidNumOfShares, validPrice));
   }
 
-  @Test
-  void Test_buyInvalidPrice() throws SQLException {
-    validTicker = "MSFT";
-    validNumOfShares = 1;
-    invalidPrice = 0.0;
-
-    result = new Position();
-    result = positionService.buy(validTicker, validNumOfShares, invalidPrice);
-
-    assertNull(result);
-  }
 
   @Test
   void Test_sellInvalidTicker() {
     invalidTicker = " ";
-    positionService.sell(invalidTicker);
-
-    assertTrue(positionDAO.findById(invalidTicker).isEmpty());
+    assertThrows(IllegalArgumentException.class, () -> positionService.sell(invalidTicker),
+        ("There is no record for the ticker provided."));
   }
 
   @Test

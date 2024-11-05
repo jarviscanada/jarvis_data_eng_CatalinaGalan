@@ -33,7 +33,7 @@ class PositionDAOTest {
   public static void init() throws IOException, SQLException {
     String jsonString = "{\n"
         + "  \"Global Quote\": {\n"
-        + "    \"01. symbol\": \"MSFT\",\n"
+        + "    \"01. symbol\": \"MT\",\n"
         + "    \"02. open\": \"332.3800\",\n"
         + "    \"03. high\": \"333.8300\",\n"
         + "    \"04. low\": \"326.3600\",\n"
@@ -51,16 +51,24 @@ class PositionDAOTest {
     connection = dcm.getConnection();
     quote = JsonParser.toObjectFromJson(jsonString, Quote.class);
     quote.setTimestamp(Timestamp.from(Instant.now()));
+    positionDAO = new PositionDAO(connection);
     quoteDAO = new QuoteDAO(connection);
     Quote quote1 = quoteDAO.save(quote);
   }
 
   @BeforeEach
-  void setUp() throws SQLException {
-    positionDAO = new PositionDAO(connection);
-//    position = positionDAO.create(5695, quote);
-//    id = position.getTicker();
-//    position1 = positionDAO.save(position);
+  void setUp() throws IOException {
+    String jsonPosition = "{\n"
+        + "  \"Position\": {\n"
+        + "    \"symbol\": \"MT\",\n"
+        + "    \"num_of_shares\": \"10\",\n"
+        + "    \"value_paid\": \"3277.30\"\n"
+        + "  }\n"
+        + "}";
+
+    position = JsonParser.toObjectFromJson(jsonPosition, Position.class);
+    id = position.getTicker();
+    position1 = positionDAO.save(position);
   }
 
   @AfterAll
@@ -105,8 +113,9 @@ class PositionDAOTest {
   @Test
   void TestDeleteByIdNotValid() {
     System.out.println("Testing position DeleteByNotValidId");
-    positionDAO.deleteById("-");
-    assertEquals(Optional.empty(), positionDAO.findById("-"));
+    assertThrows(IllegalArgumentException.class, () -> positionDAO.deleteById("-"), ("\n Invalid input. "
+        + "There is no record for the ticker provided."));
+
   }
 
   @Test

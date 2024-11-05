@@ -39,7 +39,7 @@ public class PositionService {
       System.out.print("\n Invalid number of shares. ");
       throw new IllegalArgumentException();
     }
-    position.setTicker(ticker);
+    position.setTicker(ticker.toUpperCase());
     position.setNumOfShares(numberOfShares);
     position.setValuePaid(price * numberOfShares);
     return positionDAO.save(position);
@@ -57,7 +57,7 @@ public class PositionService {
   public Iterable<Position> listAll() {
     Iterable<Position> allPositions = positionDAO.findAll();
     if (!allPositions.iterator().hasNext()) {
-      System.out.println("\n You don't have any stocks in your portfolio at the moment");
+      System.out.println("\n You don't have any stocks in your portfolio at the moment.");
       return null;
     }
     return allPositions;

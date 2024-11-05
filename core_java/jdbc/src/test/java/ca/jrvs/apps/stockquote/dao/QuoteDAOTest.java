@@ -89,8 +89,8 @@ class QuoteDAOTest {
   @Test
   void TestDeleteByNotValidId() {
     System.out.println("Testing DeleteByNotValidId");
-    quoteDAO.deleteById("-");
-    assertEquals(Optional.empty(), quoteDAO.findById("-"));
+    assertThrows(IllegalArgumentException.class, () -> quoteDAO.deleteById("_"),
+        ("There is no quote record for the given symbol"));
   }
 
   @Test

@@ -1,5 +1,6 @@
 package ca.jrvs.apps.stockquote.service;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import ca.jrvs.apps.stockquote.dao.QuoteDAO;
@@ -52,8 +53,7 @@ class QuoteServiceIntTest {
 
   @Test
   void Test_fetchQuoteDataFromApiInValidTicker() {
-    invalidTicker = " ";
-    Optional<Quote> result = quoteService.fetchQuoteDataFromAPI(invalidTicker);
-    assert(result.isEmpty());
+    invalidTicker = "-";
+    assertThrows(IllegalArgumentException.class, () -> quoteService.fetchQuoteDataFromAPI(invalidTicker));
   }
 }

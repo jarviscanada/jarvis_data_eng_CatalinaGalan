@@ -1,9 +1,6 @@
 package ca.jrvs.apps.stockquote.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -65,12 +62,11 @@ class PositionServiceUnitTest {
 
   @Test
   void Test_positionServiceBuyInvalidTicker() throws SQLException {
-    invalidTicker = " ";
+    invalidTicker = "-";
 
     when(mockQuoteService.fetchQuoteDataFromAPI(invalidTicker)).thenReturn(Optional.empty());
-    Position result = positionService.buy(invalidTicker, validNumOfShares, validPrice);
-
-    assertNull(result);
+    assertThrows(IllegalArgumentException.class, () ->
+        positionService.buy(invalidTicker, validNumOfShares, validPrice));
   }
 
   @Test
@@ -79,8 +75,8 @@ class PositionServiceUnitTest {
 
     when(mockQuoteService.fetchQuoteDataFromAPI(validTicker)).thenReturn(Optional.of(quote));
 
-    Position result = positionService.buy(validTicker, invalidNumOfShares, validPrice);
-    assertNull(result);
+    assertThrows(IllegalArgumentException.class, () ->
+        positionService.buy(validTicker, invalidNumOfShares, validPrice));
   }
 
   @Test
