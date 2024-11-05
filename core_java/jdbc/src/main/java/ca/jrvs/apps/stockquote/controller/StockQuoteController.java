@@ -7,6 +7,7 @@ import ca.jrvs.apps.stockquote.service.QuoteService;
 import ca.jrvs.apps.stockquote.util.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.sql.SQLException;
+import java.util.InputMismatchException;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -83,8 +84,8 @@ public class StockQuoteController {
           );
       }
       displayChoices();
-    } catch (NullPointerException e) {
-      System.out.println("\nPlease choose another option: \n");
+    } catch (NullPointerException | IllegalArgumentException e) {
+      System.out.println("\nPlease choose another option.");
       displayChoices();
     }
   }
@@ -106,16 +107,15 @@ public class StockQuoteController {
       System.out.print("> ");
       int numOfShares = scanner.nextInt();
       double price = quote.get().getPrice();
-      System.out.println("Confirm purchase? (y/n)");
-      System.out.print("> ");
-      String confirm = scanner.next();
-      if (confirm.equals("y") || confirm.equals("yes")) {
-          quoteService.getQuoteDAO().save(quote.get());
-          positionService.buy(ticker, numOfShares, price);
-          System.out.println("\n Purchase successful");
-      }
-    } catch (IllegalArgumentException | JsonProcessingException | SQLException e) {
-      System.out.println(e.getMessage());
+      Position position = positionService.buy(ticker, numOfShares, price);
+      String p = JsonParser.toJson(position, true, true);
+      quoteService.getQuoteDAO().save(quote.get());
+      System.out.println("\n Purchase successful");
+      System.out.println(p);
+    } catch (IllegalArgumentException | JsonProcessingException | SQLException |
+             InputMismatchException e) {
+      System.out.println("\n Invalid Input.");
+//      System.out.println(e.getMessage());
     }
     displayChoices();
   }

@@ -62,7 +62,6 @@ public class QuoteDAO implements CrudDAO<Quote, String>{
           statement.setTimestamp(10, entity.getTimestamp());
           statement.setString(11, entity.getTicker());
           statement.execute();
-          System.out.println("UPDATED QUOTE");
         } catch (SQLException d) {
           throw new IllegalArgumentException(e);
         }

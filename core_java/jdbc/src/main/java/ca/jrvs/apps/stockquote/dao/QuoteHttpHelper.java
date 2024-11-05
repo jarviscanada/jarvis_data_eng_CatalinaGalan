@@ -38,12 +38,14 @@ public class QuoteHttpHelper {
     try (Response response = client.newCall(request).execute()) {
       String body = response.body().string();
       Quote quote = JsonParser.toObjectFromJson(body, Quote.class);
-      if (quote != null) {
+      if (quote.getTicker() != null) {
         quote.setTimestamp(Timestamp.from(Instant.now()));
+        return quote;
+      } else {
+        return null;
       }
-      return quote;
     } catch (IOException e) {
-      throw new IllegalArgumentException("\n Invalid input.");
+      throw new IllegalArgumentException(e);
     }
   }
 }
