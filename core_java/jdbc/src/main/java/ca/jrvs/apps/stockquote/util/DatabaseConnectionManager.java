@@ -4,8 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DatabaseConnectionManager {
+
+  final Logger logger = LoggerFactory.getLogger(DatabaseConnectionManager.class);
 
   private String url;
   private Properties properties;
@@ -18,6 +22,8 @@ public class DatabaseConnectionManager {
   }
 
   public Connection getConnection() throws SQLException {
-    return DriverManager.getConnection(this.url, this.properties);
+    Connection connection = DriverManager.getConnection(this.url, this.properties);
+    logger.info("DatabaseConnectionManager: Connection created successfully");
+    return connection;
   }
 }

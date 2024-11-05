@@ -17,10 +17,14 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import okhttp3.OkHttpClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Main {
 
   public static void main(String[] args) {
+
+    final Logger logger = LoggerFactory.getLogger(Main.class);
 
     Map<String, String> properties = new HashMap<>();
     BufferedReader bufferedReader;
@@ -34,9 +38,11 @@ public class Main {
             properties.put(tokens[0], tokens[1]);
           }
     } catch (FileNotFoundException e) {
-      throw new IllegalArgumentException(e);
+      logger.error(e.getMessage(), e);
+//      throw new IllegalArgumentException(e);
     } catch (IOException e) {
-      throw new RuntimeException(e);
+      logger.error(e.getMessage(), e);
+//      throw new RuntimeException(e);
     }
 
     DatabaseConnectionManager dcm = new DatabaseConnectionManager(properties.get("server"),
@@ -52,8 +58,10 @@ public class Main {
       PositionService positionService = new PositionService(positionDAO, quoteService);
       StockQuoteController controller = new StockQuoteController(quoteService, positionService);
       controller.initClient();
+      logger.info("Controller initialized successfully.");
     } catch (SQLException e) {
-      throw new RuntimeException(e);
+      logger.error(e.getMessage(), e);
+//      throw new RuntimeException(e);
     }
 
   }

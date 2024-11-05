@@ -2,15 +2,18 @@ package ca.jrvs.apps.stockquote.dao;
 
 import ca.jrvs.apps.stockquote.model.Quote;
 import ca.jrvs.apps.stockquote.util.JsonParser;
-import io.github.cdimascio.dotenv.Dotenv;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.Instant;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class QuoteHttpHelper {
+
+  final Logger logger = LoggerFactory.getLogger(QuoteHttpHelper.class);
 
   private final String apiKey;
   private final OkHttpClient client;
@@ -45,6 +48,7 @@ public class QuoteHttpHelper {
         return null;
       }
     } catch (IOException e) {
+      logger.error("API response error: {}", e.getMessage(), e);
       throw new IllegalArgumentException(e);
     }
   }

@@ -3,14 +3,13 @@ package ca.jrvs.apps.stockquote.service;
 import ca.jrvs.apps.stockquote.dao.QuoteDAO;
 import ca.jrvs.apps.stockquote.dao.QuoteHttpHelper;
 import ca.jrvs.apps.stockquote.model.Quote;
-import ca.jrvs.apps.stockquote.util.DatabaseConnectionManager;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class QuoteService {
+
+  final Logger logger = LoggerFactory.getLogger(QuoteService.class);
 
   private QuoteDAO quoteDAO;
   private QuoteHttpHelper quoteHttpHelper;
@@ -28,8 +27,10 @@ public class QuoteService {
   public Optional<Quote> fetchQuoteDataFromAPI(String ticker) {
     try {
       Quote quote = quoteHttpHelper.fetchQuoteInfo(ticker);
+      logger.info("Quote info successfully fetched from API.");
       return Optional.of(quote);
     } catch (NullPointerException e) {
+      logger.error("Invalid ticker given for API call: {}", e.getMessage(), e);
       throw new IllegalArgumentException(e);
     }
   }
@@ -41,16 +42,5 @@ public class QuoteService {
   public Optional<Quote> getOneQuote(String ticker) {
     return quoteDAO.findById(ticker);
   }
-
-
-//  public Iterable<Quote> getAllRecentQuotes() {
-//    Iterable<Quote> quotes = quoteDAO.findAll();
-//    List<Quote> newQuotes = new ArrayList<>();
-//    quotes.forEach(quote -> {
-//      quote = quoteHttpHelper.fetchQuoteInfo(quote.getTicker());
-//      newQuotes.add(quote);
-//    });
-//    return newQuotes;
-//  }
 
 }

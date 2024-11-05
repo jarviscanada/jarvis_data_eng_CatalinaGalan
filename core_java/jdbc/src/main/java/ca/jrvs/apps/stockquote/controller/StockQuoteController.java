@@ -1,5 +1,6 @@
 package ca.jrvs.apps.stockquote.controller;
 
+import ca.jrvs.apps.stockquote.Main;
 import ca.jrvs.apps.stockquote.model.Position;
 import ca.jrvs.apps.stockquote.model.Quote;
 import ca.jrvs.apps.stockquote.service.PositionService;
@@ -10,8 +11,12 @@ import java.sql.SQLException;
 import java.util.InputMismatchException;
 import java.util.Optional;
 import java.util.Scanner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class StockQuoteController {
+
+  final Logger logger = LoggerFactory.getLogger(StockQuoteController.class);
 
   private QuoteService quoteService;
   private PositionService positionService;
