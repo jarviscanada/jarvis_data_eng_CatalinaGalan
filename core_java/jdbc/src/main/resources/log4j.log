@@ -1,0 +1,13 @@
+2024-11-06 13:28:50,342 [main] INFO  ca.jrvs.apps.stockquote.util.DatabaseConnectionManager - Connection created successfully
+2024-11-06 13:28:50,560 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - Controller initialized successfully.
+2024-11-06 13:28:57,503 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-06 13:29:25,471 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-06 13:29:37,918 [main] INFO  ca.jrvs.apps.stockquote.dao.QuoteDAO - New quote H saved to database.
+2024-11-06 13:29:38,040 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-06 13:29:38,040 [main] INFO  ca.jrvs.apps.stockquote.service.PositionService - Position object H created.
+2024-11-06 13:29:38,040 [main] INFO  ca.jrvs.apps.stockquote.service.PositionService - Position H bought.
+2024-11-06 13:29:38,043 [main] INFO  ca.jrvs.apps.stockquote.dao.PositionDAO - New position H saved to database.
+2024-11-06 13:29:52,766 [main] INFO  ca.jrvs.apps.stockquote.dao.PositionDAO - Position MSFT deleted from database.
+2024-11-06 13:29:52,770 [main] INFO  ca.jrvs.apps.stockquote.dao.QuoteDAO - Quote MSFT deleted from database.
+2024-11-06 13:29:52,770 [main] INFO  ca.jrvs.apps.stockquote.service.PositionService - Position MSFT sold successfully.
+2024-11-06 13:29:59,209 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - App exited successfully.

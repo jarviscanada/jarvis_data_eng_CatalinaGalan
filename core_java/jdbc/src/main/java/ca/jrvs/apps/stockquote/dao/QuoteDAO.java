@@ -8,9 +8,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class QuoteDAO implements CrudDAO<Quote, String>{
+
+  final Logger logger = LoggerFactory.getLogger(QuoteDAO.class);
 
   private Connection connection;
 
@@ -48,6 +52,7 @@ public class QuoteDAO implements CrudDAO<Quote, String>{
         statement.setString(10, entity.getChangePercent());
         statement.setTimestamp(11, entity.getTimestamp());
         statement.execute();
+        logger.info("New quote {} saved to database.", entity.getTicker());
       } catch (SQLException e) {
         try (PreparedStatement statement = this.connection.prepareStatement(UPDATE)) {
           statement.setDouble(1, entity.getOpen());
@@ -62,8 +67,10 @@ public class QuoteDAO implements CrudDAO<Quote, String>{
           statement.setTimestamp(10, entity.getTimestamp());
           statement.setString(11, entity.getTicker());
           statement.execute();
+          logger.info("Quote {} updated.", entity.getTicker());
         } catch (SQLException d) {
-          throw new IllegalArgumentException(e);
+          logger.error(d.getMessage());
+          throw new IllegalArgumentException(d);
         }
      }
     }
@@ -93,10 +100,12 @@ public class QuoteDAO implements CrudDAO<Quote, String>{
         }
         return Optional.of(quote);
       } else {
+        logger.info("Quote {} is not found in database.", s);
         return Optional.empty();
       }
     } catch (SQLException e) {
-    throw new IllegalArgumentException(e);
+      logger.error(e.getMessage());
+      throw new IllegalArgumentException(e);
     }
   }
 
@@ -122,8 +131,9 @@ public class QuoteDAO implements CrudDAO<Quote, String>{
         allQuotes.add(quote);
         }
       } catch (SQLException e) {
-      throw new IllegalArgumentException(e);
-    }
+        logger.error(e.getMessage());
+        throw new IllegalArgumentException(e);
+      }
     return allQuotes;
   }
 
@@ -135,7 +145,9 @@ public class QuoteDAO implements CrudDAO<Quote, String>{
       try (PreparedStatement statement = this.connection.prepareStatement(DELETE)) {
         statement.setString(1, s);
         statement.execute();
+        logger.info("Quote {} deleted from database.", s);
       } catch (SQLException e) {
+        logger.error(e.getMessage());
         throw new IllegalArgumentException(e);
       }
     }

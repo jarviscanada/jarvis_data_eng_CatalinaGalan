@@ -1,6 +1,5 @@
 package ca.jrvs.apps.stockquote.controller;
 
-import ca.jrvs.apps.stockquote.Main;
 import ca.jrvs.apps.stockquote.model.Position;
 import ca.jrvs.apps.stockquote.model.Quote;
 import ca.jrvs.apps.stockquote.service.PositionService;
@@ -93,6 +92,7 @@ public class StockQuoteController {
       }
       displayChoices();
     } catch (NullPointerException | IllegalArgumentException e) {
+      logger.error(e.getMessage());
       System.out.println(" Please choose another option.");
       displayChoices();
     }
@@ -115,15 +115,16 @@ public class StockQuoteController {
       System.out.print("> ");
       int numOfShares = scanner.nextInt();
       double price = quote.get().getPrice();
+      quoteService.getQuoteDAO().save(quote.get());
       Position position = positionService.buy(ticker, numOfShares, price);
       String p = JsonParser.toJson(position, true, true);
-      quoteService.getQuoteDAO().save(quote.get());
-      System.out.println("\n Purchase successful");
+      System.out.println("\n Purchase successful:");
       System.out.println(p);
-    } catch (IllegalArgumentException | JsonProcessingException | SQLException |
-             InputMismatchException e) {
+    } catch (IllegalArgumentException | SQLException | InputMismatchException |
+             JsonProcessingException e) {
+      logger.error(e.getMessage());
       System.out.println("\n Invalid Input.");
-//      System.out.println(e.getMessage());
+      System.out.println(e.getMessage());
     }
     displayChoices();
   }
@@ -138,8 +139,9 @@ public class StockQuoteController {
     String ticker = scanner.next();
     try {
       positionService.sell(ticker);
-      System.out.println("Sale successful");
+      System.out.println("\n Sale successful.");
     } catch (IllegalArgumentException e) {
+      logger.error(e.getMessage());
       System.out.println(e.getMessage());
     }
     displayChoices();

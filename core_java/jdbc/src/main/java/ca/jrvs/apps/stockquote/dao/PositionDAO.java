@@ -1,7 +1,6 @@
 package ca.jrvs.apps.stockquote.dao;
 
 import ca.jrvs.apps.stockquote.model.Position;
-import ca.jrvs.apps.stockquote.model.Quote;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,8 +8,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PositionDAO implements CrudDAO<Position, String> {
+
+  final Logger logger = LoggerFactory.getLogger(PositionDAO.class);
 
   private Connection connection;
 
@@ -36,12 +39,14 @@ public class PositionDAO implements CrudDAO<Position, String> {
       statement.setInt(2, entity.getNumOfShares());
       statement.setDouble(3, entity.getValuePaid());
       statement.execute();
+      logger.info("New position {} saved to database.", entity.getTicker());
     } catch (SQLException e) {
       try (PreparedStatement statement = this.connection.prepareStatement(UPDATE)) {
         statement.setInt(1, entity.getNumOfShares());
         statement.setDouble(2, entity.getValuePaid());
         statement.setString(3, entity.getTicker());
         statement.execute();
+        logger.info("Position {} updated.", entity.getTicker());
       } catch (SQLException ex) {
         throw new RuntimeException(ex);
       }
@@ -64,9 +69,11 @@ public class PositionDAO implements CrudDAO<Position, String> {
         }
         return Optional.of(position);
       } else{
+        logger.info("No position {} found in database.", s);
         return Optional.empty();
       }
     } catch (SQLException e) {
+      logger.error(e.getMessage());
       throw new RuntimeException(e);
     }
   }
@@ -86,6 +93,7 @@ public class PositionDAO implements CrudDAO<Position, String> {
         }
       }
     } catch (SQLException e) {
+      logger.error(e.getMessage());
       throw new RuntimeException(e);
     }
     return allPositions;
@@ -100,7 +108,9 @@ public class PositionDAO implements CrudDAO<Position, String> {
       try (PreparedStatement statement = this.connection.prepareStatement(DELETE)) {
         statement.setString(1, ticker);
         statement.execute();
+        logger.info("Position {} deleted from database.", ticker);
       } catch (SQLException e) {
+        logger.error(e.getMessage());
         throw new IllegalArgumentException(e);
       }
     }
@@ -110,8 +120,9 @@ public class PositionDAO implements CrudDAO<Position, String> {
   public void deleteAll() {
     try (PreparedStatement statement = this.connection.prepareStatement(DELETE_ALL)) {
       statement.execute();
-      System.out.println("All quote records deleted from database");
+      logger.info("All quote records deleted from database");
     } catch (SQLException e) {
+      logger.error(e.getMessage());
       throw new IllegalArgumentException(e);
     }
   }
