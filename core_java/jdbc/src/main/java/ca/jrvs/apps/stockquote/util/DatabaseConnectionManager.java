@@ -23,7 +23,7 @@ public class DatabaseConnectionManager {
 
   public Connection getConnection() throws SQLException {
     Connection connection = DriverManager.getConnection(this.url, this.properties);
-    logger.info("DatabaseConnectionManager: Connection created successfully");
+    logger.info("Connection created successfully");
     return connection;
   }
 }

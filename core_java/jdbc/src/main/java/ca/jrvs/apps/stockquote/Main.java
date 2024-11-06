@@ -17,13 +17,17 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import okhttp3.OkHttpClient;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Main {
 
+
   public static void main(String[] args) {
 
+    PropertyConfigurator.configure("src/main/resources/log4j.properties");
     final Logger logger = LoggerFactory.getLogger(Main.class);
 
     Map<String, String> properties = new HashMap<>();
@@ -58,7 +62,6 @@ public class Main {
       PositionService positionService = new PositionService(positionDAO, quoteService);
       StockQuoteController controller = new StockQuoteController(quoteService, positionService);
       controller.initClient();
-      logger.info("Controller initialized successfully.");
     } catch (SQLException e) {
       logger.error(e.getMessage(), e);
 //      throw new RuntimeException(e);

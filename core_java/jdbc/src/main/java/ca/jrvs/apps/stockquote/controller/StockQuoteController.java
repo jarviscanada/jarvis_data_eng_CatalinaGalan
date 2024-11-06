@@ -30,6 +30,8 @@ public class StockQuoteController {
    * User interface for application
    */
   public void initClient() {
+    logger.info("Controller initialized successfully.");
+
     System.out.println("\n -------- Welcome to the Stock-Quote App --------");
     displayChoices();
   }
@@ -54,6 +56,7 @@ public class StockQuoteController {
       case (3) : sellStock();
         break;
       case (4) : System.out.println("\n--- Goodbye ---");
+        logger.info("App exited successfully.");
         break;
     }
   }
@@ -90,7 +93,7 @@ public class StockQuoteController {
       }
       displayChoices();
     } catch (NullPointerException | IllegalArgumentException e) {
-      System.out.println("\nPlease choose another option.");
+      System.out.println(" Please choose another option.");
       displayChoices();
     }
   }
