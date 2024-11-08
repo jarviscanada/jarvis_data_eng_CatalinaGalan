@@ -43,7 +43,7 @@ else
   base_path="$(dirname "$0")/../sql/stockquote"
 fi
 
-# Execute the SQL files to create database and tables
+# Execute the SQL files
 docker exec -i jrvs-psql psql -U $POSTGRES_USER -d postgres -f "$base_path/stock_quote_database.sql"
 docker exec -i jrvs-psql psql -U $POSTGRES_USER -d stock_quote -f "$base_path/quote.sql"
 docker exec -i jrvs-psql psql -U $POSTGRES_USER -d stock_quote -f "$base_path/position.sql"
@@ -53,7 +53,7 @@ unset PGPASSWORD
 
 echo "Database setup completed successfully."
 
-# Define a cleanup function to stop the container once the main app exits
+# Define a cleanup function to stop the container
 cleanup() {
   echo "Stopping container jrvs-psql"
   docker stop jrvs-psql
@@ -63,4 +63,4 @@ cleanup() {
 trap cleanup EXIT
 
 # Run your Java application
-java -jar lib/jdbc.jar
+java -jar lib/appname.jar
