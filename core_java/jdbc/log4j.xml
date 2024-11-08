@@ -1,4 +1,0 @@
-
-2024-11-06 11:14:16,786 [main] INFO  ca.jrvs.apps.stockquote.util.DatabaseConnectionManager - DatabaseConnectionManager: Connection created successfully
-2024-11-06 11:14:16,989 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - Controller initialized successfully.
-2024-11-06 11:14:21,115 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - App exited successfully.

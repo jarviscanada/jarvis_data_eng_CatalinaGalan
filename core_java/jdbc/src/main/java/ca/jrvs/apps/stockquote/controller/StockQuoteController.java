@@ -6,6 +6,7 @@ import ca.jrvs.apps.stockquote.service.PositionService;
 import ca.jrvs.apps.stockquote.service.QuoteService;
 import ca.jrvs.apps.stockquote.util.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import java.sql.SQLException;
 import java.util.InputMismatchException;
 import java.util.Optional;
@@ -40,23 +41,33 @@ public class StockQuoteController {
    */
   public void displayChoices() {
     Scanner scanner = new Scanner(System.in);
+    boolean exit = false;
     System.out.println("\n What would you like to do? \n");
     System.out.println("1- List my stocks\n"
         + "2- Buy stock\n"
         + "3- Sell stock\n"
         + "4- Exit");
-    System.out.print("\n> ");
-    int choice = scanner.nextInt();
-    switch (choice) {
-      case (1) : listAllPositions();
-        break;
-      case (2) : buyStock();
-        break;
-      case (3) : sellStock();
-        break;
-      case (4) : System.out.println("\n--- Goodbye ---");
-        logger.info("App exited successfully.");
-        break;
+    while (!exit) {
+      System.out.print("\n> ");
+      try {
+        int choice = scanner.nextInt();
+        switch (choice) {
+          case (1) : listAllPositions();
+            break;
+          case (2) : buyStock();
+            break;
+          case (3) : sellStock();
+            break;
+          case (4) : System.out.println("\n--- Goodbye ---");
+            logger.info("App exited successfully.");
+            exit = true;
+            break;
+          default: System.out.println("\nPlease choose a valid option:");
+        } catch (MismatchedInputException e) {
+        System.out.println("Please enter a valid option:");
+        logger.error("Invalid input: non-integer value.");
+      }
+      }
     }
   }
 
