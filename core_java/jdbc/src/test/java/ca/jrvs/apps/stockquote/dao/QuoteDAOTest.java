@@ -53,7 +53,7 @@ class QuoteDAOTest {
 
   @AfterAll
   public static void closeConnection() throws SQLException {
-    quoteDAO.findAll();
+    quoteDAO.deleteAll();
     if (connection != null) {
       connection.close();
       System.out.println("CONNECTION CLOSED");

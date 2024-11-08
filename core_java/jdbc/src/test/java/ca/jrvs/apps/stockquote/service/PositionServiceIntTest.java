@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Optional;
 import okhttp3.OkHttpClient;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -61,6 +62,16 @@ class PositionServiceIntTest {
   @BeforeEach
   void createQuote() {
     quote1 = quoteDAO.save(quote.get());
+  }
+
+  @AfterAll
+  static void tearDown() throws SQLException {
+    positionDAO.deleteAll();
+    quoteDAO.deleteAll();
+    if (connection != null) {
+      connection.close();
+      System.out.println("Connection CLOSED");
+    }
   }
 
   @Test

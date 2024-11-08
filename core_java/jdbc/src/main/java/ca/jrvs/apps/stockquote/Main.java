@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
 
 public class Main {
 
-
   public static void main(String[] args) {
 
     PropertyConfigurator.configure("src/main/resources/log4j.properties");
@@ -31,6 +30,11 @@ public class Main {
 
     Map<String, String> properties = new HashMap<>();
     BufferedReader bufferedReader;
+    String apiKey = System.getenv("X_RAPID_API_KEY");
+    if (apiKey == null) {
+      Dotenv dotenv = Dotenv.load();
+      apiKey = dotenv.get("X_RAPID_API_KEY");
+    }
 
     try {
       bufferedReader = new BufferedReader(
@@ -55,8 +59,7 @@ public class Main {
       QuoteDAO quoteDAO = new QuoteDAO(connection);
       PositionDAO positionDAO = new PositionDAO(connection);
       OkHttpClient client = new OkHttpClient();
-      Dotenv dotenv = Dotenv.load();
-      QuoteHttpHelper quoteHttpHelper = new QuoteHttpHelper(dotenv.get("X_RAPID_API_KEY"), client);
+      QuoteHttpHelper quoteHttpHelper = new QuoteHttpHelper(apiKey, client);
       QuoteService quoteService = new QuoteService(quoteDAO, quoteHttpHelper);
       PositionService positionService = new PositionService(positionDAO, quoteService);
       StockQuoteController controller = new StockQuoteController(quoteService, positionService);

@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Optional;
 import okhttp3.OkHttpClient;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -42,6 +43,15 @@ class QuoteServiceIntTest {
     quoteHttpHelper = new QuoteHttpHelper(apiKey, client);
     quoteDAO = new QuoteDAO(connection);
     quoteService = new QuoteService(quoteDAO, quoteHttpHelper);
+  }
+
+  @AfterAll
+  static void tearDown() throws SQLException {
+    quoteDAO.deleteAll();
+    if (connection != null) {
+      connection.close();
+      System.out.println("Connection CLOSED");
+    }
   }
 
   @Test

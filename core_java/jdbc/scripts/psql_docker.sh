@@ -1,57 +1,66 @@
 #!/bin/bash
 
-# start docker
+# Exit immediately if a command exits with a non-zero status
+set -e
+
+# Ensure Docker is running
 sudo systemctl status docker || sudo systemctl start docker
 
-# set CLI arguments
-cmd=$1
-db_username=$2
-db_password=$3
-
-# container status
-docker container inspect jrvs-psql
+# Check if the container already exists
+docker container inspect jrvs-psql &> /dev/null
 container_status=$?
 
-case $cmd in
-	create)
-	# check if container exists
-	if [ $container_status -eq 0 ]; then
-		echo "Container already exists"
-		echo
-		echo "$(docker ps -f name=jrvs-psql)"
-		exit 1
-	fi
+# If the container exists, start it
+if [ $container_status -eq 0 ]; then
+    echo "Starting existing container jrvs-psql"
+    docker start jrvs-psql
+else
+    # Ensure necessary environment variables are set
+    : "${POSTGRES_USER:?Need to set POSTGRES_USER}"
+    : "${POSTGRES_PASSWORD:?Need to set POSTGRES_PASSWORD}"
 
-	# check for correct number or arguments
-	if [ "$#" -ne 3 ]; then
-		echo "Create requires username and password"
-		exit 1
-	fi
-	
-	# create container [db_username] [db_password]
-	docker volume create pgdata
-	docker run --name jrvs-psql -e POSTGRES_USER=$db_username -e POSTGRES_PASSWORD=$db_password -d -v pgdata:/var/lib/postgresql/data -p 5432:5432 postgres:9.6-alpine
-	echo 
-	echo "$(docker ps -f name=jrvs-psql)"
-	exit $?
-	;;
-	
-	start|stop)
-	# check instance status, exit if it hasn't been created
-        if [ $container_status -eq 1 ]; then
-	     	echo "Container doesn't exist"
-        	exit 1
-        fi
+    # Create Docker volume and run the PostgreSQL container
+    docker volume create pgdata
+    docker run --name jrvs-psql -e POSTGRES_USER=$POSTGRES_USER -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -d \
+    -v pgdata:/var/lib/postgresql/data -p 5432:5432 postgres:9.6-alpine
 
-	# start|stop the container
-	docker container $cmd jrvs-psql
-	exit $?
-	;;
+    # Wait for PostgreSQL to start
+    echo "Waiting for PostgreSQL to start..."
+    until docker exec jrvs-psql pg_isready -U $POSTGRES_USER -d postgres; do
+      sleep 1
+    done
+fi
 
-	*)
-	#check incorrect arguments
-	echo "Illegal command"
-	echo "Commands start|stop|create"
-	exit 1
-	;;
-esac
+# Set the password environment variable for psql
+export PGPASSWORD=$POSTGRES_PASSWORD
+
+# Set base_path depending on environment
+if [ -f "/.dockerenv" ]; then
+  # Inside Docker
+  base_path="/usr/local/app/jdbc"
+else
+  # Local environment
+  base_path="$(dirname "$0")/../sql/stockquote"
+fi
+
+# Execute the SQL files to create database and tables
+docker exec -i jrvs-psql psql -U $POSTGRES_USER -d postgres -f "$base_path/stock_quote_database.sql"
+docker exec -i jrvs-psql psql -U $POSTGRES_USER -d stock_quote -f "$base_path/quote.sql"
+docker exec -i jrvs-psql psql -U $POSTGRES_USER -d stock_quote -f "$base_path/position.sql"
+
+# Unset the password environment variable for security
+unset PGPASSWORD
+
+echo "Database setup completed successfully."
+
+# Define a cleanup function to stop the container once the main app exits
+cleanup() {
+  echo "Stopping container jrvs-psql"
+  docker stop jrvs-psql
+}
+
+# Trap script exit to ensure the container is stopped
+trap cleanup EXIT
+
+# Run your Java application
+java -jar lib/jdbc.jar
