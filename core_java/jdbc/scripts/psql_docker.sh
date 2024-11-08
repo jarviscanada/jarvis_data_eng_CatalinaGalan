@@ -2,9 +2,14 @@
 
 # Exit immediately if a command exits with a non-zero status
 set -e
+# set environment vars from .env file
+source .env
 
-# Ensure Docker is running
-sudo systemctl status docker || sudo systemctl start docker
+# Check if Docker is running
+if ! docker info > /dev/null 2>&1; then
+  echo "Docker is not running. Please start Docker and try again."
+  exit 1
+fi
 
 # Check if the container already exists
 docker container inspect jrvs-psql &> /dev/null
@@ -22,7 +27,7 @@ else
     # Create Docker volume and run the PostgreSQL container
     docker volume create pgdata
     docker run --name jrvs-psql -e POSTGRES_USER=$POSTGRES_USER -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -d \
-    -v pgdata:/var/lib/postgresql/data -p 5432:5432 postgres:9.6-alpine
+     -v pgdata:/var/lib/postgresql/data -p 5432:5432 postgres:9.6-alpine
 
     # Wait for PostgreSQL to start
     echo "Waiting for PostgreSQL to start..."
@@ -44,9 +49,9 @@ else
 fi
 
 # Execute the SQL files
-docker exec -i jrvs-psql psql -U $POSTGRES_USER -d postgres -f "$base_path/stock_quote_database.sql"
-docker exec -i jrvs-psql psql -U $POSTGRES_USER -d stock_quote -f "$base_path/quote.sql"
-docker exec -i jrvs-psql psql -U $POSTGRES_USER -d stock_quote -f "$base_path/position.sql"
+psql -h localhost -U $POSTGRES_USER -d postgres -f "$base_path/stock_quote_database.sql"
+psql psql -h localhost -U $POSTGRES_USER -d stock_quote -f "$base_path/quote.sql"
+psql -h localhost -U $POSTGRES_USER -d stock_quote -f "$base_path/position.sql"
 
 # Unset the password environment variable for security
 unset PGPASSWORD
@@ -55,6 +60,7 @@ echo "Database setup completed successfully."
 
 # Define a cleanup function to stop the container
 cleanup() {
+  echo
   echo "Stopping container jrvs-psql"
   docker stop jrvs-psql
 }
@@ -63,4 +69,4 @@ cleanup() {
 trap cleanup EXIT
 
 # Run your Java application
-java -jar lib/appname.jar
+java -jar target/jdbc*.jar
