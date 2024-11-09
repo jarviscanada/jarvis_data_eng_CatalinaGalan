@@ -66,7 +66,7 @@ public class Main {
       controller.initClient();
     } catch (SQLException e) {
       logger.error(e.getMessage(), e);
-//      throw new RuntimeException(e);
+      System.out.println("\n*** Please start the docker database container ***");
     }
 
   }

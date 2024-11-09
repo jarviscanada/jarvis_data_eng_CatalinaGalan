@@ -34,7 +34,7 @@ public class PositionService {
     Optional<Quote> quote = quoteService.fetchQuoteDataFromAPI(ticker);
 
     if (quote.get().getVolume() < numberOfShares || numberOfShares < 1) {
-      System.out.print("\n Invalid number of shares. ");
+      System.out.print("\n The number of shares entered is not permitted for this purchase. ");
       logger.error("Invalid input for numberOfShares: {}", IllegalArgumentException.class);
       throw new IllegalArgumentException();
     }
@@ -63,7 +63,6 @@ public class PositionService {
   public Iterable<Position> listAll() {
     Iterable<Position> allPositions = positionDAO.findAll();
     if (!allPositions.iterator().hasNext()) {
-      System.out.println("\n You don't have any stocks in your portfolio at the moment.");
       return null;
     }
     return allPositions;

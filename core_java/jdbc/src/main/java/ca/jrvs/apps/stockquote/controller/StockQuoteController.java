@@ -60,13 +60,15 @@ public class StockQuoteController {
             break;
           case (4) : System.out.println("\n--- Goodbye ---");
             logger.info("App exited successfully.");
-            exit = true;
+            System.exit(0);
             break;
-          default: System.out.println("\nPlease choose a valid option:");
-        } catch (MismatchedInputException e) {
-        System.out.println("Please enter a valid option:");
+          default: System.out.println("Please enter a valid option:");
+            break;
+        }
+      } catch (InputMismatchException e) {
         logger.error("Invalid input: non-integer value.");
-      }
+        System.out.println("Please enter a valid option:");
+        scanner.nextLine();
       }
     }
   }
@@ -102,9 +104,13 @@ public class StockQuoteController {
           );
       }
       displayChoices();
-    } catch (NullPointerException | IllegalArgumentException e) {
+    } catch (IllegalArgumentException e) {
+      logger.error("API calls limit reached: {}", e.getMessage());
+      System.out.println("\n *** Process interrupted. Please wait one minute and try again ***");
+      displayChoices();
+    } catch (NullPointerException e) {
       logger.error(e.getMessage());
-      System.out.println(" Please choose another option.");
+      System.out.println("\n You don't have any stocks in your portfolio at the moment.");
       displayChoices();
     }
   }
@@ -122,7 +128,7 @@ public class StockQuoteController {
       Optional<Quote> quote = quoteService.fetchQuoteDataFromAPI(ticker);
       String q = JsonParser.toJson(quote.get(), true, true);
       System.out.println(q);
-      System.out.println("\nPlease enter the number of shares you'd like to purchase:");
+      System.out.println("\nEnter the number of shares you'd like to purchase:");
       System.out.print("> ");
       int numOfShares = scanner.nextInt();
       double price = quote.get().getPrice();
@@ -131,11 +137,14 @@ public class StockQuoteController {
       String p = JsonParser.toJson(position, true, true);
       System.out.println("\n Purchase successful:");
       System.out.println(p);
-    } catch (IllegalArgumentException | SQLException | InputMismatchException |
-             JsonProcessingException e) {
-      logger.error(e.getMessage());
+    } catch (SQLException | JsonProcessingException | InputMismatchException e) {
+      logger.error("{}", e.getMessage());
       System.out.println("\n Invalid Input.");
-      System.out.println(e.getMessage());
+      displayChoices();
+    } catch (IllegalArgumentException e) {
+      logger.error("API calls limit exceeded: {}", e.getMessage());
+      System.out.println("\n *** Process interrupted. Please wait one minute and try again ***");
+      displayChoices();
     }
     displayChoices();
   }
@@ -152,8 +161,8 @@ public class StockQuoteController {
       positionService.sell(ticker);
       System.out.println("\n Sale successful.");
     } catch (IllegalArgumentException e) {
-      logger.error(e.getMessage());
       System.out.println(e.getMessage());
+      logger.error(e.getMessage());
     }
     displayChoices();
   }

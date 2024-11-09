@@ -12,13 +12,6 @@ else
   base_path="$(dirname "$0")/.."
   source $base_path/.env
 fi
-# set environment vars from .env file
-
-# Check if Docker is running
-if ! docker info > /dev/null 2>&1; then
-  echo "Docker is not running. Please start Docker and try again."
-  exit 1
-fi
 
 # Check if the container already exists
 docker container inspect jrvs-psql &> /dev/null

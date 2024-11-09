@@ -1,4 +1,87 @@
-2024-11-08 12:11:47,826 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - App exited successfully.
-2024-11-08 12:13:04,586 [main] INFO  ca.jrvs.apps.stockquote.util.DatabaseConnectionManager - Connection created successfully
-2024-11-08 12:13:04,766 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - Controller initialized successfully.
-2024-11-08 12:13:08,933 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - App exited successfully.
+2024-11-08 17:57:03,356 [main] ERROR ca.jrvs.apps.stockquote.controller.StockQuoteController - API calls limit exceeded: com.fasterxml.jackson.databind.exc.MismatchedInputException: Root name ('message') does not match expected ('Global Quote') for type `ca.jrvs.apps.stockquote.model.Quote`
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); line: 1, column: 2] (through reference chain: ca.jrvs.apps.stockquote.model.Quote["message"])
+2024-11-08 17:59:45,005 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-08 17:59:46,324 [main] ERROR ca.jrvs.apps.stockquote.controller.StockQuoteController - null
+2024-11-08 17:59:51,785 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-08 17:59:51,785 [main] ERROR ca.jrvs.apps.stockquote.service.QuoteService - Invalid ticker given for API call: null
+java.lang.NullPointerException
+	at java.base/java.util.Objects.requireNonNull(Objects.java:220)
+	at java.base/java.util.Optional.of(Optional.java:113)
+	at ca.jrvs.apps.stockquote.service.QuoteService.fetchQuoteDataFromAPI(QuoteService.java:31)
+	at ca.jrvs.apps.stockquote.controller.StockQuoteController.buyStock(StockQuoteController.java:128)
+	at ca.jrvs.apps.stockquote.controller.StockQuoteController.displayChoices(StockQuoteController.java:57)
+	at ca.jrvs.apps.stockquote.controller.StockQuoteController.buyStock(StockQuoteController.java:143)
+	at ca.jrvs.apps.stockquote.controller.StockQuoteController.displayChoices(StockQuoteController.java:57)
+	at ca.jrvs.apps.stockquote.controller.StockQuoteController.buyStock(StockQuoteController.java:147)
+	at ca.jrvs.apps.stockquote.controller.StockQuoteController.displayChoices(StockQuoteController.java:57)
+	at ca.jrvs.apps.stockquote.controller.StockQuoteController.buyStock(StockQuoteController.java:143)
+	at ca.jrvs.apps.stockquote.controller.StockQuoteController.displayChoices(StockQuoteController.java:57)
+	at ca.jrvs.apps.stockquote.controller.StockQuoteController.listAllPositions(StockQuoteController.java:106)
+	at ca.jrvs.apps.stockquote.controller.StockQuoteController.displayChoices(StockQuoteController.java:55)
+	at ca.jrvs.apps.stockquote.controller.StockQuoteController.initClient(StockQuoteController.java:36)
+	at ca.jrvs.apps.stockquote.Main.main(Main.java:66)
+2024-11-08 17:59:51,786 [main] ERROR ca.jrvs.apps.stockquote.controller.StockQuoteController - API calls limit exceeded: java.lang.NullPointerException
+2024-11-08 18:00:05,863 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-08 18:00:08,153 [main] INFO  ca.jrvs.apps.stockquote.dao.QuoteDAO - Quote Q updated.
+2024-11-08 18:00:08,428 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-08 18:00:08,428 [main] ERROR ca.jrvs.apps.stockquote.service.PositionService - Invalid input for numberOfShares: class java.lang.IllegalArgumentException
+2024-11-08 18:00:08,428 [main] ERROR ca.jrvs.apps.stockquote.controller.StockQuoteController - API calls limit exceeded: null
+2024-11-08 18:00:23,618 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-08 18:00:23,887 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-08 18:00:30,988 [main] INFO  ca.jrvs.apps.stockquote.dao.PositionDAO - No position q found in database.
+2024-11-08 18:00:30,988 [main] ERROR ca.jrvs.apps.stockquote.controller.StockQuoteController - 
+ Invalid input. There is no record for the ticker provided.
+2024-11-08 18:00:34,939 [main] INFO  ca.jrvs.apps.stockquote.dao.PositionDAO - No position 3 found in database.
+2024-11-08 18:00:34,940 [main] ERROR ca.jrvs.apps.stockquote.controller.StockQuoteController - 
+ Invalid input. There is no record for the ticker provided.
+2024-11-08 18:00:45,453 [main] ERROR ca.jrvs.apps.stockquote.controller.StockQuoteController - Invalid input: non-integer value.
+2024-11-08 18:00:55,638 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - App exited successfully.
+2024-11-08 19:05:58,337 [main] ERROR ca.jrvs.apps.stockquote.Main - Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+org.postgresql.util.PSQLException: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:346)
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:54)
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:273)
+	at org.postgresql.Driver.makeConnection(Driver.java:446)
+	at org.postgresql.Driver.connect(Driver.java:298)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:682)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:191)
+	at ca.jrvs.apps.stockquote.util.DatabaseConnectionManager.getConnection(DatabaseConnectionManager.java:25)
+	at ca.jrvs.apps.stockquote.Main.main(Main.java:58)
+Caused by: java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:682)
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:592)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327)
+	at java.base/java.net.Socket.connect(Socket.java:752)
+	at org.postgresql.core.PGStream.createSocket(PGStream.java:243)
+	at org.postgresql.core.PGStream.<init>(PGStream.java:98)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:136)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:262)
+	... 8 more
+2024-11-08 19:09:09,588 [main] INFO  ca.jrvs.apps.stockquote.util.DatabaseConnectionManager - Connection created successfully
+2024-11-08 19:09:09,792 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - Controller initialized successfully.
+2024-11-08 19:09:32,982 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - App exited successfully.
+2024-11-08 19:10:08,546 [main] INFO  ca.jrvs.apps.stockquote.util.DatabaseConnectionManager - Connection created successfully
+2024-11-08 19:10:08,750 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - Controller initialized successfully.
+2024-11-08 19:10:41,134 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-08 19:10:41,265 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-08 19:10:51,071 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - App exited successfully.
+2024-11-08 19:11:08,230 [main] INFO  ca.jrvs.apps.stockquote.util.DatabaseConnectionManager - Connection created successfully
+2024-11-08 19:11:08,393 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - Controller initialized successfully.
+2024-11-08 19:11:15,519 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-08 19:11:15,648 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-08 19:11:18,043 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - App exited successfully.
+2024-11-08 19:13:04,504 [main] INFO  ca.jrvs.apps.stockquote.util.DatabaseConnectionManager - Connection created successfully
+2024-11-08 19:13:04,665 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - Controller initialized successfully.
+2024-11-08 19:13:06,687 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - App exited successfully.
+2024-11-08 19:13:20,746 [main] INFO  ca.jrvs.apps.stockquote.util.DatabaseConnectionManager - Connection created successfully
+2024-11-08 19:13:20,908 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - Controller initialized successfully.
+2024-11-08 19:13:26,234 [main] ERROR ca.jrvs.apps.stockquote.controller.StockQuoteController - Cannot invoke "java.lang.Iterable.iterator()" because "allPositions" is null
+2024-11-08 19:13:28,397 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - App exited successfully.
+2024-11-08 19:15:09,808 [main] INFO  ca.jrvs.apps.stockquote.util.DatabaseConnectionManager - Connection created successfully
+2024-11-08 19:15:09,973 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - Controller initialized successfully.
+2024-11-08 19:15:11,534 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - App exited successfully.
+2024-11-08 19:15:16,532 [main] INFO  ca.jrvs.apps.stockquote.util.DatabaseConnectionManager - Connection created successfully
+2024-11-08 19:15:16,696 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - Controller initialized successfully.
+2024-11-08 19:15:19,221 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - App exited successfully.
