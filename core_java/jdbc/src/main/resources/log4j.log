@@ -99,3 +99,15 @@ Caused by: java.net.ConnectException: Connection refused
 2024-11-11 12:00:37,785 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - App exited successfully.
 2024-11-11 12:01:27,015 [main] INFO  ca.jrvs.apps.stockquote.util.DatabaseConnectionManager - Connection created successfully
 2024-11-11 12:01:27,176 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - Controller initialized successfully.
+2024-11-11 13:22:44,778 [main] INFO  ca.jrvs.apps.stockquote.util.DatabaseConnectionManager - Connection created successfully
+2024-11-11 13:22:44,955 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - Controller initialized successfully.
+2024-11-11 13:22:46,922 [main] ERROR ca.jrvs.apps.stockquote.controller.StockQuoteController - Cannot invoke "java.lang.Iterable.iterator()" because "allPositions" is null
+2024-11-11 13:22:54,594 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-11 13:23:04,887 [main] ERROR ca.jrvs.apps.stockquote.controller.StockQuoteController - null
+2024-11-11 13:23:13,541 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-11 13:23:19,414 [main] INFO  ca.jrvs.apps.stockquote.dao.QuoteDAO - New quote H saved to database.
+2024-11-11 13:23:19,499 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-11 13:23:19,499 [main] INFO  ca.jrvs.apps.stockquote.service.PositionService - Position H bought successfully.
+2024-11-11 13:23:19,502 [main] INFO  ca.jrvs.apps.stockquote.dao.PositionDAO - New position H saved to database.
+2024-11-11 13:23:27,105 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-11 13:23:38,742 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - App exited successfully.
