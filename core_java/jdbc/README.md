@@ -48,20 +48,34 @@ file in this root directory. You will need an Alpha Vantage API key (free).
 mv .env.example .env  # => Default values are included for the database.
 ```
 4. Package app using Maven (use the -DskipTests flag to avoid surpassing the permitted API calls 
-per minute while running implementation tests):
+per minute):
 ```
 mvn clean package -DskipTests
 ```
 5. Initialize and run the app in your command line using the provided script. This will create a 
 docker container for a psql database, create and set up the stock_quote database and its tables, 
-and run the application:
+and run the application:  
+\* Ensure that postgres server is **not** running locally and that port 5432 is available.
+\* In the case of working with Docker Desktop, please make sure Docker is running before executing this command.
 ```
 scripts/stock_quote_init.sh
 ```
 
 ### Docker
-1. Pull the docker image of the app:
-
+1. Pull the docker image:
+```
+docker pull catagalan/stock_quote:0.0.1
+```
+2. In the same working directory create a .env file containing the following:
+```dtd
+X_RAPID_API_KEY= #add your Rapid Api key here
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=password
+```
+3. Run the app from the docker container:
+```dtd
+docker run ---env-file ./.env catagalan/stock_quote:0.0.1
+```
 ## Implementation
 ![ERD diagram of stock_quote tables](src%2Fmain%2Fresources%2FERD.png)
 

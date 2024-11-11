@@ -111,3 +111,6 @@ Caused by: java.net.ConnectException: Connection refused
 2024-11-11 13:23:19,502 [main] INFO  ca.jrvs.apps.stockquote.dao.PositionDAO - New position H saved to database.
 2024-11-11 13:23:27,105 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
 2024-11-11 13:23:38,742 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - App exited successfully.
+2024-11-11 13:39:14,803 [main] INFO  ca.jrvs.apps.stockquote.util.DatabaseConnectionManager - Connection created successfully
+2024-11-11 13:39:15,043 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - Controller initialized successfully.
+2024-11-11 13:47:41,857 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - App exited successfully.
