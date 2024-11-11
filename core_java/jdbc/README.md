@@ -74,7 +74,7 @@ POSTGRES_PASSWORD=password
 ```
 3. Run the app from the docker container:
 ```dtd
-docker run ---env-file ./.env catagalan/stock_quote:0.0.1
+docker run --rm --env-file ./.env catagalan/stock_quote:0.0.1
 ```
 ## Implementation
 ![ERD diagram of stock_quote tables](src%2Fmain%2Fresources%2FERD.png)
