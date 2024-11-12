@@ -9,3 +9,4 @@ java.lang.NullPointerException
 	at ca.jrvs.apps.stockquote.Main.main(Main.java:66)
 2024-11-12 11:44:15,793 [main] ERROR ca.jrvs.apps.stockquote.controller.StockQuoteController - API calls limit exceeded: java.lang.NullPointerException
 2024-11-12 11:44:26,076 [main] ERROR ca.jrvs.apps.stockquote.controller.StockQuoteController - null
+2024-11-12 15:37:44,632 [main] ERROR ca.jrvs.apps.stockquote.controller.StockQuoteController - Cannot invoke "java.lang.Iterable.iterator()" because "allPositions" is null

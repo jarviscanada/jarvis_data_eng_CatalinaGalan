@@ -2,12 +2,11 @@ FROM openjdk:11
 
 WORKDIR /usr/local/app/jdbc
 
-RUN mkdir -p lib bin config/sql/stockquote
-
 COPY target/jdbc*.jar lib/jdbc.jar
-COPY scripts/psql_docker.sh bin/psql_docker.sh
+COPY scripts/stock_quote_docker.sh bin/stock_quote_docker.sh
 COPY sql/stockquote/ sql/stockquote
+COPY src/main/resources/ src/main/resources
 
-RUN chmod +x bin/psql_docker.sh
+# RUN chmod +x bin/stock_quote_docker.sh
 
-ENTRYPOINT ["bin/psql_docker.sh"]
+ENTRYPOINT ["java", "-jar", "lib/jdbc.jar"]

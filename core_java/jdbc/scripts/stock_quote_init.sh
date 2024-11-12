@@ -3,15 +3,9 @@
 # start docker
 sudo systemctl status docker || sudo systemctl start docker
 
-# Set base_path depending on environment
-if [ -f "/.dockerenv" ]; then
-  # Inside Docker
-  base_path="/usr/local/app/jdbc"
-else
-  # Local environment
-  base_path="$(dirname "$0")/.."
-  source $base_path/.env
-fi
+# Local environment base path
+base_path="$(dirname "$0")/.."
+source $base_path/.env
 
 # Check if the container already exists
 docker container inspect jrvs-psql &> /dev/null
@@ -62,8 +56,4 @@ cleanup() {
 trap cleanup EXIT
 
 # Run application
-if [ -f "/.dockerenv" ]; then
-  java -jar $base_path/lib/jdbc.jar
-else
-  java -jar $base_path/target/jdbc*.jar
-fi
+java -jar $base_path/target/jdbc*.jar

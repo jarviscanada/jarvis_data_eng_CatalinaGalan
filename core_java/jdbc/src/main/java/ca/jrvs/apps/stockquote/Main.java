@@ -68,6 +68,5 @@ public class Main {
       logger.error(e.getMessage(), e);
       System.out.println("\n*** Please start the docker database container ***");
     }
-
   }
 }
