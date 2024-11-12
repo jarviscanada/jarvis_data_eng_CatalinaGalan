@@ -25,4 +25,12 @@ public class Position {
 
   public double getValuePaid() { return valuePaid; }
 
+  @Override
+  public String toString() {
+    return "Position {" +
+        "\n ticker='" + ticker + '\'' +
+        "\n numOfShares=" + numOfShares +
+        "\n valuePaid=" + valuePaid +
+        "\n}";
+  }
 }

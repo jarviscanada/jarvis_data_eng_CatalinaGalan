@@ -1,0 +1,11 @@
+2024-11-12 11:44:15,792 [main] ERROR ca.jrvs.apps.stockquote.service.QuoteService - Invalid ticker given for API call: null
+java.lang.NullPointerException
+	at java.base/java.util.Objects.requireNonNull(Objects.java:220)
+	at java.base/java.util.Optional.of(Optional.java:113)
+	at ca.jrvs.apps.stockquote.service.QuoteService.fetchQuoteDataFromAPI(QuoteService.java:31)
+	at ca.jrvs.apps.stockquote.controller.StockQuoteController.buyStock(StockQuoteController.java:128)
+	at ca.jrvs.apps.stockquote.controller.StockQuoteController.displayChoices(StockQuoteController.java:57)
+	at ca.jrvs.apps.stockquote.controller.StockQuoteController.initClient(StockQuoteController.java:36)
+	at ca.jrvs.apps.stockquote.Main.main(Main.java:66)
+2024-11-12 11:44:15,793 [main] ERROR ca.jrvs.apps.stockquote.controller.StockQuoteController - API calls limit exceeded: java.lang.NullPointerException
+2024-11-12 11:44:26,076 [main] ERROR ca.jrvs.apps.stockquote.controller.StockQuoteController - null

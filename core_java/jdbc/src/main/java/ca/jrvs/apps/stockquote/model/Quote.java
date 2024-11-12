@@ -116,18 +116,18 @@ public class Quote {
 
   @Override
   public String toString() {
-    return "Quote{" +
-        "ticker='" + ticker + '\'' +
-        ", open=" + open +
-        ", high=" + high +
-        ", low=" + low +
-        ", price=" + price +
-        ", volume=" + volume +
-        ", latestTradingDay=" + latestTradingDay +
-        ", previousClose=" + previousClose +
-        ", change=" + change +
-        ", changePercent='" + changePercent + '\'' +
-        ", timestamp=" + timestamp +
-        '}';
+    return "Quote {" +
+        "\n ticker='" + ticker + '\'' +
+        "\n open=" + open +
+        "\n high=" + high +
+        "\n low=" + low +
+        "\n price=" + price +
+        "\n volume=" + volume +
+        "\n latestTradingDay=" + latestTradingDay +
+        "\n previousClose=" + previousClose +
+        "\n change=" + change +
+        "\n changePercent='" + changePercent + '\'' +
+        "\n timestamp=" + timestamp +
+        "\n}";
   }
 }

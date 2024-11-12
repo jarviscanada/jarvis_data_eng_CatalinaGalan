@@ -99,8 +99,8 @@ public class StockQuoteController {
               "\n - Symbol: " + ticker +
               "\n - Number of shares: " + numOfShares +
               "\n - Total value paid: $" + valuePaid +
-              "\n - Price paid per share: $" + paidPrice +
-              "\n - Current price per share: $" + newPrice
+              "\n - Last buying price: $" + paidPrice +
+              "\n - Current price: $" + newPrice
           );
       }
       displayChoices();
@@ -126,18 +126,16 @@ public class StockQuoteController {
     String ticker = scanner.next();
     try {
       Optional<Quote> quote = quoteService.fetchQuoteDataFromAPI(ticker);
-      String q = JsonParser.toJson(quote.get(), true, true);
-      System.out.println(q);
+      System.out.println("\n" + quote.get());
       System.out.println("\nEnter the number of shares you'd like to purchase:");
       System.out.print("> ");
       int numOfShares = scanner.nextInt();
       double price = quote.get().getPrice();
       quoteService.getQuoteDAO().save(quote.get());
       Position position = positionService.buy(ticker, numOfShares, price);
-      String p = JsonParser.toJson(position, true, true);
       System.out.println("\n Purchase successful:");
-      System.out.println(p);
-    } catch (SQLException | JsonProcessingException | InputMismatchException e) {
+      System.out.println("\n" + position);
+    } catch (SQLException  | InputMismatchException e) {
       logger.error("{}", e.getMessage());
       System.out.println("\n Invalid Input.");
       displayChoices();

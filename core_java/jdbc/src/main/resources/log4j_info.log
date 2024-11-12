@@ -1,0 +1,10 @@
+2024-11-12 11:43:49,538 [main] INFO  ca.jrvs.apps.stockquote.util.DatabaseConnectionManager - Connection created successfully
+2024-11-12 11:43:49,747 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - Controller initialized successfully.
+2024-11-12 11:43:53,062 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-12 11:43:53,151 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-12 11:43:54,817 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - App exited successfully.
+2024-11-12 11:44:06,582 [main] INFO  ca.jrvs.apps.stockquote.util.DatabaseConnectionManager - Connection created successfully
+2024-11-12 11:44:06,792 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - Controller initialized successfully.
+2024-11-12 11:44:15,792 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-12 11:44:23,402 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-12 11:44:29,496 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - App exited successfully.
