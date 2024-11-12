@@ -1,6 +1,7 @@
 package ca.jrvs.apps.stockquote.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import java.sql.Timestamp;
@@ -9,6 +10,7 @@ import java.sql.Date;
 @JsonRootName("Global Quote")
 public class Quote {
 
+//  @JsonProperty("")
   private String ticker; //id
   private double open;
   private double high;

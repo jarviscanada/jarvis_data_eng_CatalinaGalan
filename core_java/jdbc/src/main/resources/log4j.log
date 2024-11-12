@@ -114,3 +114,72 @@ Caused by: java.net.ConnectException: Connection refused
 2024-11-11 13:39:14,803 [main] INFO  ca.jrvs.apps.stockquote.util.DatabaseConnectionManager - Connection created successfully
 2024-11-11 13:39:15,043 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - Controller initialized successfully.
 2024-11-11 13:47:41,857 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - App exited successfully.
+2024-11-11 14:07:34,471 [main] INFO  ca.jrvs.apps.stockquote.util.DatabaseConnectionManager - Connection created successfully
+2024-11-11 14:07:34,726 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - Controller initialized successfully.
+2024-11-11 14:07:42,673 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-11 14:07:52,239 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-11 14:07:57,624 [main] INFO  ca.jrvs.apps.stockquote.dao.QuoteDAO - New quote MSFT saved to database.
+2024-11-11 14:07:57,725 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-11 14:07:57,725 [main] INFO  ca.jrvs.apps.stockquote.service.PositionService - Position MSFT bought successfully.
+2024-11-11 14:07:57,728 [main] INFO  ca.jrvs.apps.stockquote.dao.PositionDAO - New position MSFT saved to database.
+2024-11-11 14:08:08,619 [main] INFO  ca.jrvs.apps.stockquote.dao.PositionDAO - Position H deleted from database.
+2024-11-11 14:08:08,629 [main] INFO  ca.jrvs.apps.stockquote.dao.QuoteDAO - Quote H deleted from database.
+2024-11-11 14:08:08,629 [main] INFO  ca.jrvs.apps.stockquote.service.PositionService - Position H sold successfully.
+2024-11-11 14:08:23,179 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-11 14:08:46,287 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - App exited successfully.
+2024-11-11 14:08:49,885 [main] INFO  ca.jrvs.apps.stockquote.util.DatabaseConnectionManager - Connection created successfully
+2024-11-11 14:08:50,120 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - Controller initialized successfully.
+2024-11-11 14:08:53,487 [main] ERROR ca.jrvs.apps.stockquote.controller.StockQuoteController - Invalid input: non-integer value.
+2024-11-11 14:08:59,298 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-11 14:09:01,482 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - App exited successfully.
+2024-11-11 14:09:16,693 [main] INFO  ca.jrvs.apps.stockquote.util.DatabaseConnectionManager - Connection created successfully
+2024-11-11 14:09:16,924 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - Controller initialized successfully.
+2024-11-11 14:09:22,415 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-11 14:10:11,532 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - App exited successfully.
+2024-11-11 14:13:02,956 [main] INFO  ca.jrvs.apps.stockquote.util.DatabaseConnectionManager - Connection created successfully
+2024-11-11 14:13:03,195 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - Controller initialized successfully.
+2024-11-11 14:13:05,599 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-11 14:16:32,280 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-11 14:16:34,457 [main] INFO  ca.jrvs.apps.stockquote.dao.QuoteDAO - New quote H saved to database.
+2024-11-11 14:16:34,564 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-11 14:16:34,565 [main] INFO  ca.jrvs.apps.stockquote.service.PositionService - Position H bought successfully.
+2024-11-11 14:16:34,570 [main] INFO  ca.jrvs.apps.stockquote.dao.PositionDAO - New position H saved to database.
+2024-11-11 14:16:41,958 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-11 14:16:43,349 [main] INFO  ca.jrvs.apps.stockquote.dao.QuoteDAO - New quote MSF saved to database.
+2024-11-11 14:16:43,431 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-11 14:16:43,431 [main] INFO  ca.jrvs.apps.stockquote.service.PositionService - Position MSF bought successfully.
+2024-11-11 14:16:43,433 [main] INFO  ca.jrvs.apps.stockquote.dao.PositionDAO - New position MSF saved to database.
+2024-11-11 14:16:44,808 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-11 14:16:44,848 [main] ERROR ca.jrvs.apps.stockquote.dao.QuoteHttpHelper - API response error: Root name ('message') does not match expected ('Global Quote') for type `ca.jrvs.apps.stockquote.model.Quote`
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); line: 1, column: 2] (through reference chain: ca.jrvs.apps.stockquote.model.Quote["message"])
+com.fasterxml.jackson.databind.exc.MismatchedInputException: Root name ('message') does not match expected ('Global Quote') for type `ca.jrvs.apps.stockquote.model.Quote`
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); line: 1, column: 2] (through reference chain: ca.jrvs.apps.stockquote.model.Quote["message"])
+	at com.fasterxml.jackson.databind.exc.MismatchedInputException.from(MismatchedInputException.java:63)
+	at com.fasterxml.jackson.databind.DeserializationContext.reportPropertyInputMismatch(DeserializationContext.java:1802)
+	at com.fasterxml.jackson.databind.DeserializationContext.reportPropertyInputMismatch(DeserializationContext.java:1818)
+	at com.fasterxml.jackson.databind.deser.DefaultDeserializationContext._unwrapAndDeserialize(DefaultDeserializationContext.java:367)
+	at com.fasterxml.jackson.databind.deser.DefaultDeserializationContext.readRootValue(DefaultDeserializationContext.java:339)
+	at com.fasterxml.jackson.databind.ObjectMapper._readMapAndClose(ObjectMapper.java:4917)
+	at com.fasterxml.jackson.databind.ObjectMapper.readValue(ObjectMapper.java:3860)
+	at com.fasterxml.jackson.databind.ObjectMapper.readValue(ObjectMapper.java:3828)
+	at ca.jrvs.apps.stockquote.util.JsonParser.toObjectFromJson(JsonParser.java:47)
+	at ca.jrvs.apps.stockquote.dao.QuoteHttpHelper.fetchQuoteInfo(QuoteHttpHelper.java:43)
+	at ca.jrvs.apps.stockquote.service.QuoteService.fetchQuoteDataFromAPI(QuoteService.java:29)
+	at ca.jrvs.apps.stockquote.controller.StockQuoteController.listAllPositions(StockQuoteController.java:92)
+	at ca.jrvs.apps.stockquote.controller.StockQuoteController.displayChoices(StockQuoteController.java:55)
+	at ca.jrvs.apps.stockquote.controller.StockQuoteController.buyStock(StockQuoteController.java:149)
+	at ca.jrvs.apps.stockquote.controller.StockQuoteController.displayChoices(StockQuoteController.java:57)
+	at ca.jrvs.apps.stockquote.controller.StockQuoteController.buyStock(StockQuoteController.java:149)
+	at ca.jrvs.apps.stockquote.controller.StockQuoteController.displayChoices(StockQuoteController.java:57)
+	at ca.jrvs.apps.stockquote.controller.StockQuoteController.listAllPositions(StockQuoteController.java:106)
+	at ca.jrvs.apps.stockquote.controller.StockQuoteController.displayChoices(StockQuoteController.java:55)
+	at ca.jrvs.apps.stockquote.controller.StockQuoteController.initClient(StockQuoteController.java:36)
+	at ca.jrvs.apps.stockquote.Main.main(Main.java:66)
+2024-11-11 14:16:44,851 [main] ERROR ca.jrvs.apps.stockquote.controller.StockQuoteController - API calls limit reached: com.fasterxml.jackson.databind.exc.MismatchedInputException: Root name ('message') does not match expected ('Global Quote') for type `ca.jrvs.apps.stockquote.model.Quote`
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); line: 1, column: 2] (through reference chain: ca.jrvs.apps.stockquote.model.Quote["message"])
+2024-11-11 14:17:39,061 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-11 14:17:41,235 [main] INFO  ca.jrvs.apps.stockquote.dao.QuoteDAO - New quote L saved to database.
+2024-11-11 14:17:41,322 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-11 14:17:41,322 [main] ERROR ca.jrvs.apps.stockquote.service.PositionService - Invalid input for numberOfShares: class java.lang.IllegalArgumentException
+2024-11-11 14:17:41,322 [main] ERROR ca.jrvs.apps.stockquote.controller.StockQuoteController - API calls limit exceeded: null
+2024-11-11 14:18:18,026 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - App exited successfully.
