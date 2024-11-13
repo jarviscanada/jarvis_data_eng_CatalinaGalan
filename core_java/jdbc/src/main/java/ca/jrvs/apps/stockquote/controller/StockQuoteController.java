@@ -55,7 +55,7 @@ public class StockQuoteController {
             break;
           case (3) : sellStock();
             break;
-          case (4) : System.out.println("\n--- Goodbye ---");
+          case (4) : System.out.println("\n--- Goodbye ---\n");
             logger.info("App exited successfully.");
             System.exit(0);
             break;

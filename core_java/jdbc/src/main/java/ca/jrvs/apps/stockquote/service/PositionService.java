@@ -55,6 +55,7 @@ public class PositionService {
    * @param ticker
    */
   public void sell(String ticker) {
+    ticker = ticker.toUpperCase();
     positionDAO.deleteById(ticker);
     quoteService.getQuoteDAO().deleteById(ticker);
     logger.info("Position {} sold successfully.", ticker);

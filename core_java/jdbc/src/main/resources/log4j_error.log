@@ -10,3 +10,15 @@ java.lang.NullPointerException
 2024-11-12 11:44:15,793 [main] ERROR ca.jrvs.apps.stockquote.controller.StockQuoteController - API calls limit exceeded: java.lang.NullPointerException
 2024-11-12 11:44:26,076 [main] ERROR ca.jrvs.apps.stockquote.controller.StockQuoteController - null
 2024-11-12 15:37:44,632 [main] ERROR ca.jrvs.apps.stockquote.controller.StockQuoteController - Cannot invoke "java.lang.Iterable.iterator()" because "allPositions" is null
+2024-11-13 10:46:40,252 [main] ERROR ca.jrvs.apps.stockquote.service.PositionService - Invalid input for numberOfShares: class java.lang.IllegalArgumentException
+2024-11-13 11:05:16,921 [main] ERROR ca.jrvs.apps.stockquote.controller.StockQuoteController - There is no quote record for the given symbol
+2024-11-13 11:05:29,022 [main] ERROR ca.jrvs.apps.stockquote.controller.StockQuoteController - 
+ Invalid input. There is no record for the ticker provided.
+2024-11-13 11:06:01,032 [main] ERROR ca.jrvs.apps.stockquote.controller.StockQuoteController - There is no quote record for the given symbol
+2024-11-13 11:06:05,571 [main] ERROR ca.jrvs.apps.stockquote.controller.StockQuoteController - 
+ Invalid input. There is no record for the ticker provided.
+2024-11-13 11:07:42,692 [main] ERROR ca.jrvs.apps.stockquote.controller.StockQuoteController - Cannot invoke "java.lang.Iterable.iterator()" because "allPositions" is null
+2024-11-13 11:08:05,884 [main] ERROR ca.jrvs.apps.stockquote.controller.StockQuoteController - Cannot invoke "java.lang.Iterable.iterator()" because "allPositions" is null
+2024-11-13 11:08:23,374 [main] ERROR ca.jrvs.apps.stockquote.controller.StockQuoteController - 
+ Invalid input. There is no record for the ticker provided.
+2024-11-13 11:08:55,453 [main] ERROR ca.jrvs.apps.stockquote.controller.StockQuoteController - Cannot invoke "java.lang.Iterable.iterator()" because "allPositions" is null
