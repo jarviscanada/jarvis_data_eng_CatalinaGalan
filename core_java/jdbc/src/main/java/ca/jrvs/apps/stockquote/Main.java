@@ -31,9 +31,13 @@ public class Main {
     Map<String, String> properties = new HashMap<>();
     BufferedReader bufferedReader;
     String apiKey = System.getenv("X_RAPID_API_KEY");
+    String postgresUser = System.getenv("POSTGRES_USER");
+    String postgresPassword = System.getenv("POSTGRES_PASSWORD");
     if (apiKey == null) {
       Dotenv dotenv = Dotenv.load();
       apiKey = dotenv.get("X_RAPID_API_KEY");
+      postgresUser = dotenv.get("POSTGRES_USER");
+      postgresPassword = dotenv.get("POSTGRES_PASSWORD");
     }
 
     try {
@@ -53,7 +57,7 @@ public class Main {
     }
 
     DatabaseConnectionManager dcm = new DatabaseConnectionManager(properties.get("server"),
-        properties.get("database"), properties.get("username"), properties.get("password"));
+        properties.get("database"), postgresUser, postgresPassword);
     try {
       Connection connection = dcm.getConnection();
       QuoteDAO quoteDAO = new QuoteDAO(connection);

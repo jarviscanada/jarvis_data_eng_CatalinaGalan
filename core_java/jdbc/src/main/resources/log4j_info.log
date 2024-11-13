@@ -79,3 +79,26 @@
 2024-11-13 11:09:05,255 [main] INFO  ca.jrvs.apps.stockquote.dao.QuoteDAO - Quote F deleted from database.
 2024-11-13 11:09:05,255 [main] INFO  ca.jrvs.apps.stockquote.service.PositionService - Position F sold successfully.
 2024-11-13 11:09:07,392 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - App exited successfully.
+2024-11-13 11:50:41,281 [main] INFO  ca.jrvs.apps.stockquote.util.DatabaseConnectionManager - Connection created successfully
+2024-11-13 11:50:41,475 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - Controller initialized successfully.
+2024-11-13 11:57:07,389 [main] INFO  ca.jrvs.apps.stockquote.util.DatabaseConnectionManager - Connection created successfully
+2024-11-13 11:57:07,579 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - Controller initialized successfully.
+2024-11-13 11:57:15,541 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-13 11:57:17,386 [main] INFO  ca.jrvs.apps.stockquote.dao.QuoteDAO - New quote H saved to database.
+2024-11-13 11:57:17,481 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-13 11:57:17,482 [main] INFO  ca.jrvs.apps.stockquote.service.PositionService - Position h bought successfully.
+2024-11-13 11:57:17,484 [main] INFO  ca.jrvs.apps.stockquote.dao.PositionDAO - New position H saved to database.
+2024-11-13 11:57:19,707 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - App exited successfully.
+2024-11-13 11:58:30,803 [main] INFO  ca.jrvs.apps.stockquote.util.DatabaseConnectionManager - Connection created successfully
+2024-11-13 11:58:30,982 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - Controller initialized successfully.
+2024-11-13 11:58:37,756 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-13 11:58:44,342 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-13 11:58:45,719 [main] INFO  ca.jrvs.apps.stockquote.dao.QuoteDAO - New quote S saved to database.
+2024-11-13 11:58:45,842 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-13 11:58:45,842 [main] INFO  ca.jrvs.apps.stockquote.service.PositionService - Position s bought successfully.
+2024-11-13 11:58:45,844 [main] INFO  ca.jrvs.apps.stockquote.dao.PositionDAO - New position S saved to database.
+2024-11-13 11:58:48,760 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - App exited successfully.
+2024-11-13 12:14:39,594 [main] INFO  ca.jrvs.apps.stockquote.util.DatabaseConnectionManager - Connection created successfully
+2024-11-13 12:14:39,754 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - Controller initialized successfully.
+2024-11-13 12:14:42,080 [main] INFO  ca.jrvs.apps.stockquote.service.QuoteService - Quote info successfully fetched from API.
+2024-11-13 12:14:47,737 [main] INFO  ca.jrvs.apps.stockquote.controller.StockQuoteController - App exited successfully.

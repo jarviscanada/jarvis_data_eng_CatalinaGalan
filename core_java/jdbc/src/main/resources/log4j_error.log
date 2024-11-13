@@ -22,3 +22,41 @@ java.lang.NullPointerException
 2024-11-13 11:08:23,374 [main] ERROR ca.jrvs.apps.stockquote.controller.StockQuoteController - 
  Invalid input. There is no record for the ticker provided.
 2024-11-13 11:08:55,453 [main] ERROR ca.jrvs.apps.stockquote.controller.StockQuoteController - Cannot invoke "java.lang.Iterable.iterator()" because "allPositions" is null
+2024-11-13 11:50:25,768 [main] ERROR ca.jrvs.apps.stockquote.Main - FATAL: role "postgres" does not exist
+org.postgresql.util.PSQLException: FATAL: role "postgres" does not exist
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2725)
+	at org.postgresql.core.v3.QueryExecutorImpl.readStartupMessages(QueryExecutorImpl.java:2837)
+	at org.postgresql.core.v3.QueryExecutorImpl.<init>(QueryExecutorImpl.java:175)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:317)
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:54)
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:273)
+	at org.postgresql.Driver.makeConnection(Driver.java:446)
+	at org.postgresql.Driver.connect(Driver.java:298)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:682)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:191)
+	at ca.jrvs.apps.stockquote.util.DatabaseConnectionManager.getConnection(DatabaseConnectionManager.java:25)
+	at ca.jrvs.apps.stockquote.Main.main(Main.java:58)
+2024-11-13 11:57:10,871 [main] ERROR ca.jrvs.apps.stockquote.controller.StockQuoteController - Cannot invoke "java.lang.Iterable.iterator()" because "allPositions" is null
+2024-11-13 12:14:27,980 [main] ERROR ca.jrvs.apps.stockquote.Main - Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+org.postgresql.util.PSQLException: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:346)
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:54)
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:273)
+	at org.postgresql.Driver.makeConnection(Driver.java:446)
+	at org.postgresql.Driver.connect(Driver.java:298)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:682)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:191)
+	at ca.jrvs.apps.stockquote.util.DatabaseConnectionManager.getConnection(DatabaseConnectionManager.java:25)
+	at ca.jrvs.apps.stockquote.Main.main(Main.java:62)
+Caused by: java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:682)
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:592)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327)
+	at java.base/java.net.Socket.connect(Socket.java:752)
+	at org.postgresql.core.PGStream.createSocket(PGStream.java:243)
+	at org.postgresql.core.PGStream.<init>(PGStream.java:98)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:136)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:262)
+	... 8 more

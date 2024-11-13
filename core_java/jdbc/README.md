@@ -35,21 +35,24 @@ a message will be displayed for the user:
 ### Locally
 
 1. From your root directory, clone this repository:
-```
+```bash
 git clone https://github.com/jarviscanada/jarvis_data_eng_CatalinaGalan.git
 ```
 2. Navigate to the root of the jdbc project:
-```
+```bash
 cd /jarvis_data_eng_CatalinaGalan/core_java/jdbc
 ```
 3. Modify the provided template and variable names in the .env.example file to create your own .env 
 file in this root directory. You will need an Alpha Vantage API key (free).
-```
-mv .env.example .env  # => Default values are included for the database.
+```bash
+mv .env.example .env 
+
+# Open the file and modify the values as necessary.
+# Default values are provided for the database authentication.
 ```
 4. Package app using Maven (use the -DskipTests flag to avoid surpassing the permitted API calls 
 per minute):
-```
+```bash
 mvn clean package -DskipTests
 ```
 5. Initialize and run the app in your command line using the provided script. This will create a 
@@ -57,24 +60,58 @@ docker container for a psql database, create and set up the stock_quote database
 and run the application:  
 \* Ensure that postgres server is **not** running locally and that port 5432 is available.
 \* In the case of working with Docker Desktop, please make sure Docker is running before executing this command.
-```
+```bash
 scripts/stock_quote_init.sh
 ```
 
 ### Docker
-1. Pull the docker image:
-```
-docker pull catagalan/stock_quote:0.0.1
-```
-2. In the same working directory create a .env file containing the following:
-```dtd
-X_RAPID_API_KEY= #add your Rapid Api key here
+
+1. First you will need an Alpha Vantage API key (free). In your current working directory 
+create a .env file containing the following:
+```bash
+cat > .env << EOF
+X_RAPID_API_KEY= #add your Alpha Vantage Api key here
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=password
+EOF
 ```
-3. Run the app from the docker container:
-```dtd
-docker run --rm --env-file ./.env catagalan/stock_quote:0.0.1
+2. Create and run a psql database in docker and verify:
+```bash
+docker volume create pgdata
+docker run --env-file ./.env --name jrvs-psql -e POSTGRES_USER=$POSTGRES_USER -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -d \
+   -v pgdata:/var/lib/postgresql/data -p 5432:5432 postgres:9.6-alpine
+
+docker ps -f name=jrvs-psql
+```
+3. Then the database and tables need to be created:  
+    3.1. Create a new directory:
+    ```bash
+    mkdir sql
+    ```
+    3.2. Download the following files from this repo and move them to your new sql directory:
+    ```bash
+    jdbc/sql/stockquote/stock_quote_database.sql
+    jdbc/sql/stockquote/quote.sql
+    jdbc/sql/stockquote/position.sql
+    ```
+4. From your main working directory, set up the docker psql database with the following commands:
+```bash
+source .env
+export PGPASSWORD=$POSTGRES_PASSWORD
+
+psql -h localhost -U $POSTGRES_USER -d postgres -f "./sql/stock_quote_database.sql"
+psql -h localhost -U $POSTGRES_USER -d stock_quote -f "./sql/quote.sql"
+psql -h localhost -U $POSTGRES_USER -d stock_quote -f "./sql/position.sql"
+
+unset PGPASSWORD
+```
+5. Pull the stock_quote app docker image:
+```bash
+docker pull catagalan/stock_quote:0.0.1
+```
+6. To start the app, run the app docker container with the following command:
+```bash
+docker run -it --network="host" --env-file ./.env --rm catagalan/stock_quote:0.0.1
 ```
 ## Implementation
 ![ERD diagram of stock_quote tables](src%2Fmain%2Fresources%2FERD.png)
