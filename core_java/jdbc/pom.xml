@@ -50,13 +50,6 @@
       <version>2.0.16</version>
     </dependency>
 
-<!--      &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-shade-plugin &ndash;&gt;-->
-<!--      <dependency>-->
-<!--        <groupId>org.apache.maven.plugins</groupId>-->
-<!--        <artifactId>maven-shade-plugin</artifactId>-->
-<!--        <version>3.6.0</version>-->
-<!--      </dependency>-->
-
   </dependencies>
 
   <build>
