@@ -1,5 +1,7 @@
 package ca.jrvs.practice.codingChallenges;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -37,13 +39,17 @@ public class OddEvenTest {
   public void oddEvenMod() {
     System.out.println("Test case: test oddEvenMod method from the test class");
     String expected = "odd";
-    Assert.assertEquals(expected, oddEven.oddEvenMod(3));
+    assertEquals(expected, oddEven.oddEvenMod(3));
     expected = "even";
-    Assert.assertEquals(expected, oddEven.oddEvenMod(4));
+    assertEquals(expected, oddEven.oddEvenMod(4));
   }
 
-//  @Test
-//  public void oddEvenBit() {
-//    System.out.println("Test case: test oddEvenBit method from the test class");
-//  }
+  @Test
+  public void oddEvenBit() {
+    System.out.println("Test case: test oddEvenBit method from the test class");
+    String expected = "even";
+    assertEquals(expected, oddEven.oddEvenBit(-8));
+    expected = "odd";
+    assertEquals(expected, oddEven.oddEvenBit(-1));
+  }
 }

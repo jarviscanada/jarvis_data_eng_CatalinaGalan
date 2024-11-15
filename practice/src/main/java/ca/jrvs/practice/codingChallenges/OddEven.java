@@ -14,10 +14,10 @@ public class OddEven {
   }
 
   /**
-   * Big-O:
+   * Big-O:O(1)
    * Justification:
    */
-//  public String oddEvenBit(int i){
-//    return null;
-//  }
+  public String oddEvenBit(int i) {
+    return (i ^ 1) > i ? "even" : "odd";
+  }
 }
