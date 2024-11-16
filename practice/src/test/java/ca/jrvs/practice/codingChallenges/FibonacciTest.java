@@ -21,4 +21,18 @@ public class FibonacciTest {
     int actual = fibonacci.fibonacci(30);
     assertEquals(expected, actual);
   }
+
+  @Test
+  public void climbStairsTestMinValue() {
+    int expected = 1;
+    int actual = fibonacci.climbStairs(1);
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  public void climbStairsTestMaxValue() {
+    int expected = 1836311903;
+    int actual = fibonacci.climbStairs(45);
+    assertEquals(expected, actual);
+  }
 }
