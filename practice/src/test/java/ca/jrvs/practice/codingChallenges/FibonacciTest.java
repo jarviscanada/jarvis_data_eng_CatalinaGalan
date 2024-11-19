@@ -23,16 +23,30 @@ public class FibonacciTest {
   }
 
   @Test
-  public void climbStairsTestMinValue() {
+  public void climbStairsRecursionTestMinValue() {
     int expected = 1;
-    int actual = fibonacci.climbStairs(1);
+    int actual = fibonacci.climbStairsRecursion(1);
     assertEquals(expected, actual);
   }
 
   @Test
-  public void climbStairsTestMaxValue() {
+  public void climbStairsRecursionTestMaxValue() {
     int expected = 1836311903;
-    int actual = fibonacci.climbStairs(45);
+    int actual = fibonacci.climbStairsRecursion(45);
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  void climbingStairsMemoMaxValue() {
+    int expected = 1836311903;
+    int actual = fibonacci.climbingStairsMemo(45);
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  void climbingStairsBottomMaxValue() {
+    int expected = 1836311903;
+    int actual = fibonacci.climbingStairsBottom(45);
     assertEquals(expected, actual);
   }
 }
