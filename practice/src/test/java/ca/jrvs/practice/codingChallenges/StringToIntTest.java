@@ -17,16 +17,16 @@ class StringToIntTest {
 
   @Test
   void myAtoiParseMin() {
-    String s = "";
-    int expected = 0;
+    String s = "-91283472332";
+    int expected = -2147483648;
     int actual = test.myAtoiParse(s);
     assertEquals(expected, actual);
   }
 
   @Test
   void myAtoiParseMax() {
-    String s = "";
-    int expected = 0;
+    String s = "91283472332";
+    int expected = 2147483647;
     int actual = test.myAtoiParse(s);
     assertEquals(expected, actual);
   }
