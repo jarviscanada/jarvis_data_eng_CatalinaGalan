@@ -41,6 +41,9 @@ public class Fibonacci {
   }
 
   public int climbingStairsBottom(int n) {
+    if (n <= 2) {
+      return n;
+    }
     int[] array = new int[n + 1];
     array[1] = 1;
     array[2] = 2;

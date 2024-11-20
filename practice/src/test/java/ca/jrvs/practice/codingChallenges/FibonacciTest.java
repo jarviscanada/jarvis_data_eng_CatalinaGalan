@@ -37,6 +37,13 @@ public class FibonacciTest {
   }
 
   @Test
+  void climbingStairsMemoMinValue() {
+    int expected = 1;
+    int actual = fibonacci.climbingStairsMemo(1);
+    assertEquals(expected, actual);
+  }
+
+  @Test
   void climbingStairsMemoMaxValue() {
     int expected = 1836311903;
     int actual = fibonacci.climbingStairsMemo(45);
@@ -44,6 +51,12 @@ public class FibonacciTest {
   }
 
   @Test
+  void climbingStairsBottomMinValue() {
+    int expected = 1;
+    int actual = fibonacci.climbingStairsBottom(1);
+    assertEquals(expected, actual);
+  }
+
   void climbingStairsBottomMaxValue() {
     int expected = 1836311903;
     int actual = fibonacci.climbingStairsBottom(45);
