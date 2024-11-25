@@ -14,25 +14,22 @@ public class ValidSudoku {
       answer = checkSection(board[i]);
     }
 
-    for (int i = 0; i < board[0].length; i++) {
-      char[] col = new char[9];
-      for (int j = 0; j < 9; j++) {
-        col[j] = board[i][j];
-      }
-     answer = checkSection(col);
+    for (int i = 0; i < 9; i++) {
+     answer = checkSection(buildCol(board, i));
     }
 
-    for (int i = 0; i < 9; i += 3) {
-      for (int j = 0; j < 9; j += 3) {
-      char[] box = new char[9];
-        int index = 0;
-        for (int k = i; k < i + 3; k++) {
-          for (int l = j; l < j + 3; l++) {
-            box[index] = board[k][l];
-            index++;
-          }
-        }
-      answer = checkSection(box);
+    for (int i = 0; i < 9; i++) {
+      for (int j = 0; j < 9; j++) {
+      answer = checkSection(buildBox(board, i, j));
+//      char[] box = new char[9];
+//        int index = 0;
+//        for (int k = i; k < i + 3; k++) {
+//          for (int l = j; l < j + 3; l++) {
+//            box[index] = board[k][l];
+//            index++;
+//          }
+//        }
+
       }
     }
 
@@ -49,4 +46,27 @@ public class ValidSudoku {
     }
     return set.size() == count;
   }
+
+  public char[] buildCol(char[][] board, int i) {
+    char[] col = new char[9];
+    int index = 0;
+    for (int j = 0; j < 9; j++) {
+      col[index] = board[i][j];
+    }
+    return col;
+  }
+
+  public char[] buildBox(char[][] board, int i, int j) {
+    char[] box = new char[9];
+    int index = 0;
+    for (int row = 0; row < i + 3; row ++) {
+      for (int col = 0; col < j + 3; col++) {
+        box[index] = board[row][col];
+        index++;
+      }
+    }
+    return box;
+  }
+
+
 }
