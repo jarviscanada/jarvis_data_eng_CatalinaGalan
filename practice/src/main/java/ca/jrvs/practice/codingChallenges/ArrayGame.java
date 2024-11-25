@@ -1,32 +1,37 @@
 package ca.jrvs.practice.codingChallenges;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ArrayGame {
 
   int[] board;
   int k;
+  Map<Integer, Boolean> results = new HashMap<>();
 
   public boolean canWin(int[] board, int k) {
     this.board = board;
     this.k = k;
 
-    boolean answer = false;
-    for (int i = 0; i <= board.length; i++) {
-      answer = solve(i);
-    }
-    return answer;
+    return solve(0);
   }
 
   public boolean solve(int i) {
-    if (i < 0) {
-      return false;
-    }
     if (i >= board.length) {
       return true;
     }
-    if (board[i] == 1) {
+    if (i < 0 || board[i] == 1) {
       return false;
     }
-    board[i] = 1;
-    return solve(i - 1) || solve(i + 1) || solve(i + k);
+
+    if (results.containsKey(i)) {
+      return results.get(i);
+    }
+    results.put(i, false);
+
+    boolean result = solve(i - 1) || solve(i + 1) || solve(i + k);
+
+    results.put(i, result);
+    return result;
   }
 }
