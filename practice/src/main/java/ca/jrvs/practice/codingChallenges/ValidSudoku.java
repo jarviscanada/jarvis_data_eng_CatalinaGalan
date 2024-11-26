@@ -7,23 +7,27 @@ public class ValidSudoku {
 
   public boolean validSudoku(char[][] board) {
 
-    boolean answer = false;
-
     for (int i = 0; i < board.length; i++) {
-      answer = checkSection(board[i]);
+      if (!checkSection(board[i])) {
+        return false;
+      };
     }
 
     for (int i = 0; i < 9; i++) {
-     answer = checkSection(buildCol(board, i));
+     if (!checkSection(buildCol(board, i))) {
+       return false;
+     };
     }
 
     for (int i = 0; i < 9; i += 3) {
       for (int j = 0; j < 9; j += 3) {
-        answer = checkSection(buildBox(board, i, j));
+        if (!checkSection(buildBox(board, i, j))) {
+          return false;
+        };
       }
     }
 
-    return answer;
+    return true;
   }
 
   public boolean checkSection(char[] section) {
@@ -41,7 +45,7 @@ public class ValidSudoku {
   public char[] buildCol(char[][] board, int i) {
     char[] col = new char[9];
     for (int j = 0; j < 9; j++) {
-      col[j] = board[i][j];
+      col[j] = board[j][i];
     }
     return col;
   }
