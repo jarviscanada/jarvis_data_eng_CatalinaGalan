@@ -1,12 +1,9 @@
 package ca.jrvs.practice.codingChallenges;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 public class ValidSudoku {
-
 
   public boolean validSudoku(char[][] board) {
 
@@ -28,6 +25,7 @@ public class ValidSudoku {
 
     return answer;
   }
+
   public boolean checkSection(char[] section) {
     Set<Character> set = new HashSet<>();
     int count = 0;
