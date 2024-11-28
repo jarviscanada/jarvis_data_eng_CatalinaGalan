@@ -9,7 +9,6 @@ public class FillWithPaint {
         if (picture[i][j] != '.') {
           char[][] nextPicture = checkAdjacentCells(picture, i, j);
           if (nextPicture != null) { result ++; }
-          System.out.println(result);
         }
       }
     }

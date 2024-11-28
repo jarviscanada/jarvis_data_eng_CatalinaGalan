@@ -38,4 +38,20 @@ class FillWithPaintTest {
     };
     assertEquals(5, fill.countSections(picture));
   }
+
+  @Test
+  void countSectionsTest4() {
+    char[][] picture = {
+        {},
+    };
+    assertEquals(0, fill.countSections(picture));
+  }
+
+  @Test
+  void countSectionsTest5() {
+    char[][] picture = {
+        {'A'},
+    };
+    assertEquals(1, fill.countSections(picture));
+  }
 }
