@@ -1,5 +1,6 @@
 package ca.jrvs.practice.codingChallenges;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -9,25 +10,27 @@ public class ValidAnagram {
 
   public static boolean validAnagram(String s, String t) {
 
-    if (s.equals(t)) {
-      return true;
-    } else if (s.length() != t.length()) {
-      return false;
-    }
+    // using sort
+    char[] sChars = s.toCharArray();
+    char[] tChars = t.toCharArray();
+    Arrays.sort(sChars);
+    Arrays.sort(tChars);
+
+    return Arrays.equals(sChars, tChars);
 
     // using a HashMap
-    Map<Character, Integer> letters = new HashMap<>();
-
-    for (char c : s.toCharArray()) {
-      letters.put(c, letters.getOrDefault(c, 0) + 1);
-    }
-
-    for (char c : t.toCharArray()) {
-      letters.put(c, letters.getOrDefault(c, 0) - 1);
-    }
-
-    Set<Integer> result = new HashSet<>(letters.values());
-    return result.equals(Set.of(0));
+//    Map<Character, Integer> letters = new HashMap<>();
+//
+//    for (char c : s.toCharArray()) {
+//      letters.put(c, letters.getOrDefault(c, 0) + 1);
+//    }
+//
+//    for (char c : t.toCharArray()) {
+//      letters.put(c, letters.getOrDefault(c, 0) - 1);
+//    }
+//
+//    Set<Integer> result = new HashSet<>(letters.values());
+//    return result.equals(Set.of(0));
 
     // using StringBuilder
     // StringBuilder trings = new StringBuilder(t);
