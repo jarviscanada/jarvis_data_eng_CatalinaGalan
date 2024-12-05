@@ -23,8 +23,8 @@ public class PrintLetterWithNumber {
       newString[i] = c;
       number = Integer.toString(n);
       for (char num : number.toCharArray()) {
-        newString[i + 1] = num;
         i++;
+        newString[i] = num;
       }
       i++;
     }
