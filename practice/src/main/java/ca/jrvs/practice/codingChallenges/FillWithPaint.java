@@ -30,6 +30,7 @@ public class FillWithPaint {
     if (y + 1 < picture[0].length && currentChar == picture[x][y + 1]) {
       checkAdjacentCells(picture, x, y + 1);
     }
+
     if (x + 1 < picture.length && currentChar == picture[x + 1][y]) {
       checkAdjacentCells(picture, x + 1, y);
     }
