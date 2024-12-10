@@ -13,27 +13,26 @@ skills:
   proficient:
     - Ruby
     - Ruby on Rails
-    - HTML/CSS
-    - Tailwind
+    - Java
     - Agile/Scrum
     - Git/GitHub
   # At least 5 skills
   competent:
     - SQL/PostgreSQL
-    - Java
-    - Linux/Bash
-    - Python
-    - JavaScript
     - Docker
+    - Maven
+    - Linux/Bash
+    - JavaScript
+    - HTML/CSS
+    - Tailwind
 
   # At least 5 skills
   familiar:
-    - Maven
+    - Spring Boot
     - GCP
     - AWS
+    - Python
     - React
-    - Kubernetes
-    - C
 
 # List of Jarvis projects
 jarvis_projects:
@@ -52,7 +51,7 @@ jarvis_projects:
     description:
   #     - "Twitter App: Curabitur laoreet tristique leo, eget suscipit nisi. Sed in sodales ex. Maecenas vitae tincidunt dui, et eleifend quam."
        - "Grep App: This Java app mimics the functionality of the Linux command 'grep', which is used to search for a string or regex pattern within a file and returns all lines that contain the match. This app is designed to be run directly in the command line, outputting the results to a given file."
-       - "JDBC App: TBD"
+       - "JDBC App: Implementing JDBC, OkHttpHelper and PostgreSQL, the Stock Quote App is designed to simulate buying and selling stock based on real time data fetched from the Alpha Vantage API."
   # - name: "Springboot App"
   #   git_url: "/springboot"
   #   description: ""
@@ -114,7 +113,7 @@ education:
     department: "Music Theory and Composition"
     # optional
     awards_achievements:
-      - "Campaign for the New Millenium Scholarship"
+      - "Campaign for the New Millennium Scholarship"
       - "Ruth Leith Award in Classical Music Performance"
       - "Graduated with Great Distinction."
       - "GPA: 4.14/4.30"
