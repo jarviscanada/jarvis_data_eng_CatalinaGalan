@@ -4,11 +4,11 @@ I am a deeply curious individual and a dedicated lifelong learner. With a backgr
 
 ## Skills
 
-**Proficient:** Ruby, Ruby on Rails, HTML/CSS, Tailwind, Agile/Scrum, Git/GitHub
+**Proficient:** Ruby, Ruby on Rails, Java, Agile/Scrum, Git/GitHub
 
-**Competent:** SQL/PostgreSQL, Java, Linux/Bash, Python, JavaScript, Docker
+**Competent:** SQL/PostgreSQL, Docker, Maven, Linux/Bash, JavaScript, HTML/CSS, Tailwind
 
-**Familiar:** Maven, GCP, AWS, React, Kubernetes, C
+**Familiar:** Spring Boot, GCP, AWS, Python, React
 
 ## Jarvis Projects
 
@@ -22,7 +22,7 @@ Project source code: [https://github.com/jarviscanada/jarvis_data_eng_CatalinaGa
 **Core Java Apps** [[GitHub](https://github.com/jarviscanada/jarvis_data_eng_CatalinaGalan/tree/master/core_java)]:
       
   - Grep App: This Java app mimics the functionality of the Linux command 'grep', which is used to search for a string or regex pattern within a file and returns all lines that contain the match. This app is designed to be run directly in the command line, outputting the results to a given file.
-  - JDBC App: TBD
+  - JDBC App: Implementing JDBC, OkHttpHelper and PostgreSQL, the Stock Quote App is designed to simulate buying and selling stock based on real time data fetched from the Alpha Vantage API.
 
 
 ## Highlighted Projects
@@ -44,7 +44,7 @@ Project source code: [https://github.com/jarviscanada/jarvis_data_eng_CatalinaGa
 
 ## Education
 **Concordia University, Montreal (2017-2020)**, Bachelor of Fine Arts, Specialization in Music Composition, Music Theory and Composition
-- Campaign for the New Millenium Scholarship
+- Campaign for the New Millennium Scholarship
 - Ruth Leith Award in Classical Music Performance
 - Graduated with Great Distinction.
 - GPA: 4.14/4.30
