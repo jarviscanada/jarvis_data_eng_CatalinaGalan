@@ -52,6 +52,7 @@ Project source code: [https://github.com/jarviscanada/jarvis_data_eng_CatalinaGa
 
 ## Miscellaneous
 - Winner of the Concordia Composition Competition in 2018.
+- Volunteer at the Montreal ConFoo Developer Conference 2024.
 - Member of OPCM classical choir. Contralto voice.
 - Was a member of the organizing committee for the Women in Music Conference in Concordia University, 2018.
 - Volunteered as a band coach for Rock Camp Montreal in 2021, a summer camp for female and non-gendered youth.
