@@ -8,16 +8,26 @@ import jakarta.persistence.Id;
 @Entity
 public class Cat {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private int id;
 
   String name;
+
+  public String getAge() {
+    return age;
+  }
+
+  public void setAge(String age) {
+    this.age = age;
+  }
+
+  String age;
 
   public int getId() {
     return id;
   }
 
-  public void setId() {
+  public void setId(int id) {
   }
 
   public String getName() {
@@ -33,6 +43,7 @@ public class Cat {
     return "Cat{" +
         "id=" + id +
         ", name='" + name + '\'' +
+        ", age='" + age + '\'' +
         '}';
   }
 }
