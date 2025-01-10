@@ -1,10 +1,10 @@
-package ca.jrvs.apps.trading.app;
+package ca.jrvs.apps.trading;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ApplicationTests {
+class TradingApplicationTests {
 
 	@Test
 	void contextLoads() {

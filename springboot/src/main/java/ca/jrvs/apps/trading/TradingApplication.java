@@ -1,13 +1,13 @@
-package ca.jrvs.apps.trading.app;
+package ca.jrvs.apps.trading;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Application {
+public class TradingApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
+		SpringApplication.run(TradingApplication.class, args);
 	}
 
 }
