@@ -5,13 +5,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import java.sql.Date;
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Trader {
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
 
   @Column(nullable = false)
@@ -21,7 +22,7 @@ public class Trader {
   private String lastName;
 
   @Column(nullable = false)
-  @DateTimeFormat(pattern = "dd/MM/yyyy")
+  @Temporal(TemporalType.DATE)
   private Date dob;
 
   @Column(nullable = false)
