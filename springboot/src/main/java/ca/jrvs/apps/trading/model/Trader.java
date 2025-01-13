@@ -1,10 +1,13 @@
 package ca.jrvs.apps.trading.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import java.sql.Date;
@@ -13,7 +16,11 @@ import java.sql.Date;
 public class Trader {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
+  private Long id;
+
+  @OneToOne(mappedBy = "trader", cascade = CascadeType.ALL)
+  @PrimaryKeyJoinColumn
+  private Account account;
 
   @Column(nullable = false)
   private String firstName;
@@ -31,11 +38,11 @@ public class Trader {
   @Column(nullable = false)
   private String email;
 
-  public int getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
