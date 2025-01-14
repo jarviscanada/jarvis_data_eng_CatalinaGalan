@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ResponseBody
 public class AppController {
   @GetMapping("/")
-  public void greeting(){
-    System.out.println("Welcome to the Trading App");
+  public String greeting(){
+    return "Welcome to the Trading App";
   }
 }

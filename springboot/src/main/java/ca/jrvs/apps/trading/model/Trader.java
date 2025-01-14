@@ -15,7 +15,7 @@ import java.sql.Date;
 @Entity
 public class Trader {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Long id;
 
   @OneToOne(mappedBy = "trader", cascade = CascadeType.ALL)

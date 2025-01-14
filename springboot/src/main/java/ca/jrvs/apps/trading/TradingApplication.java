@@ -14,7 +14,6 @@ public class TradingApplication implements CommandLineRunner {
 	public AppController appController;
 
 	public static void main(String[] args) {
-		SpringApplication.run(TradingApplication.class, args);
 		SpringApplication app = new SpringApplication(TradingApplication.class);
 		app.run(args);
 	}

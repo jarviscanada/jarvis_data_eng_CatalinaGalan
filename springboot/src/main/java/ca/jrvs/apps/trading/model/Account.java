@@ -3,12 +3,14 @@ package ca.jrvs.apps.trading.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 
 @Entity
 public class Account {
   @Id
+  @Column
   private Long id;
 
   @OneToOne
