@@ -22,5 +22,6 @@ public class TradingApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception{
 		System.out.println("Trading App running...");
 		appController.greeting();
+		appController.apiDemo();
 	}
 }

@@ -8,7 +8,7 @@ import java.sql.Timestamp;
  */
 public class AlphaQuote {
 
-  private String symbol;
+  private String ticker;
   private double open;
   private double high;
   private double low;
@@ -20,12 +20,12 @@ public class AlphaQuote {
   private String changePercent;
   private Timestamp timestamp;
 
-  public String getSymbol() {
-    return symbol;
+  public String getTicker() {
+    return ticker;
   }
 
-  public void setSymbol(String symbol) {
-    this.symbol = symbol;
+  public void setTicker(String ticker) {
+    this.ticker = ticker;
   }
 
   public double getOpen() {
@@ -111,7 +111,7 @@ public class AlphaQuote {
   @Override
   public String toString() {
     return "AlphaQuote{" +
-        "symbol='" + symbol + '\'' +
+        "symbol='" + ticker + '\'' +
         ", open=" + open +
         ", high=" + high +
         ", low=" + low +
