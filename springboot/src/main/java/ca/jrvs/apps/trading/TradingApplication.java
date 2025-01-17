@@ -1,6 +1,7 @@
 package ca.jrvs.apps.trading;
 
 import ca.jrvs.apps.trading.controller.AppController;
+import ca.jrvs.apps.trading.util.MarketDataHttpHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -12,6 +13,9 @@ public class TradingApplication implements CommandLineRunner {
 
 	@Autowired
 	public AppController appController;
+
+	@Autowired
+	public MarketDataHttpHelper httpHelper;
 
 	public static void main(String[] args) {
 		SpringApplication app = new SpringApplication(TradingApplication.class);
