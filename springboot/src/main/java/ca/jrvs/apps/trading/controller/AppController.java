@@ -22,6 +22,6 @@ public class AppController {
 
   @GetMapping("/apiDemo")
   public AlphaQuote apiDemo() throws IOException {
-    return marketDataHttpHelper.findQuoteByTicker("IBM").get();
+    return marketDataHttpHelper.findQuoteByTicker("MSFT").get();
   }
 }

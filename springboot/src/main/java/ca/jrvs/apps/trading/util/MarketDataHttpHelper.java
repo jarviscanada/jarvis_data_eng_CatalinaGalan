@@ -2,11 +2,14 @@ package ca.jrvs.apps.trading.util;
 
 import ca.jrvs.apps.trading.model.AlphaQuote;
 import ca.jrvs.apps.trading.model.MarketDataConfig;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.Optional;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
@@ -14,6 +17,7 @@ import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager;
 import org.apache.hc.core5.http.HttpEntity;
+import org.apache.hc.core5.http.HttpStatus;
 import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,35 +34,70 @@ public class MarketDataHttpHelper {
   @Autowired
   private ObjectMapper objectMapper;
 
-  public Optional<AlphaQuote> findQuoteByTicker(String ticker) throws IOException {
+  /**
+   * Get an IexQuote
+   *
+   * @param ticker
+   * @throws IllegalArgumentException if a given ticker is invalid
+   * @throws DataRetrievalFailureException if HTTP request failed
+   */
+  public Optional<AlphaQuote> findQuoteByTicker(String ticker) {
     String url = marketDataConfig.getHost() + ticker + "&apikey=" + marketDataConfig.getToken();
-    String resposeBody = executeGetRequest(url).get();
+    Optional<String> responseBody = null;
+    try {
+      System.out.println("from MarketDataHttpHelper - findQuoteById: executeGetRequest(url)");
+      responseBody = executeGetRequest(url);
+    } catch (DataRetrievalFailureException e) {
+      throw new DataRetrievalFailureException(e.getMessage());
+    }
 
-    objectMapper.configure(DeserializationFeature.UNWRAP_ROOT_VALUE, true);
-    AlphaQuote alphaQuote = objectMapper.readValue(resposeBody, AlphaQuote.class);
-    alphaQuote.setLastUpdated(Timestamp.from(Instant.now()));
-    return Optional.of(alphaQuote);
+    try {
+      objectMapper.configure(DeserializationFeature.UNWRAP_ROOT_VALUE, true);
+      System.out.println("from MarketDataHttpHelper - findQuoteById: deserializing JSON");
+      AlphaQuote alphaQuote = objectMapper.readValue(responseBody.get(), AlphaQuote.class);
+      alphaQuote.setLastUpdated(Timestamp.from(Instant.now()));
+      return Optional.of(alphaQuote);
+    } catch (JsonProcessingException e) {
+      throw new DataRetrievalFailureException(responseBody.get() + "\n" + e.getMessage());
+    }
   }
 
-  private Optional<String> executeGetRequest(String url) throws IOException {
+  /**
+   * Execute a GET request and return http entity/body as a string
+   * Tip: use EntitiyUtils.toString to process HTTP entity
+   *
+   * @param url resource URL
+   * @return http response body or Optional.empty for 404 response
+   * @throws DataRetrievalFailureException if HTTP failed or status code is unexpected
+   */
+  private Optional<String> executeGetRequest(String url) {
     HttpGet getRequest = new HttpGet(url);
     CloseableHttpClient client = getHttpClient();
     try (CloseableHttpResponse response = client.execute(getRequest)) {
       HttpEntity entity = response.getEntity();
-      if (entity != null) {
+      int status = response.getCode();
+//      int status = 404;
+      System.out.println(
+          "from MarketDataHttpHelper - executeGet: response status code = " + status);
+      if (entity != null && status != 404) {
         return Optional.of(EntityUtils.toString(entity));
       }
-    } catch (DataRetrievalFailureException | ParseException e) {
-      throw new RuntimeException(e);
+    } catch (ParseException | IOException e) {
+      System.out.println("from MarketDataHttpHelper - executeGet: DataRetrievalFailureException");
+      throw new DataRetrievalFailureException(e.getMessage());
     }
     return Optional.empty();
   }
 
+  /**
+   * Borrow a HTTP client from the HttpClientConnectionManager
+   * @return a HttpClient
+   */
   private CloseableHttpClient getHttpClient() {
 //    HttpClientConnectionManager leasaedConnection = HttpClientConnectionManager.lease();
-    return HttpClients.createMinimal(connectionManager);
 //    return HttpClients.createDefault();
 //    return client;
+    return HttpClients.createMinimal(connectionManager);
   }
 
 }
