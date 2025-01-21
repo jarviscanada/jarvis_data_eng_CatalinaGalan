@@ -2,6 +2,7 @@ package ca.jrvs.apps.trading;
 
 import ca.jrvs.apps.trading.config.AppConfig;
 import ca.jrvs.apps.trading.controller.AppController;
+import ca.jrvs.apps.trading.controller.QuoteController;
 import ca.jrvs.apps.trading.util.MarketDataHttpHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,9 @@ public class TradingApplication implements CommandLineRunner {
 	public AppController appController;
 
 	@Autowired
+	private QuoteController quoteController;
+
+	@Autowired
 	public MarketDataHttpHelper httpHelper;
 
 	public static void main(String[] args) {
@@ -37,7 +41,8 @@ public class TradingApplication implements CommandLineRunner {
 		System.out.println("Trading App running...");
 		try {
 			appController.greeting();
-			appController.apiDemo();
+			quoteController.getQuote("-");
+//			appController.apiDemo();
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}

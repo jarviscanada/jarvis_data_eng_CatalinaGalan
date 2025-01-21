@@ -17,7 +17,7 @@ public class AppConfig {
   @Bean
   public MarketDataConfig marketDataConfig() {
     MarketDataConfig marketDataConfig = new MarketDataConfig();
-    marketDataConfig.setToken(System.getenv("API_KEY"));
+    marketDataConfig.setToken("demo");
     marketDataConfig.setHost("https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=");
 //    logger.atError();
     return marketDataConfig;

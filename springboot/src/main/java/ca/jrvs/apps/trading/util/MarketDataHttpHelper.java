@@ -5,23 +5,24 @@ import ca.jrvs.apps.trading.model.MarketDataConfig;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectReader;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.Arrays;
+import java.util.NoSuchElementException;
 import java.util.Optional;
+import javax.naming.ServiceUnavailableException;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager;
 import org.apache.hc.core5.http.HttpEntity;
-import org.apache.hc.core5.http.HttpStatus;
 import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 public class MarketDataHttpHelper {
 
@@ -43,22 +44,28 @@ public class MarketDataHttpHelper {
    */
   public Optional<AlphaQuote> findQuoteByTicker(String ticker) {
     String url = marketDataConfig.getHost() + ticker + "&apikey=" + marketDataConfig.getToken();
-    Optional<String> responseBody = null;
+    String responseBody = null;
     try {
       System.out.println("from MarketDataHttpHelper - findQuoteById: executeGetRequest(url)");
-      responseBody = executeGetRequest(url);
-    } catch (DataRetrievalFailureException e) {
+      responseBody = executeGetRequest(url).get();
+    } catch (DataRetrievalFailureException | NoSuchElementException e) {
+      System.out.println("from MarketDataHttpHelper - caught DataRetrievalFailureException: findQuoteByTicker: executeGetRequest(url)");
       throw new DataRetrievalFailureException(e.getMessage());
     }
 
     try {
       objectMapper.configure(DeserializationFeature.UNWRAP_ROOT_VALUE, true);
       System.out.println("from MarketDataHttpHelper - findQuoteById: deserializing JSON");
-      AlphaQuote alphaQuote = objectMapper.readValue(responseBody.get(), AlphaQuote.class);
+      AlphaQuote alphaQuote = objectMapper.readValue(responseBody, AlphaQuote.class);
       alphaQuote.setLastUpdated(Timestamp.from(Instant.now()));
+      System.out.println(alphaQuote);
       return Optional.of(alphaQuote);
     } catch (JsonProcessingException e) {
-      throw new DataRetrievalFailureException(responseBody.get() + "\n" + e.getMessage());
+      System.out.println("from MarketDataHttpHelper - caught JsonProcessingException: findQuoteByTicker: objectMapper.readValue()");
+      if (responseBody.contains("Information")) {
+        throw new ResponseStatusException(HttpStatus.PAYMENT_REQUIRED, responseBody);
+      }
+      throw new IllegalArgumentException("Invalid Ticker.");
     }
   }
 
@@ -76,7 +83,6 @@ public class MarketDataHttpHelper {
     try (CloseableHttpResponse response = client.execute(getRequest)) {
       HttpEntity entity = response.getEntity();
       int status = response.getCode();
-//      int status = 404;
       System.out.println(
           "from MarketDataHttpHelper - executeGet: response status code = " + status);
       if (entity != null && status != 404) {
