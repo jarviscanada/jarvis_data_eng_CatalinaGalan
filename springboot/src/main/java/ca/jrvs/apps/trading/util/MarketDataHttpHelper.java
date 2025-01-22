@@ -60,6 +60,7 @@ public class MarketDataHttpHelper {
       System.out.println(alphaQuote);
       return Optional.of(alphaQuote);
     } catch (JsonProcessingException e) {
+      System.out.println(responseBody);
       System.out.println("from MarketDataHttpHelper - caught JsonProcessingException: findQuoteByTicker: objectMapper.readValue()");
       if (responseBody.contains("Information")) {
         throw new ResponseStatusException(HttpStatus.PAYMENT_REQUIRED, responseBody);

@@ -1,10 +1,11 @@
 package ca.jrvs.apps.trading.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.Timestamp;
 
 /**
@@ -19,11 +20,13 @@ public class AlphaQuote {
   private double low;
   private double price;
   private int volume;
-  private Date latestTradingDay;
   private double previousClose;
   private double change;
   private String changePercent;
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MMM-dd @HH:mm:ss")
+//  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MMM-dd")
+
+  private Date latestTradingDay;
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "EEE MMM dd HH:mm:ss zzz yyyy")
   private Timestamp lastUpdated;
 
   @JsonGetter("Ticker")
@@ -87,8 +90,8 @@ public class AlphaQuote {
   }
 
   @JsonGetter("Latest Trading Day")
-  public Date getLatestTradingDay() {
-    return latestTradingDay;
+  public String getLatestTradingDay() {
+    return latestTradingDay.toString();
   }
 
   @JsonSetter("07. latest trading day")
