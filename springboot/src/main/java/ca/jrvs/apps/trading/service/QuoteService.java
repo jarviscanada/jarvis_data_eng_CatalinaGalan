@@ -1,12 +1,8 @@
 package ca.jrvs.apps.trading.service;
 
 import ca.jrvs.apps.trading.model.AlphaQuote;
-import ca.jrvs.apps.trading.repository.QuoteRepository;
 import ca.jrvs.apps.trading.util.MarketDataHttpHelper;
-import java.security.AlgorithmConstraints;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.stereotype.Service;
 
 @Service

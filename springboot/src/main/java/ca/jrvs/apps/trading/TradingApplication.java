@@ -28,9 +28,6 @@ public class TradingApplication implements CommandLineRunner {
 	@Autowired
 	private QuoteController quoteController;
 
-	@Autowired
-	public MarketDataHttpHelper httpHelper;
-
 	public static void main(String[] args) {
 		SpringApplication app = new SpringApplication(TradingApplication.class);
 		app.run(args);
@@ -41,8 +38,7 @@ public class TradingApplication implements CommandLineRunner {
 		System.out.println("Trading App running...");
 		try {
 			appController.greeting();
-			quoteController.getQuote("-");
-//			appController.apiDemo();
+			quoteController.getQuote("IBM");
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
