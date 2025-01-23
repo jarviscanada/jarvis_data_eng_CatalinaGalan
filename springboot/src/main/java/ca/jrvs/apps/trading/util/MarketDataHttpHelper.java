@@ -15,6 +15,7 @@ import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager;
+import org.apache.hc.client5.http.io.HttpClientConnectionManager;
 import org.apache.hc.core5.http.HttpEntity;
 import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
@@ -26,7 +27,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class MarketDataHttpHelper {
 
   @Autowired
-  private PoolingHttpClientConnectionManager connectionManager;
+  private HttpClientConnectionManager connectionManager;
 
   @Autowired
   private MarketDataConfig marketDataConfig;

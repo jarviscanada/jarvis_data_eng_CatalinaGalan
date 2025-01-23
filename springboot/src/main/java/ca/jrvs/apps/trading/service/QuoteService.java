@@ -1,6 +1,7 @@
 package ca.jrvs.apps.trading.service;
 
 import ca.jrvs.apps.trading.model.AlphaQuote;
+import ca.jrvs.apps.trading.repository.QuoteRepository;
 import ca.jrvs.apps.trading.util.MarketDataHttpHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,8 +9,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class QuoteService {
 
-//  @Autowired
-//  private QuoteRepository quoteRepository;
+  @Autowired
+  private QuoteRepository quoteRepository;
 
   @Autowired
   private MarketDataHttpHelper httpHelper;

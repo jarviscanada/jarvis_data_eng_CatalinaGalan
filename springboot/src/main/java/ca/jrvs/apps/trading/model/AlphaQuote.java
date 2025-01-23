@@ -23,8 +23,6 @@ public class AlphaQuote {
   private double previousClose;
   private double change;
   private String changePercent;
-//  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MMM-dd")
-
   private Date latestTradingDay;
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "EEE MMM dd HH:mm:ss zzz yyyy")
   private Timestamp lastUpdated;

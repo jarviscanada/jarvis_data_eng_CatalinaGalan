@@ -23,7 +23,7 @@ public class TradingApplication implements CommandLineRunner {
 	private Logger logger = LoggerFactory.getLogger(AppConfig.class);
 
 	@Autowired
-	public AppController appController;
+	private AppController appController;
 
 	@Autowired
 	private QuoteController quoteController;
