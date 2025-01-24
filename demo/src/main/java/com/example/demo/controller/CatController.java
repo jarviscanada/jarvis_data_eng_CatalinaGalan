@@ -19,6 +19,11 @@ public class CatController {
   @Autowired
   public CatService catService;
 
+  @GetMapping("/")
+  public String greeting() {
+    return "Welcome to the Cat App";
+  }
+
   @PostMapping("/cat")
   public Cat newCat(Cat cat, String name, String age) {
 //    cat.setId();

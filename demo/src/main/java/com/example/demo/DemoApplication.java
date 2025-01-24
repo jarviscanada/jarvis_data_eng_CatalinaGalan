@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+
 
 @SpringBootApplication
 public class DemoApplication implements CommandLineRunner {
@@ -24,7 +21,8 @@ public class DemoApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Cat cat = new Cat();
+		catController.greeting();
+    Cat cat = new Cat();
 		Cat cat2 = new Cat();
 		String catName = "LunaBug";
 		String catName2 = "Suertuda";
