@@ -14,10 +14,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
+import org.springframework.context.annotation.PropertySource;
 
 
-@SpringBootApplication(exclude =  {JdbcTemplateAutoConfiguration.class,
-		DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
+@SpringBootApplication(exclude =  {JdbcTemplateAutoConfiguration.class})
+//		DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 public class TradingApplication implements CommandLineRunner {
 
 	private Logger logger = LoggerFactory.getLogger(AppConfig.class);
@@ -38,7 +39,7 @@ public class TradingApplication implements CommandLineRunner {
 		System.out.println("Trading App running...");
 		try {
 			appController.greeting();
-			quoteController.getQuote("IBM");
+//			quoteController.getQuote("IBM");
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
