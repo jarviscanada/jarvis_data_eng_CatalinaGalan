@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration;
@@ -17,7 +18,8 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
 import org.springframework.context.annotation.PropertySource;
 
 
-@SpringBootApplication(exclude =  {JdbcTemplateAutoConfiguration.class})
+@SpringBootApplication
+@EnableAutoConfiguration(exclude =  {JdbcTemplateAutoConfiguration.class})
 //		DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 public class TradingApplication implements CommandLineRunner {
 

@@ -1,6 +1,7 @@
 package ca.jrvs.apps.trading.service;
 
 import ca.jrvs.apps.trading.model.AlphaQuote;
+import ca.jrvs.apps.trading.model.Quote;
 import ca.jrvs.apps.trading.repository.QuoteRepository;
 import ca.jrvs.apps.trading.util.MarketDataHttpHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,5 +34,11 @@ public class QuoteService {
         System.out.println("from QuoteService - caught Exception");
         throw e;
       }
+    }
+
+    public Quote saveQuote(AlphaQuote alphaQuote) {
+      Quote quote = new Quote();
+      quote.setTicker(alphaQuote.getTicker());
+      return quote;
     }
 }
