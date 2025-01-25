@@ -43,57 +43,77 @@ public class MarketDataHttpHelper {
    * @throws DataRetrievalFailureException if HTTP request failed
    */
   public Optional<AlphaQuote> findQuoteByTicker(String ticker) {
+
     String url = marketDataConfig.getHost() + ticker + "&apikey=" + marketDataConfig.getToken();
     String responseBody = null;
+
     try {
-      System.out.println("from MarketDataHttpHelper - findQuoteById: executeGetRequest(url)");
-      responseBody = executeGetRequest(url).get();
-    } catch (DataRetrievalFailureException | NoSuchElementException e) {
-      System.out.println("from MarketDataHttpHelper - caught DataRetrievalFailureException: findQuoteByTicker: executeGetRequest(url)");
-      throw new DataRetrievalFailureException(e.getMessage());
+      Optional<String> responseBodyOpt = executeGetRequest(url);
+      responseBody = responseBodyOpt.get();
+    }
+    catch (DataRetrievalFailureException e) {
+      System.out.println("from MarketDataHttpHelper - caught DataRetrievalFailureException: "
+          + "findQuoteByTicker: executeGetRequest(url)");
+      throw new DataRetrievalFailureException(e.toString());
     }
 
     try {
       objectMapper.configure(DeserializationFeature.UNWRAP_ROOT_VALUE, true);
       System.out.println("from MarketDataHttpHelper - findQuoteById: deserializing JSON");
+
       AlphaQuote alphaQuote = objectMapper.readValue(responseBody, AlphaQuote.class);
+
+      if (alphaQuote.getTicker() == null) {
+        throw new IllegalArgumentException("Invalid Ticker.");
+      }
+
       alphaQuote.setLastUpdated(Timestamp.from(Instant.now()));
-      System.out.println(alphaQuote);
       return Optional.of(alphaQuote);
+
     } catch (JsonProcessingException e) {
-      System.out.println(responseBody);
-      System.out.println("from MarketDataHttpHelper - caught JsonProcessingException: findQuoteByTicker: objectMapper.readValue()");
+      System.out.println("from MarketDataHttpHelper - caught JsonProcessingException: "
+          + "findQuoteByTicker: objectMapper.readValue()");
+
       if (responseBody.contains("Information")) {
         throw new ResponseStatusException(HttpStatus.PAYMENT_REQUIRED, responseBody);
+      } else if (responseBody.contains("Error")) {
+        throw new DataRetrievalFailureException(responseBody);
       }
-      throw new IllegalArgumentException("Invalid Ticker.");
     }
+
+    return Optional.empty();
   }
 
   /**
    * Execute a GET request and return http entity/body as a string
-   * Tip: use EntitiyUtils.toString to process HTTP entity
    *
    * @param url resource URL
    * @return http response body or Optional.empty for 404 response
    * @throws DataRetrievalFailureException if HTTP failed or status code is unexpected
    */
   private Optional<String> executeGetRequest(String url) {
+
     HttpGet getRequest = new HttpGet(url);
     CloseableHttpClient client = getHttpClient();
+
     try (CloseableHttpResponse response = client.execute(getRequest)) {
       HttpEntity entity = response.getEntity();
       int status = response.getCode();
-      System.out.println(
-          "from MarketDataHttpHelper - executeGet: response status code = " + status);
-      if (entity != null && status != 404) {
-        return Optional.of(EntityUtils.toString(entity));
+
+      System.out.println("from MarketDataHttpHelper: executeGet: "
+          + "response status code = " + status);
+
+      if (status == 404) {
+        return Optional.empty();
       }
-    } catch (ParseException | IOException e) {
-      System.out.println("from MarketDataHttpHelper - executeGet: DataRetrievalFailureException");
-      throw new DataRetrievalFailureException(e.getMessage());
+
+      return Optional.of(EntityUtils.toString(entity));
+
     }
-    return Optional.empty();
+    catch (ParseException | IOException e) {
+      System.out.println("from MarketDataHttpHelper - executeGet: DataRetrievalFailureException");
+      throw new DataRetrievalFailureException(e.toString());
+    }
   }
 
   /**

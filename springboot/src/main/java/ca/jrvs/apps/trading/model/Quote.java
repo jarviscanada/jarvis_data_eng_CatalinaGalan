@@ -63,9 +63,7 @@ public class Quote {
     this.askPrice = askPrice;
   }
 
-  public Integer getAskSize() {
-    return askSize;
-  }
+  public Integer getAskSize() { return askSize; }
 
   public void setAskSize(Integer askSize) {
     this.askSize = askSize;
