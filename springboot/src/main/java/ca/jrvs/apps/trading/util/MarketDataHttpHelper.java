@@ -44,7 +44,7 @@ public class MarketDataHttpHelper {
    */
   public Optional<AlphaQuote> findQuoteByTicker(String ticker) {
 
-    String url = marketDataConfig.getHost() + ticker + "&apikey=" + marketDataConfig.getToken();
+    String url = marketDataConfig.getHost() + ticker + "&apikey=" + marketDataConfig.getDemoToken();
     String responseBody = null;
 
     try {

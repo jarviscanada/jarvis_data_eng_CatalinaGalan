@@ -9,7 +9,9 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class QuoteService {
@@ -32,18 +34,28 @@ public class QuoteService {
    * @throws DataAccessException if unable to retrieve data
    * @throws IllegalArgumentException for invalid input
    */
-  public void updateMarketData(String ticker) {
+  public void updateMarketData(String ticker) throws ResourceNotFoundException, DataAccessException {
+
     Optional<Quote> quote = quoteRepository.findById(ticker);
+
     if (quote.isPresent()) {
       try {
-        findAlphaQuoteByTicker(quote.get().getTicker());
+        AlphaQuote alphaQuote = findAlphaQuoteByTicker(quote.get().getTicker());
+        Quote updatedQuote = buildQuoteFromAlphaQuote(alphaQuote);
+        saveQuote(updatedQuote);
       } catch (IllegalArgumentException e){
         throw new IllegalArgumentException(e.getMessage());
-      } catch (Exception e) {
-        throw e;
-//        throw new DataAccessException();
+      } catch (DataRetrievalFailureException | ResponseStatusException e) {
+        throw new ResourceNotFoundException(e.toString());
       }
-      saveQuote(quote.get());
+
+    } else {
+      throw new DataAccessException("Quote for ticker " + ticker + "not found.") {
+        @Override
+        public Throwable getRootCause() {
+          return super.getRootCause();
+        }
+      };
     }
   }
 
@@ -55,12 +67,14 @@ public class QuoteService {
    */
     public AlphaQuote findAlphaQuoteByTicker(String ticker) {
       if (ticker.isEmpty()) {
-        System.out.println("form QuoteService - Throwing IllegalArgumentException for empty ticker");
+        System.out.println(
+            "form QuoteService - Throwing IllegalArgumentException for empty ticker");
         throw new IllegalArgumentException("Empty ticker.");
       }
 
       try {
-        return httpHelper.findQuoteByTicker(ticker).get();
+        Optional<AlphaQuote> alphaQuoteOpt = httpHelper.findQuoteByTicker(ticker);
+        return alphaQuoteOpt.get();
       } catch (Exception e) {
         System.out.println("from QuoteService - caught Exception");
         throw e;
@@ -91,17 +105,21 @@ public class QuoteService {
    * Make sure to set a default value for number field(s)
    */
     protected static Quote buildQuoteFromAlphaQuote(AlphaQuote alphaQuote) {
+
       Double price = alphaQuote.getPrice();
       Double spread = price * 0.05;
       Double bidPrice = price - spread;
       Double askPrice = price + spread;
+
       Quote quote = new Quote();
+
       quote.setTicker(alphaQuote.getTicker());
       quote.setLastPrice(alphaQuote.getPrice());
       quote.setBidPrice(bidPrice);
       quote.setAskPrice(askPrice);
       quote.setBidSize(1000);
       quote.setAskSize(500);
+
       return quote;
     }
 
