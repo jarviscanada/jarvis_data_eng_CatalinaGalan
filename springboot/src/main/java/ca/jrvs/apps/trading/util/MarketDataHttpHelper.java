@@ -67,7 +67,7 @@ public class MarketDataHttpHelper {
         throw new IllegalArgumentException("Invalid Ticker.");
       }
 
-      alphaQuote.setLastUpdated(Timestamp.from(Instant.now()));
+//      alphaQuote.setLastUpdated(Timestamp.from(Instant.now()));
       return Optional.of(alphaQuote);
 
     } catch (JsonProcessingException e) {

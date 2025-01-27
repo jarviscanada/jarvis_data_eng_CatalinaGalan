@@ -1,9 +1,11 @@
 package ca.jrvs.apps.trading.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.sql.Timestamp;
 
 @Entity
 @Table(schema = "public")
@@ -22,6 +24,9 @@ public class Quote {
     private Double askPrice;
     @Column(nullable = false)
     private Integer askSize;
+    @Column(nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "EEE MMM dd HH:mm:ss zzz yyyy")
+    private Timestamp lastUpdated;
 
   public String getTicker() {
     return ticker;
@@ -67,5 +72,26 @@ public class Quote {
 
   public void setAskSize(Integer askSize) {
     this.askSize = askSize;
+  }
+
+  public Timestamp getLastUpdated() {
+    return lastUpdated;
+  }
+
+  public void setLastUpdated(Timestamp lastUpdated) {
+    this.lastUpdated = lastUpdated;
+  }
+
+  @Override
+  public String toString() {
+    return "Quote{" +
+        "ticker='" + ticker + '\'' +
+        ", lastPrice=" + lastPrice +
+        ", bidPrice=" + bidPrice +
+        ", bidSize=" + bidSize +
+        ", askPrice=" + askPrice +
+        ", askSize=" + askSize +
+        ", lastUpdated=" + lastUpdated +
+        '}';
   }
 }

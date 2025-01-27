@@ -5,6 +5,9 @@ import ca.jrvs.apps.trading.model.Quote;
 import ca.jrvs.apps.trading.repository.QuoteRepository;
 import ca.jrvs.apps.trading.util.MarketDataHttpHelper;
 import ca.jrvs.apps.trading.util.ResourceNotFoundException;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,21 +39,24 @@ public class QuoteService {
    */
   public void updateMarketData(String ticker) throws ResourceNotFoundException, DataAccessException {
 
+    Quote updatedQuote;
+
+    try {
+//      AlphaQuote alphaQuote = findAlphaQuoteByTicker(ticker);
+//      updatedQuote = buildQuoteFromAlphaQuote(alphaQuote);
+      updatedQuote = createNewQuote(ticker);
+    } catch (IllegalArgumentException e){
+      throw new IllegalArgumentException(e.getMessage());
+    } catch (DataRetrievalFailureException | ResponseStatusException e) {
+      throw new ResourceNotFoundException(e.toString());
+    }
+
     Optional<Quote> quote = quoteRepository.findById(ticker);
 
     if (quote.isPresent()) {
-      try {
-        AlphaQuote alphaQuote = findAlphaQuoteByTicker(quote.get().getTicker());
-        Quote updatedQuote = buildQuoteFromAlphaQuote(alphaQuote);
         saveQuote(updatedQuote);
-      } catch (IllegalArgumentException e){
-        throw new IllegalArgumentException(e.getMessage());
-      } catch (DataRetrievalFailureException | ResponseStatusException e) {
-        throw new ResourceNotFoundException(e.toString());
-      }
-
     } else {
-      throw new DataAccessException("Quote for ticker " + ticker + "not found.") {
+      throw new DataAccessException("Quote for ticker " + ticker + " not found in database.") {
         @Override
         public Throwable getRootCause() {
           return super.getRootCause();
@@ -89,6 +95,7 @@ public class QuoteService {
    */
   public Quote saveQuote(Quote quote) {
     quoteRepository.save(quote);
+    quote.setLastUpdated(Timestamp.from(Instant.now()));
     return quoteRepository.findById(quote.getTicker()).get();
   }
 
@@ -99,10 +106,11 @@ public class QuoteService {
   public List<Quote> findAllQuotes() {
     return quoteRepository.findAll();
   }
+
   /**
-   * Helper method to map an IexQuote to a Quote entity
-   * Note: 'iexQuote.getLatestPrice() == null' if the stock market is closed
-   * Make sure to set a default value for number field(s)
+   * Helper method to map an AlphaQuote to a Quote entity
+   * Note: 'alphaQuote.getPrice() == null' if the stock market is closed
+   * Default values for number field(s)
    */
     protected static Quote buildQuoteFromAlphaQuote(AlphaQuote alphaQuote) {
 
@@ -119,6 +127,7 @@ public class QuoteService {
       quote.setAskPrice(askPrice);
       quote.setBidSize(1000);
       quote.setAskSize(500);
+      quote.setLastUpdated(Timestamp.from(alphaQuote.getLatestTradingDay()));
 
       return quote;
     }
@@ -130,13 +139,14 @@ public class QuoteService {
    * @return Quote
    * @throws IllegalArgumentException if ticker is not found in Alpha Vantage
    */
-    protected Quote saveNewQuote(String ticker) {
+    protected Quote createNewQuote(String ticker) {
       try {
         AlphaQuote alphaQuote = findAlphaQuoteByTicker(ticker);
-        return buildQuoteFromAlphaQuote(alphaQuote);
+        Quote newQuote = buildQuoteFromAlphaQuote(alphaQuote);
+        newQuote.setLastUpdated(Timestamp.from(Instant.now()));
+        return newQuote;
       } catch (IllegalArgumentException e) {
-//        throw new ResourceNotFoundException(e. getMessage());
-        throw e;
+        throw new IllegalArgumentException(e.getMessage());
       }
     }
 }

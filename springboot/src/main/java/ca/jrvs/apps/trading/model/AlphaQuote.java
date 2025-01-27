@@ -1,12 +1,10 @@
 package ca.jrvs.apps.trading.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import java.time.Instant;
 import java.util.Date;
-import java.sql.Timestamp;
 
 /**
  * https://www.alphavantage.co/documentation/#latestprice
@@ -24,8 +22,8 @@ public class AlphaQuote {
   private double change;
   private String changePercent;
   private Date latestTradingDay;
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "EEE MMM dd HH:mm:ss zzz yyyy")
-  private Timestamp lastUpdated;
+//  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "EEE MMM dd HH:mm:ss zzz yyyy")
+//  private Timestamp lastUpdated;
 
   @JsonGetter("Ticker")
   public String getTicker() {
@@ -88,8 +86,8 @@ public class AlphaQuote {
   }
 
   @JsonGetter("Latest Trading Day")
-  public String getLatestTradingDay() {
-    return latestTradingDay.toString();
+  public Instant getLatestTradingDay() {
+    return latestTradingDay.toInstant();
   }
 
   @JsonSetter("07. latest trading day")
@@ -127,14 +125,14 @@ public class AlphaQuote {
     this.changePercent = changePercent;
   }
 
-  @JsonGetter("Last Updated")
-  public Timestamp getLastUpdated() {
-    return lastUpdated;
-  }
-
-  public void setLastUpdated(Timestamp lastUpdated) {
-    this.lastUpdated = lastUpdated;
-  }
+//  @JsonGetter("Last Updated")
+//  public Timestamp getLastUpdated() {
+//    return lastUpdated;
+//  }
+//
+//  public void setLastUpdated(Timestamp lastUpdated) {
+//    this.lastUpdated = lastUpdated;
+//  }
 
   @Override
   public String toString() {
@@ -149,7 +147,7 @@ public class AlphaQuote {
         ", close=" + previousClose +
         ", change=" + change +
         ", change percent=" + changePercent +
-        ", last updated=" + lastUpdated + '\'' +
+//        ", last updated=" + lastUpdated + '\'' +
         '}';
   }
 }

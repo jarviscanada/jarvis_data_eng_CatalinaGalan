@@ -8,6 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import ca.jrvs.apps.trading.model.AlphaQuote;
 import ca.jrvs.apps.trading.model.Quote;
 import com.sun.source.tree.AssertTree;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
 import org.aspectj.lang.annotation.After;
 import org.junit.jupiter.api.AfterAll;
@@ -35,6 +37,7 @@ public class QuoteRepositoryIntTest {
     savedQuote.setBidPrice(200.05);
     savedQuote.setBidSize(10);
     savedQuote.setLastPrice(200.00);
+    savedQuote.setLastUpdated(Timestamp.from(Instant.now()));
     quoteRepository.save(savedQuote);
   }
 
