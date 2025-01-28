@@ -1,6 +1,6 @@
 package ca.jrvs.apps.trading.util;
 
-public class ResourceNotFoundException extends Throwable {
+public class ResourceNotFoundException extends Exception {
 
   public ResourceNotFoundException () {}
 

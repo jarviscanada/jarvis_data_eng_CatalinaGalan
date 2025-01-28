@@ -90,7 +90,7 @@ class QuoteServiceIntTest {
 
   @Test
   void findAllQuotesTest() {
-    Quote newQuote = quoteService.createNewQuote("300135.SHZ");
+    Quote newQuote = quoteService.saveQuote("300135.SHZ");
     quoteService.saveQuote(newQuote);
     List<Quote> allSavedQuotes = quoteService.findAllQuotes();
     assertEquals(2, allSavedQuotes.size());
@@ -110,7 +110,7 @@ class QuoteServiceIntTest {
   @Test
   void createNewQuoteValidDemoTickerTest() {
     String validTicker = "300135.SHZ";
-    Quote newQuote = quoteService.createNewQuote(validTicker);
+    Quote newQuote = quoteService.saveQuote(validTicker);
     System.out.println(newQuote);
     assertEquals("300135.SHZ", newQuote.getTicker());
   }
@@ -118,12 +118,12 @@ class QuoteServiceIntTest {
   @Test
   void createNewQuoteInvalidTickerTest() {
     String invalidTicker = "AppleInc.";
-    assertThrows(IllegalArgumentException.class, () -> quoteService.createNewQuote(invalidTicker));
+    assertThrows(IllegalArgumentException.class, () -> quoteService.saveQuote(invalidTicker));
   }
 
   @Test
   void createNewQuoteEmptyTickerTest() {
     String invalidTicker = "";
-    assertThrows(IllegalArgumentException.class, () -> quoteService.createNewQuote(invalidTicker));
+    assertThrows(IllegalArgumentException.class, () -> quoteService.saveQuote(invalidTicker));
   }
 }

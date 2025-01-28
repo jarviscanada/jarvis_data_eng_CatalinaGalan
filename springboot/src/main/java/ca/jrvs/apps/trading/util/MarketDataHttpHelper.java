@@ -64,7 +64,7 @@ public class MarketDataHttpHelper {
       AlphaQuote alphaQuote = objectMapper.readValue(responseBody, AlphaQuote.class);
 
       if (alphaQuote.getTicker() == null) {
-        throw new IllegalArgumentException("Invalid Ticker.");
+        throw new IllegalArgumentException("Ticker not found in Alpha Vantage.");
       }
 
 //      alphaQuote.setLastUpdated(Timestamp.from(Instant.now()));
@@ -108,7 +108,6 @@ public class MarketDataHttpHelper {
       }
 
       return Optional.of(EntityUtils.toString(entity));
-
     }
     catch (ParseException | IOException e) {
       System.out.println("from MarketDataHttpHelper - executeGet: DataRetrievalFailureException");

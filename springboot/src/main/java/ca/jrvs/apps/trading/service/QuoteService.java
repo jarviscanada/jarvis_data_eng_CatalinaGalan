@@ -37,26 +37,26 @@ public class QuoteService {
    * @throws DataAccessException if unable to retrieve data
    * @throws IllegalArgumentException for invalid input
    */
-  public void updateMarketData(String ticker) throws ResourceNotFoundException, DataAccessException {
+  public Quote updateMarketData(String ticker) throws ResourceNotFoundException, DataAccessException {
 
     Quote updatedQuote;
-
-    try {
-//      AlphaQuote alphaQuote = findAlphaQuoteByTicker(ticker);
-//      updatedQuote = buildQuoteFromAlphaQuote(alphaQuote);
-      updatedQuote = createNewQuote(ticker);
-    } catch (IllegalArgumentException e){
-      throw new IllegalArgumentException(e.getMessage());
-    } catch (DataRetrievalFailureException | ResponseStatusException e) {
-      throw new ResourceNotFoundException(e.toString());
-    }
-
     Optional<Quote> quote = quoteRepository.findById(ticker);
 
-    if (quote.isPresent()) {
-        saveQuote(updatedQuote);
-    } else {
-      throw new DataAccessException("Quote for ticker " + ticker + " not found in database.") {
+    try {
+      updatedQuote = saveQuote(ticker);
+      if (quote.isPresent()) {
+          return saveQuote(updatedQuote);
+      } else {
+        throw new IllegalArgumentException("Invalid Ticker: "
+            + "Quote for ticker " + ticker + " not found in database.");
+      }
+    } catch (IllegalArgumentException e) {
+      if (e.getMessage().contains("Alpha Vantage")) {
+        throw new ResourceNotFoundException(e.getMessage(), e);
+      }
+      throw new IllegalArgumentException(e.getMessage());
+    } catch (DataRetrievalFailureException e) {
+      throw new DataAccessException(e.toString()) {
         @Override
         public Throwable getRootCause() {
           return super.getRootCause();
@@ -75,7 +75,7 @@ public class QuoteService {
       if (ticker.isEmpty()) {
         System.out.println(
             "form QuoteService - Throwing IllegalArgumentException for empty ticker");
-        throw new IllegalArgumentException("Empty ticker.");
+        throw new IllegalArgumentException("Ticker cannot be empty.");
       }
 
       try {
@@ -139,7 +139,7 @@ public class QuoteService {
    * @return Quote
    * @throws IllegalArgumentException if ticker is not found in Alpha Vantage
    */
-    protected Quote createNewQuote(String ticker) {
+  public Quote saveQuote(String ticker) {
       try {
         AlphaQuote alphaQuote = findAlphaQuoteByTicker(ticker);
         Quote newQuote = buildQuoteFromAlphaQuote(alphaQuote);
