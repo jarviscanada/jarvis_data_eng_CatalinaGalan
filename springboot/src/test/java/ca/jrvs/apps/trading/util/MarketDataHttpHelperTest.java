@@ -3,10 +3,8 @@ package ca.jrvs.apps.trading.util;
 import static org.junit.jupiter.api.Assertions.*;
 
 import ca.jrvs.apps.trading.model.AlphaQuote;
-import ca.jrvs.apps.trading.model.MarketDataConfig;
+import ca.jrvs.apps.trading.config.MarketDataConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.Optional;
-import net.bytebuddy.asm.Advice.Thrown;
 import org.apache.hc.client5.http.io.HttpClientConnectionManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

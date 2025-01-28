@@ -1,20 +1,16 @@
 package ca.jrvs.apps.trading.util;
 
 import ca.jrvs.apps.trading.model.AlphaQuote;
-import ca.jrvs.apps.trading.model.MarketDataConfig;
+import ca.jrvs.apps.trading.config.MarketDataConfig;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.time.Instant;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
-import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager;
 import org.apache.hc.client5.http.io.HttpClientConnectionManager;
 import org.apache.hc.core5.http.HttpEntity;
 import org.apache.hc.core5.http.ParseException;

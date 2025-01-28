@@ -1,14 +1,11 @@
 package ca.jrvs.apps.trading.config;
 
-import ca.jrvs.apps.trading.model.MarketDataConfig;
 import ca.jrvs.apps.trading.util.MarketDataHttpHelper;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import javax.sql.DataSource;
 import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager;
 import org.apache.hc.client5.http.io.HttpClientConnectionManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 @Configuration
 public class AppConfig {

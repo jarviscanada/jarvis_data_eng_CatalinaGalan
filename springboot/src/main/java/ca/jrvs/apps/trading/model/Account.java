@@ -3,7 +3,6 @@ package ca.jrvs.apps.trading.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -20,7 +19,7 @@ public class Account {
   private Trader trader;
 
   @Column(nullable = false)
-  private double ammount;
+  private double amount;
 
 
   public Long getId() {
@@ -31,12 +30,12 @@ public class Account {
     this.id = id;
   }
 
-  public double getAmmount() {
-    return ammount;
+  public double getAmount() {
+    return amount;
   }
 
-  public void setAmmount(double ammount) {
-    this.ammount = ammount;
+  public void setAmount(double amount) {
+    this.amount = amount;
   }
 
   public Trader getTrader() {
