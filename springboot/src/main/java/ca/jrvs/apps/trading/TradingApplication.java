@@ -3,6 +3,9 @@ package ca.jrvs.apps.trading;
 import ca.jrvs.apps.trading.config.AppConfig;
 import ca.jrvs.apps.trading.controller.AppController;
 import ca.jrvs.apps.trading.controller.QuoteController;
+import ca.jrvs.apps.trading.controller.TraderAccountController;
+import ca.jrvs.apps.trading.model.Trader;
+import java.sql.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +29,9 @@ public class TradingApplication implements CommandLineRunner {
 	@Autowired
 	private QuoteController quoteController;
 
+	@Autowired
+	private TraderAccountController traderAccountController;
+
 	public static void main(String[] args) {
 		SpringApplication app = new SpringApplication(TradingApplication.class);
 		app.run(args);
@@ -36,6 +42,8 @@ public class TradingApplication implements CommandLineRunner {
 		System.out.println("Trading App running...");
 		try {
 			appController.greeting();
+			Trader trader = traderAccountController.createTrader("Carlos", "Fuentes", "1981-10-10",
+					"Spain", "carlos@carlos.carlos");
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}

@@ -20,10 +20,6 @@ public class Trader {
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Long id;
 
-  @OneToOne(mappedBy = "trader", cascade = CascadeType.ALL)
-  @PrimaryKeyJoinColumn
-  private Account account;
-
   @Column(nullable = false)
   private String firstName;
 
@@ -31,14 +27,19 @@ public class Trader {
   private String lastName;
 
   @Column(nullable = false)
-  @Temporal(TemporalType.DATE)
-  private Date dob;
+//  @Temporal(TemporalType.DATE)
+  private String dob;
 
   @Column(nullable = false)
   private String country;
 
   @Column(nullable = false)
   private String email;
+
+  @OneToOne(mappedBy = "trader", cascade = CascadeType.ALL)
+  @PrimaryKeyJoinColumn
+  private Account account;
+
 
   public Long getId() {
     return id;
@@ -64,11 +65,11 @@ public class Trader {
     this.lastName = lastName;
   }
 
-  public Date getDob() {
+  public String getDob() {
     return dob;
   }
 
-  public void setDob(Date dob) {
+  public void setDob(String dob) {
     this.dob = dob;
   }
 

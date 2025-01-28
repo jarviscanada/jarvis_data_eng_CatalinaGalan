@@ -3,6 +3,7 @@ package ca.jrvs.apps.trading.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -14,12 +15,13 @@ public class Account {
   @Column
   private Long id;
 
-  @OneToOne
-  @MapsId
-  private Trader trader;
-
   @Column(nullable = false)
   private double amount;
+
+  @OneToOne
+  @JoinColumn(name = "id")
+  @MapsId
+  private Trader trader;
 
 
   public Long getId() {

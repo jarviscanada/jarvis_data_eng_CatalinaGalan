@@ -18,10 +18,20 @@ public class TraderAccountView {
 
   private String traderFirstName;
   private String traderLastName;
-  private Date traderDob;
+  private String traderDob;
   private String traderCountry;
   private String traderEmail;
-  private Double accountAmount;
+
+  private Account traderAccount;
+  private Double traderAccountAmount;
+
+  public Account getTraderAccount() {
+    return traderAccount;
+  }
+
+  public Double getTraderAccountAmount() {
+    return traderAccountAmount;
+  }
 
   public Long getId() {
     return id;
@@ -39,7 +49,7 @@ public class TraderAccountView {
     return traderLastName;
   }
 
-  public Date getTraderDob() {
+  public String getTraderDob() {
     return traderDob;
   }
 
@@ -51,7 +61,4 @@ public class TraderAccountView {
     return traderEmail;
   }
 
-  public Double getAccountAmount() {
-    return accountAmount;
-  }
 }
