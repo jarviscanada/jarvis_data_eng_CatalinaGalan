@@ -5,6 +5,7 @@ import ca.jrvs.apps.trading.model.Quote;
 import ca.jrvs.apps.trading.service.QuoteService;
 import ca.jrvs.apps.trading.util.ResourceNotFoundException;
 import ca.jrvs.apps.trading.util.ResponseExceptionUtil;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.http.HttpStatus;
@@ -36,10 +37,10 @@ public class QuoteController {
     }
   }
 
-  @PutMapping("/")
+  @PutMapping("/update/{ticker}")
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
-  public Quote updateQuoteMarketData(String ticker) {
+  public Quote updateQuoteMarketData(@PathVariable String ticker) {
     try {
       return quoteService.updateMarketData(ticker);
     } catch (Exception e) {
@@ -52,7 +53,19 @@ public class QuoteController {
   @ResponseBody
   public Quote createNewQuote(@PathVariable String ticker) {
     try {
-      return quoteService.saveQuote(ticker);
+      Quote newQuote = quoteService.saveQuote(ticker);
+      return quoteService.saveQuote(newQuote);
+    } catch (Exception e) {
+      throw ResponseExceptionUtil.getResponseStatusException(e);
+    }
+  }
+
+  @GetMapping("/dailyList")
+  @ResponseStatus(HttpStatus.OK)
+  @ResponseBody
+  public List<Quote> getDailyList() {
+    try {
+      return quoteService.findAllQuotes();
     } catch (Exception e) {
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }

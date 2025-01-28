@@ -1,5 +1,6 @@
 package ca.jrvs.apps.trading.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
@@ -22,7 +23,6 @@ public class AlphaQuote {
   private double change;
   private String changePercent;
   private Date latestTradingDay;
-//  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "EEE MMM dd HH:mm:ss zzz yyyy")
 //  private Timestamp lastUpdated;
 
   @JsonGetter("Ticker")
@@ -86,8 +86,9 @@ public class AlphaQuote {
   }
 
   @JsonGetter("Latest Trading Day")
-  public Instant getLatestTradingDay() {
-    return latestTradingDay.toInstant();
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "EEE MMM dd HH:mm:ss zzz yyyy")
+  public Date getLatestTradingDay() {
+    return latestTradingDay;
   }
 
   @JsonSetter("07. latest trading day")

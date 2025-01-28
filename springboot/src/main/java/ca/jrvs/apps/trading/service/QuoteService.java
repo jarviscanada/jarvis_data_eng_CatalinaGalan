@@ -48,7 +48,7 @@ public class QuoteService {
           return saveQuote(updatedQuote);
       } else {
         throw new IllegalArgumentException("Invalid Ticker: "
-            + "Quote for ticker " + ticker + " not found in database.");
+            + "Quote for ticker " + ticker + " not found in Daily List.");
       }
     } catch (IllegalArgumentException e) {
       if (e.getMessage().contains("Alpha Vantage")) {
@@ -82,7 +82,7 @@ public class QuoteService {
         Optional<AlphaQuote> alphaQuoteOpt = httpHelper.findQuoteByTicker(ticker);
         return alphaQuoteOpt.get();
       } catch (Exception e) {
-        System.out.println("from QuoteService - caught Exception");
+        System.out.println("from QuoteService - caught Exception from MarketDataHttpHelper: findQuoteByTicker");
         throw e;
       }
     }
@@ -127,7 +127,7 @@ public class QuoteService {
       quote.setAskPrice(askPrice);
       quote.setBidSize(1000);
       quote.setAskSize(500);
-      quote.setLastUpdated(Timestamp.from(alphaQuote.getLatestTradingDay()));
+      quote.setLastUpdated(Timestamp.from(alphaQuote.getLatestTradingDay().toInstant()));
 
       return quote;
     }

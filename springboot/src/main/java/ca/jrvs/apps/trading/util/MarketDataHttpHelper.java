@@ -64,7 +64,7 @@ public class MarketDataHttpHelper {
       AlphaQuote alphaQuote = objectMapper.readValue(responseBody, AlphaQuote.class);
 
       if (alphaQuote.getTicker() == null) {
-        throw new IllegalArgumentException("Ticker not found in Alpha Vantage.");
+        throw new IllegalArgumentException("Symbol not found in Alpha Vantage. Please provide a valid Ticker.");
       }
 
 //      alphaQuote.setLastUpdated(Timestamp.from(Instant.now()));
