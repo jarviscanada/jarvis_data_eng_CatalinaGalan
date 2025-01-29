@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Cat;
-import com.example.demo.service.CatService;
+import com.example.demo.service.CatOwnerService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class CatController {
 
   @Autowired
-  public CatService catService;
+  public CatOwnerService catOwnerService;
 
   @GetMapping("/")
   public String greeting() {
@@ -25,31 +25,31 @@ public class CatController {
   }
 
   @PostMapping("/cat")
-  public Cat newCat(Cat cat, String name, String age) {
-//    cat.setId();
+  public Cat newCat(String name, String age) {
+    Cat cat = new Cat();
     cat.setName(name);
     cat.setAge(age);
     System.out.println("New Cat Created!");
-    return catService.saveNewCat(cat);
+    return catOwnerService.saveNewCat(cat);
   }
 
   @GetMapping("/cats")
   public List<Cat> findAllCats() {
-    return catService.listAllCats();
+    return catOwnerService.listAllCats();
   }
 
-  @GetMapping("/cat/{catId}")
+  @GetMapping("/cat/{catName}")
   @ResponseBody
-  public Cat showCat(@PathVariable int catId) {
-    return catService.getCat(catId);
+  public Cat showCat(@PathVariable String catName) {
+    return catOwnerService.getCat(catName);
   }
 
   public Cat changeCatName(Cat cat, String name) {
-    return catService.updateCatName(cat, name);
+    return catOwnerService.updateCatName(cat, name);
   }
 
   public void deleteCat(Cat cat) {
-    catService.deleteCat(cat);
+    catOwnerService.deleteCat(cat);
     System.out.println("Deleted from db: " + cat);
   }
 }

@@ -22,19 +22,17 @@ public class DemoApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		catController.greeting();
-    Cat cat = new Cat();
-		Cat cat2 = new Cat();
 		String catName = "LunaBug";
 		String catName2 = "Suertuda";
 		String catAge = "5";
 		String catAge2 = "Very old!";
-		catController.newCat(cat, catName, catAge);
+		Cat cat = catController.newCat(catName, catAge);
 		System.out.println(cat);
-		catController.newCat(cat2, catName2, catAge2);
+		Cat cat2 = catController.newCat(catName2, catAge2);
 		System.out.println(cat2);
-		catController.showCat(cat.getId());
+		catController.showCat(cat.getName());
 		catController.findAllCats();
-		catController.changeCatName(cat, "Luna");
-		catController.deleteCat(cat2);
+//		catController.changeCatName(cat, "Luna");
+//		catController.deleteCat(cat2);
 	}
 }

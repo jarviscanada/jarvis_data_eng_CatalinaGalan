@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Cat {
@@ -11,7 +12,19 @@ public class Cat {
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private int id;
 
-  String name;
+  private String name;
+  private String age;
+
+  @OneToOne(mappedBy = "cat")
+  private Owner owner;
+
+  public Owner getOwner() {
+    return owner;
+  }
+
+  public void setOwner(Owner owner) {
+    this.owner = owner;
+  }
 
   public String getAge() {
     return age;
@@ -20,8 +33,6 @@ public class Cat {
   public void setAge(String age) {
     this.age = age;
   }
-
-  String age;
 
   public int getId() {
     return id;
@@ -44,6 +55,7 @@ public class Cat {
         "id=" + id +
         ", name='" + name + '\'' +
         ", age='" + age + '\'' +
+        ", owner=" + owner +
         '}';
   }
 }
