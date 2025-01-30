@@ -13,27 +13,26 @@ skills:
   proficient:
     - Ruby
     - Ruby on Rails
-    - HTML/CSS
-    - Tailwind
+    - Java
     - Agile/Scrum
     - Git/GitHub
   # At least 5 skills
   competent:
     - SQL/PostgreSQL
-    - Java
-    - Linux/Bash
-    - Python
-    - JavaScript
     - Docker
+    - Maven
+    - Linux/Bash
+    - JavaScript
+    - HTML/CSS
+    - Tailwind
 
   # At least 5 skills
   familiar:
-    - Maven
+    - Spring Boot
     - GCP
     - AWS
+    - Python
     - React
-    - Kubernetes
-    - C
 
 # List of Jarvis projects
 jarvis_projects:
@@ -50,9 +49,9 @@ jarvis_projects:
   - name: "Core Java Apps"
     git_url: "/core_java"
     description:
-  #     - "Twitter App: Curabitur laoreet tristique leo, eget suscipit nisi. Sed in sodales ex. Maecenas vitae tincidunt dui, et eleifend quam."
-       - "Grep App: This Java app mimics the functionality of the Linux command 'grep', which is used to search for a string or regex pattern within a file and returns all lines that contain the match. This app is designed to be run directly in the command line, outputting the results to a given file."
-       - "JDBC App: TBD"
+      #     - "Twitter App: Curabitur laoreet tristique leo, eget suscipit nisi. Sed in sodales ex. Maecenas vitae tincidunt dui, et eleifend quam."
+      - "Grep App: This Java app mimics the functionality of the Linux command 'grep', which is used to search for a string or regex pattern within a file and returns all lines that contain the match. This app is designed to be run directly in the command line, outputting the results to a given file."
+      - "JDBC App: Implementing JDBC, OkHttpHelper and PostgreSQL, the Stock Quote App is designed to simulate buying and selling stock based on real time data fetched from the Alpha Vantage API."
   # - name: "Springboot App"
   #   git_url: "/springboot"
   #   description: ""
@@ -72,7 +71,7 @@ jarvis_projects:
 # List of personal or academic projects
 # Feel free to add more projects
 highlighted_projects:
-    #project name
+  #project name
   - name: "Frontrow"
     #URL is optional
     git_url: "https://github.com/catagalan-mtl/frontrow-cat"
@@ -90,7 +89,7 @@ professional_experience:
   - title: "Guest lecturer"
     company: "Le Wagon Montreal"
     duration: "2024 - ongoing"
-      # The project description must start with an action verb (https://bit.ly/3guO98u)
+    # The project description must start with an action verb (https://bit.ly/3guO98u)
     description: "Conduct occasional introductory programming workshops to teach foundational coding skills to beginners in JavaScript and Ruby."
   - title: "Junior Software Developer"
     company: "Bellow Media"
@@ -114,24 +113,24 @@ education:
     department: "Music Theory and Composition"
     # optional
     awards_achievements:
-      - "Campaign for the New Millenium Scholarship"
+      - "Campaign for the New Millennium Scholarship"
       - "Ruth Leith Award in Classical Music Performance"
       - "Graduated with Great Distinction."
       - "GPA: 4.14/4.30"
 
 #Optional section
 others:
-    #category
-#  - title: "Certificates"
-    #list of items
-#    bullets:
-#      - "Udacity Machine Learning (2019)"
+  #category
+  #  - title: "Certificates"
+  #list of items
+  #    bullets:
+  #      - "Udacity Machine Learning (2019)"
   - title: "Awards"
     bullets:
       - "Winner of the Concordia Composition Competition in 2018."
   - title: "Activities/Hobbies"
     bullets:
-#      - "Guest lecturer for introductory workshops in JavaScript and Ruby at Le Wagon Montreal"
+      - "Volunteer at the Montreal ConFoo Developer Conference 2024."
       - "Member of OPCM classical choir. Contralto voice."
       - "Was a member of the organizing committee for the Women in Music Conference in Concordia University, 2018."
       - "Volunteered as a band coach for Rock Camp Montreal in 2021, a summer camp for female and non-gendered youth."

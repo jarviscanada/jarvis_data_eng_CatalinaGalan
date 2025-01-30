@@ -2,7 +2,7 @@
   "education": [
     {
       "awards_achievements": [
-        "Campaign for the New Millenium Scholarship",
+        "Campaign for the New Millennium Scholarship",
         "Ruth Leith Award in Classical Music Performance",
         "Graduated with Great Distinction.",
         "GPA: 4.14/4.30"
@@ -40,7 +40,7 @@
     {
       "description": [
         "Grep App: This Java app mimics the functionality of the Linux command 'grep', which is used to search for a string or regex pattern within a file and returns all lines that contain the match. This app is designed to be run directly in the command line, outputting the results to a given file.",
-        "JDBC App: TBD"
+        "JDBC App: Implementing JDBC, OkHttpHelper and PostgreSQL, the Stock Quote App is designed to simulate buying and selling stock based on real time data fetched from the Alpha Vantage API."
       ],
       "git_url": "/core_java",
       "name": "Core Java Apps"
@@ -56,6 +56,7 @@
     },
     {
       "bullets": [
+        "Volunteer at the Montreal ConFoo Developer Conference 2024.",
         "Member of OPCM classical choir. Contralto voice.",
         "Was a member of the organizing committee for the Women in Music Conference in Concordia University, 2018.",
         "Volunteered as a band coach for Rock Camp Montreal in 2021, a summer camp for female and non-gendered youth."
@@ -92,25 +93,24 @@
   "skills": {
     "competent": [
       "SQL/PostgreSQL",
-      "Java",
+      "Docker",
+      "Maven",
       "Linux/Bash",
-      "Python",
       "JavaScript",
-      "Docker"
+      "HTML/CSS",
+      "Tailwind"
     ],
     "familiar": [
-      "Maven",
+      "Spring Boot",
       "GCP",
       "AWS",
-      "React",
-      "Kubernetes",
-      "C"
+      "Python",
+      "React"
     ],
     "proficient": [
       "Ruby",
       "Ruby on Rails",
-      "HTML/CSS",
-      "Tailwind",
+      "Java",
       "Agile/Scrum",
       "Git/GitHub"
     ]
