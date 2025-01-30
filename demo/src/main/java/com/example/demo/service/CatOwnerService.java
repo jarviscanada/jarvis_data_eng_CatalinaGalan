@@ -1,7 +1,9 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Cat;
+import com.example.demo.entity.Owner;
 import com.example.demo.repository.CatRepository;
+import com.example.demo.repository.OwnerRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,15 +15,28 @@ public class CatOwnerService {
   @Autowired
   private CatRepository catRepository;
 
-  public Cat saveNewCat(Cat cat) {
+  @Autowired
+  private OwnerRepository ownerRepository;
+
+  public Cat saveCat(Cat cat) {
     return catRepository.save(cat);
   }
 
-  public Cat saveNewCat(String name, String age) {
+  public Owner saveOwner(Owner owner) {return ownerRepository.save(owner); }
+
+  public Cat saveCat(String name, String age) {
     Cat cat = new Cat();
     cat.setName(name);
     cat.setAge(age);
-    return catRepository.save(cat);
+    return saveCat(cat);
+  }
+
+  public Owner saveOwner(Cat cat) {
+    Owner owner = new Owner();
+    owner.setCat(cat);
+//    owner.setId(cat.getId());
+    owner.setName(cat.getName() + "'s Owner");
+    return saveOwner(owner);
   }
 
   public Cat getCat(String name) {
@@ -33,11 +48,11 @@ public class CatOwnerService {
     return catRepository.findAll();
   }
 
-  public Cat updateCatName(Cat cat, String name) {
-    Cat catDb = catRepository.findById(cat.getId()).get();
-    catDb.setName(name);
-    return catRepository.save(catDb);
-  }
+//  public Cat updateCatAge(Cat cat, String age) {
+//    Cat catDb = catRepository.findByName(cat.getName()).get();
+//    catDb.setAge(age);
+//    return saveCat(catDb);
+//  }
 
   public void deleteCat(Cat cat) {
     catRepository.delete(cat);

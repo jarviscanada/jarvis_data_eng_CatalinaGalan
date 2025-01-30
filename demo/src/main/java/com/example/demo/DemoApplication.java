@@ -1,6 +1,6 @@
 package com.example.demo;
 
-import com.example.demo.controller.CatController;
+import com.example.demo.controller.CatOwnerController;
 import com.example.demo.entity.Cat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -12,7 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class DemoApplication implements CommandLineRunner {
 
 	@Autowired
-	public CatController catController;
+	public CatOwnerController catOwnerController;
 
 	public static void main(String[] args) {
 		SpringApplication app = new SpringApplication(DemoApplication.class);
@@ -21,18 +21,16 @@ public class DemoApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		catController.greeting();
+		catOwnerController.greeting();
 		String catName = "LunaBug";
 		String catName2 = "Suertuda";
 		String catAge = "5";
 		String catAge2 = "Very old!";
-		Cat cat = catController.newCat(catName, catAge);
+		Cat cat = catOwnerController.newCat(catName, catAge);
 		System.out.println(cat);
-		Cat cat2 = catController.newCat(catName2, catAge2);
-		System.out.println(cat2);
-		catController.showCat(cat.getName());
-		catController.findAllCats();
-//		catController.changeCatName(cat, "Luna");
-//		catController.deleteCat(cat2);
+//		Cat cat2 = catOwnerController.newCat(catName2, catAge2);
+//		System.out.println(cat2);
+		catOwnerController.showCat(cat.getName());
+		catOwnerController.findAllCats();
 	}
 }
