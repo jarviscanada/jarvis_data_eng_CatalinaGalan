@@ -2,7 +2,9 @@ package com.example.demo.entity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,16 +16,14 @@ import jakarta.persistence.OneToOne;
 public class Owner {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
-  private int id;
+  private Integer id;
+
+  @OneToOne
+  @MapsId
+  private Cat cat;
 
   @Column(nullable = false)
   private String name;
-
-  @OneToOne
-  @JoinColumn(name = "cat_id", referencedColumnName = "id")
-//  @MapsId
-  private Cat cat;
 
   public int getId() {
     return id;
@@ -41,9 +41,9 @@ public class Owner {
     this.name = name;
   }
 
-  public Cat getCat() {
-    return cat;
-  }
+//  public Cat getCat() {
+//    return cat;
+//  }
 
   public void setCat(Cat cat) {
     this.cat = cat;
@@ -54,7 +54,6 @@ public class Owner {
     return "Owner{" +
         "id=" + id +
         ", name='" + name + '\'' +
-        ", cat=" + cat +
         '}';
   }
 }

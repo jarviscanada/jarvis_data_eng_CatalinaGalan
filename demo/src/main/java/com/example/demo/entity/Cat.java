@@ -6,7 +6,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 
 @Entity
 public class Cat {
@@ -20,6 +22,7 @@ public class Cat {
   private String age;
 
   @OneToOne(mappedBy = "cat", cascade = CascadeType.ALL)
+  @PrimaryKeyJoinColumn
   private Owner owner;
 
   public Owner getOwner() {

@@ -1,6 +1,7 @@
 package com.example.demo.repository;
 
 import com.example.demo.entity.Cat;
+import com.example.demo.entity.Owner;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -9,5 +10,4 @@ import org.springframework.stereotype.Repository;
 public interface CatRepository extends JpaRepository<Cat, Integer> {
 
   Optional<Cat> findByName(String catName);
-
 }

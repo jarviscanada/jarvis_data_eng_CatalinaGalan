@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import static java.util.Objects.isNull;
+
 import com.example.demo.entity.Cat;
 import com.example.demo.entity.Owner;
 import com.example.demo.repository.CatRepository;
@@ -18,25 +20,19 @@ public class CatOwnerService {
   @Autowired
   private OwnerRepository ownerRepository;
 
-  public Cat saveCat(Cat cat) {
-    return catRepository.save(cat);
-  }
+  public Cat createCatAndOwner(Cat cat) {
+    if (cat.getName().isEmpty() || cat.getName() == null || cat.getAge().isEmpty() || cat.getAge() == null) {
+      throw new IllegalArgumentException("all fields must be present");
+    }
 
-  public Owner saveOwner(Owner owner) {return ownerRepository.save(owner); }
-
-  public Cat saveCat(String name, String age) {
-    Cat cat = new Cat();
-    cat.setName(name);
-    cat.setAge(age);
-    return saveCat(cat);
-  }
-
-  public Owner saveOwner(Cat cat) {
     Owner owner = new Owner();
     owner.setCat(cat);
-//    owner.setId(cat.getId());
-    owner.setName(cat.getName() + "'s Owner");
-    return saveOwner(owner);
+    owner.setName(cat.getName() + "'s owner");
+    cat.setOwner(owner);
+
+
+    Cat savedCat = catRepository.save(cat);
+    return savedCat;
   }
 
   public Cat getCat(String name) {
@@ -44,17 +40,9 @@ public class CatOwnerService {
     return cat.get();
   }
 
-  public List<Cat> listAllCats() {
-    return catRepository.findAll();
-  }
-
-//  public Cat updateCatAge(Cat cat, String age) {
-//    Cat catDb = catRepository.findByName(cat.getName()).get();
-//    catDb.setAge(age);
-//    return saveCat(catDb);
-//  }
-
-  public void deleteCat(Cat cat) {
-    catRepository.delete(cat);
+  public Owner getOwner(String catName) {
+    Optional<Cat> cat = catRepository.findByName(catName);
+    Owner owner = cat.get().getOwner();
+    return owner;
   }
 }
