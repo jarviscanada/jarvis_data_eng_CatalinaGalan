@@ -1,12 +1,8 @@
 package com.example.demo.service;
 
-import static java.util.Objects.isNull;
-
 import com.example.demo.entity.Cat;
 import com.example.demo.entity.Owner;
 import com.example.demo.repository.CatRepository;
-import com.example.demo.repository.OwnerRepository;
-import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,8 +13,8 @@ public class CatOwnerService {
   @Autowired
   private CatRepository catRepository;
 
-  @Autowired
-  private OwnerRepository ownerRepository;
+//  @Autowired
+//  private OwnerRepository ownerRepository;
 
   public Cat createCatAndOwner(Cat cat) {
     if (cat.getName().isEmpty() || cat.getName() == null || cat.getAge().isEmpty() || cat.getAge() == null) {
