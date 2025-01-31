@@ -11,8 +11,8 @@ import jakarta.persistence.Table;
 @Entity
 @Table(schema = "public")
 public class Account {
+
   @Id
-  @Column
   private Long id;
 
   @Column(nullable = false)
@@ -23,10 +23,9 @@ public class Account {
   @MapsId
   private Trader trader;
 
-
-  public Long getId() {
-    return id;
-  }
+//  public Long getId() {
+//    return id;
+//  }
 
   public void setId(Long id) {
     this.id = id;
@@ -38,10 +37,6 @@ public class Account {
 
   public void setAmount(double amount) {
     this.amount = amount;
-  }
-
-  public Trader getTrader() {
-    return trader;
   }
 
   public void setTrader(Trader trader) {

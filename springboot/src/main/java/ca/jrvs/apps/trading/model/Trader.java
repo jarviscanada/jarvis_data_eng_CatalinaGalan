@@ -16,23 +16,20 @@ import java.sql.Date;
 @Entity
 @Table(schema = "public")
 public class Trader {
+
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Long id;
 
   @Column(nullable = false)
   private String firstName;
-
   @Column(nullable = false)
   private String lastName;
-
   @Column(nullable = false)
 //  @Temporal(TemporalType.DATE)
   private String dob;
-
   @Column(nullable = false)
   private String country;
-
   @Column(nullable = false)
   private String email;
 
@@ -40,13 +37,20 @@ public class Trader {
   @PrimaryKeyJoinColumn
   private Account account;
 
-
   public Long getId() {
     return id;
   }
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public Account getAccount() {
+    return account;
+  }
+
+  public void setAccount(Account account) {
+    this.account = account;
   }
 
   public String getFirstName() {

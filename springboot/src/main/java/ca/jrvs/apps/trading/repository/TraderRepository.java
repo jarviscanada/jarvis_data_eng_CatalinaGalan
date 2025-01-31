@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface TraderRepository extends JpaRepository<Trader, Long> {
 
   Account findAccountById(Long Id);
+
 }
