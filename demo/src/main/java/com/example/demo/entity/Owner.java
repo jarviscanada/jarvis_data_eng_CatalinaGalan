@@ -2,50 +2,35 @@ package com.example.demo.entity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
-import jakarta.persistence.PrimaryKeyJoinColumn;
 
 @Entity
-public class Cat {
+public class Owner {
+
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
-  private int id;
+  private Integer id;
+
+  @OneToOne
+  @MapsId
+  private Cat cat;
 
   @Column(nullable = false)
   private String name;
-  @Column(nullable = false)
-  private String age;
-
-  @OneToOne(mappedBy = "cat", cascade = CascadeType.ALL)
-  @PrimaryKeyJoinColumn
-  private Owner owner;
-
-  public Owner getOwner() {
-    return owner;
-  }
-
-  public void setOwner(Owner owner) {
-    this.owner = owner;
-  }
-
-  public String getAge() {
-    return age;
-  }
-
-  public void setAge(String age) {
-    this.age = age;
-  }
 
   public int getId() {
     return id;
   }
 
   public void setId(int id) {
+    this.id = id;
   }
 
   public String getName() {
@@ -56,12 +41,19 @@ public class Cat {
     this.name = name;
   }
 
+//  public Cat getCat() {
+//    return cat;
+//  }
+
+  public void setCat(Cat cat) {
+    this.cat = cat;
+  }
+
   @Override
   public String toString() {
-    return "Cat{" +
+    return "Owner{" +
         "id=" + id +
         ", name='" + name + '\'' +
-        ", age='" + age + '\'' +
         '}';
   }
 }
