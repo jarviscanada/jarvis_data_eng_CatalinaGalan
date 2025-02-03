@@ -11,6 +11,7 @@ import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.NotBlank;
 import java.sql.Date;
 
 @Entity
@@ -21,10 +22,13 @@ public class Trader {
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Long id;
 
-  @Column(nullable = false)
+  @NotBlank
+//  @Column(nullable = false)
   private String firstName;
-  @Column(nullable = false)
+  @NotBlank
+//  @Column(nullable = false)
   private String lastName;
+
   @Column(nullable = false)
 //  @Temporal(TemporalType.DATE)
   private String dob;

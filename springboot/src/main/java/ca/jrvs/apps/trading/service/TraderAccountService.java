@@ -43,7 +43,7 @@ public class TraderAccountService {
       if (account.getAmount() != 0) {
         throw new IllegalArgumentException("Unable to delete Trader #{traderId}. Account balance must be 0.");
       }
-      
+
 //      positions.forEach(position -> () {
 ////      securityOrderRepository.deleteById(positionId);
 //      });
@@ -93,6 +93,14 @@ public class TraderAccountService {
     double newAmount = account.getAmount() - amount;
     account.setAmount(newAmount);
     return account;
+  }
+
+  public Trader getTraderById(Long traderId) {
+    Optional<Trader> trader = traderRepository.findById(traderId);
+    if (trader.isPresent()) {
+      return trader.get();
+    }
+    throw new IllegalArgumentException("Trader nor found. Please provide a valid Trader Id.");
   }
 }
 

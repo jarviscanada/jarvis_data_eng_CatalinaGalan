@@ -4,10 +4,12 @@ import ca.jrvs.apps.trading.model.Account;
 import ca.jrvs.apps.trading.model.Trader;
 import ca.jrvs.apps.trading.service.TraderAccountService;
 import ca.jrvs.apps.trading.util.ResponseExceptionUtil;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -33,6 +35,7 @@ public class TraderAccountController {
       + "email/{email}")
   @ResponseStatus(HttpStatus.CREATED)
   @ResponseBody
+  @Valid
   public Trader createTrader(@PathVariable String firstName, @PathVariable String lastName,
       @PathVariable String dob, @PathVariable String country, @PathVariable String email) {
 
@@ -43,10 +46,21 @@ public class TraderAccountController {
     trader.setCountry(country);
     trader.setEmail(email);
 
-    return traderAccountService.createTraderAndAccount(trader);
+    return createTrader(trader);
   }
 
-  @DeleteMapping("trader/{traderId}")
+  @GetMapping("/{traderId}")
+  @ResponseStatus(HttpStatus.OK)
+  @ResponseBody
+  public Trader showTrader(@PathVariable Long traderId) {
+    try {
+      return traderAccountService.getTraderById(traderId);
+    } catch (Exception e) {
+      throw ResponseExceptionUtil.getResponseStatusException(e);
+    }
+  }
+
+  @DeleteMapping("/{traderId}")
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
   public void deleteTrader(@PathVariable Long traderId) {
