@@ -1,10 +1,15 @@
 package ca.jrvs.apps.trading.util;
 
+import jakarta.validation.ValidationException;
+import org.hibernate.TransactionException;
+import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.TransactionSystemException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.server.ResponseStatusException;
 
 public class ResponseExceptionUtil {
@@ -15,9 +20,12 @@ public class ResponseExceptionUtil {
 
     if (e instanceof IllegalArgumentException) {
       logger.debug("Invalid Input.", e);
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
       
-//    } else if (e instanceof DataRetrievalFailureException || e instanceof DataAccessException) {
+    } else if (e instanceof ConstraintViolationException) {
+      logger.debug("Invalid Input.", e);
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+
     } else if (e instanceof DataAccessException) {
       logger.debug("Failed Alpha Vantage api request.", e);
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);

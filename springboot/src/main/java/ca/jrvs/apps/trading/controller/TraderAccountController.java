@@ -4,7 +4,9 @@ import ca.jrvs.apps.trading.model.Account;
 import ca.jrvs.apps.trading.model.Trader;
 import ca.jrvs.apps.trading.service.TraderAccountService;
 import ca.jrvs.apps.trading.util.ResponseExceptionUtil;
-import jakarta.validation.Valid;
+//import jakarta.validation.ConstraintViolationException;
+//import org.hibernate.exception.ConstraintViolationException;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -28,25 +30,33 @@ public class TraderAccountController {
   @ResponseStatus(HttpStatus.CREATED)
   @ResponseBody
   public Trader createTrader(Trader trader) {
-    return traderAccountService.createTraderAndAccount(trader);
+    try {
+      return traderAccountService.createTraderAndAccount(trader);
+    } catch (IllegalArgumentException e) {
+      throw new IllegalArgumentException(e.getMessage());
+    } catch (Exception e) {
+      throw ResponseExceptionUtil.getResponseStatusException(e);
+    }
   }
 
   @PostMapping("/firstName/{firstName}/lastName/{lastName}/dob/{dob}/country/{country}/"
       + "email/{email}")
   @ResponseStatus(HttpStatus.CREATED)
   @ResponseBody
-  @Valid
   public Trader createTrader(@PathVariable String firstName, @PathVariable String lastName,
       @PathVariable String dob, @PathVariable String country, @PathVariable String email) {
 
     Trader trader = new Trader();
-    trader.setFirstName(firstName);
-    trader.setLastName(lastName);
-    trader.setDob(dob);
-    trader.setCountry(country);
-    trader.setEmail(email);
-
-    return createTrader(trader);
+    try {
+      trader.setFirstName(firstName);
+      trader.setLastName(lastName);
+      trader.setDob(dob);
+      trader.setCountry(country);
+      trader.setEmail(email);
+      return createTrader(trader);
+    } catch (Exception e) {
+      throw ResponseExceptionUtil.getResponseStatusException(e);
+    }
   }
 
   @GetMapping("/{traderId}")
@@ -64,11 +74,15 @@ public class TraderAccountController {
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
   public void deleteTrader(@PathVariable Long traderId) {
-    traderAccountService.deleteTraderById(traderId);
-    System.out.println("Trader and Account successfully deleted");
+    try {
+      traderAccountService.deleteTraderById(traderId);
+      System.out.println("Trader and Account successfully deleted");
+    } catch (Exception e) {
+      throw ResponseExceptionUtil.getResponseStatusException(e);
+    }
   }
 
-  @PutMapping("/deposit/trader/{traderId}/amount/{amount}")
+  @PutMapping("/{traderId}/deposit/amount/{amount}")
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
   public Account depositFunds(@PathVariable Long traderId, @PathVariable Double amount) {
@@ -79,10 +93,10 @@ public class TraderAccountController {
     }
   }
 
-  @PutMapping("/withdraw/trader/{traderID}/amount/{amount}")
+  @PutMapping("/{traderId}/withdraw/amount/{amount}")
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
-  public Account withrowFunds(@PathVariable Long traderId, @PathVariable Double amount) {
+  public Account withdrawFunds(@PathVariable Long traderId, @PathVariable Double amount) {
     try {
       return traderAccountService.withdraw(traderId, amount);
     } catch (Exception e) {

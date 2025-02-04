@@ -4,6 +4,7 @@ import ca.jrvs.apps.trading.model.Account;
 import ca.jrvs.apps.trading.model.Position;
 import ca.jrvs.apps.trading.model.Trader;
 import ca.jrvs.apps.trading.repository.TraderRepository;
+import jakarta.validation.ConstraintViolationException;
 import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
@@ -27,61 +28,55 @@ public class TraderAccountService {
       account.setAmount(0.0);
       account.setTrader(trader);
       trader.setAccount(account);
+      return traderRepository.save(trader);
     } catch (Exception e) {
-      throw new IllegalArgumentException("All fields for trader must be provided.", e);
+      throw new IllegalArgumentException("All required fields must be present and must be valid.");
     }
-    return traderRepository.save(trader);
   }
 
   public void deleteTraderById(Long traderId) {
 
     try {
-      traderRepository.existsById(traderId);
-      Account account = traderRepository.findAccountById(traderId);
-//      List<Position> positions =
-
-      if (account.getAmount() != 0) {
-        throw new IllegalArgumentException("Unable to delete Trader #{traderId}. Account balance must be 0.");
+      Trader trader = traderRepository.findById(traderId).get();
+      if (trader.getAccount().getAmount() != 0) {
+        throw new IllegalArgumentException("Unable to delete Trader: Account balance must be 0.");
       }
-
-//      positions.forEach(position -> () {
-////      securityOrderRepository.deleteById(positionId);
-//      });
       traderRepository.deleteById(traderId);
     } catch (Exception e) {
-
+      throw new IllegalArgumentException(e.getMessage());
     }
 
   }
 
-
   public Account deposit(Long traderId, Double amount) {
-
+    Trader trader;
     Account account;
-
     if (amount <= 0) {
-      throw new IllegalArgumentException("Withdraw amount must be greater than 0. Please enter a valid withdraw amount.");
+      throw new IllegalArgumentException("Deposit amount must be greater than 0. Please enter a valid amount.");
     }
 
     try {
-      account = traderRepository.findAccountById(traderId);
+      trader = traderRepository.findById(traderId).get();
+      account = trader.getAccount();
     } catch (Exception e) {
-      throw new IllegalArgumentException("traderId not found. Please provide a valid traderId.", e);
+      throw new IllegalArgumentException("Trader not found. Please provide a valid Trader Id.", e);
     }
 
     double newAmount = account.getAmount() + amount;
     account.setAmount(newAmount);
+    trader.setAccount(account);
+    traderRepository.save(trader);
     return account;
   }
 
   public Account withdraw(Long traderId, Double amount) {
-
+    Trader trader;
     Account account;
-
     try {
-      account = traderRepository.findAccountById(traderId);
+      trader = traderRepository.findById(traderId).get();
+      account = trader.getAccount();
     } catch (Exception e) {
-      throw new IllegalArgumentException("traderId not found. Please provide a valid traderId.", e);
+      throw new IllegalArgumentException("Trader not found. Please provide a valid Trader Id.", e);
     }
 
     if (amount <= 0) {
@@ -92,6 +87,8 @@ public class TraderAccountService {
 
     double newAmount = account.getAmount() - amount;
     account.setAmount(newAmount);
+    trader.setAccount(account);
+    traderRepository.save(trader);
     return account;
   }
 

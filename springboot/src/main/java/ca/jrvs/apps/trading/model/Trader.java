@@ -11,6 +11,7 @@ import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import java.sql.Date;
 
@@ -22,19 +23,20 @@ public class Trader {
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Long id;
 
-  @NotBlank
-//  @Column(nullable = false)
+  @NotBlank(message = "First Name must be provided.")
   private String firstName;
-  @NotBlank
-//  @Column(nullable = false)
+  @NotBlank(message = "Last Name must be provided.")
   private String lastName;
 
-  @Column(nullable = false)
+  @NotBlank(message = "dob must be provided.")
 //  @Temporal(TemporalType.DATE)
   private String dob;
-  @Column(nullable = false)
+
+  @NotBlank(message = "Country must be provided.")
   private String country;
-  @Column(nullable = false)
+
+  @NotBlank(message = "Email must be provided.")
+  @Email(message = "Email must be valid.")
   private String email;
 
   @OneToOne(mappedBy = "trader", cascade = CascadeType.ALL)
