@@ -24,8 +24,8 @@ class TraderRepositoryIntTest {
   private TraderRepository traderRepository;
 
   private Trader trader;
-  private long validId;
-  private long invalidId;
+  private Integer validId;
+  private Integer invalidId;
 
   @BeforeEach
   public void setUp() {
@@ -47,7 +47,7 @@ class TraderRepositoryIntTest {
 
   @Test
   public void findAllByIdTest() {
-    List<Long> allTraderIds = Arrays.asList(validId, invalidId);
+    List<Integer> allTraderIds = Arrays.asList(validId, invalidId);
     List<Trader> traders = Lists.newArrayList(traderRepository.findAllById(allTraderIds));
     assertEquals(1, traders.size());
     assertEquals(traders.get(0).getFirstName(), "Roberto");

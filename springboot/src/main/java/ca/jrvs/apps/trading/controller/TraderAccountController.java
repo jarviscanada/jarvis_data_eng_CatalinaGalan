@@ -62,7 +62,7 @@ public class TraderAccountController {
   @GetMapping("/{traderId}")
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
-  public Trader showTrader(@PathVariable Long traderId) {
+  public Trader showTrader(@PathVariable Integer traderId) {
     try {
       return traderAccountService.getTraderById(traderId);
     } catch (Exception e) {
@@ -73,7 +73,7 @@ public class TraderAccountController {
   @DeleteMapping("/{traderId}")
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
-  public void deleteTrader(@PathVariable Long traderId) {
+  public void deleteTrader(@PathVariable Integer traderId) {
     try {
       traderAccountService.deleteTraderById(traderId);
       System.out.println("Trader and Account successfully deleted");
@@ -85,7 +85,7 @@ public class TraderAccountController {
   @PutMapping("/{traderId}/deposit/amount/{amount}")
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
-  public Account depositFunds(@PathVariable Long traderId, @PathVariable Double amount) {
+  public Account depositFunds(@PathVariable Integer traderId, @PathVariable Double amount) {
     try {
       return traderAccountService.deposit(traderId, amount);
     } catch (Exception e) {
@@ -96,7 +96,7 @@ public class TraderAccountController {
   @PutMapping("/{traderId}/withdraw/amount/{amount}")
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
-  public Account withdrawFunds(@PathVariable Long traderId, @PathVariable Double amount) {
+  public Account withdrawFunds(@PathVariable Integer traderId, @PathVariable Double amount) {
     try {
       return traderAccountService.withdraw(traderId, amount);
     } catch (Exception e) {

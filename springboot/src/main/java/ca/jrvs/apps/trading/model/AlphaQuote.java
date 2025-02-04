@@ -23,7 +23,6 @@ public class AlphaQuote {
   private double change;
   private String changePercent;
   private Date latestTradingDay;
-//  private Timestamp lastUpdated;
 
   @JsonGetter("Ticker")
   public String getTicker() {

@@ -13,31 +13,27 @@ import jakarta.persistence.Table;
 public class Account {
 
   @Id
-  private Long id;
+  private Integer id;
 
   @Column(nullable = false)
-  private double amount;
+  private Double amount;
 
   @OneToOne
   @JoinColumn(name = "id")
   @MapsId
   private Trader trader;
 
-//  public Long getId() {
-//    return id;
-//  }
-
-  public void setId(Long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 
-  public Long getId() { return id; }
+  public Integer getId() { return id; }
 
-  public double getAmount() {
+  public Double getAmount() {
     return amount;
   }
 
-  public void setAmount(double amount) {
+  public void setAmount(Double amount) {
     this.amount = amount;
   }
 

@@ -21,7 +21,7 @@ public class Trader {
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
-  private Long id;
+  private Integer id;
 
   @NotBlank(message = "First Name must be provided.")
   private String firstName;
@@ -43,11 +43,11 @@ public class Trader {
   @PrimaryKeyJoinColumn
   private Account account;
 
-  public Long getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.sql.Timestamp;
 
@@ -14,6 +15,9 @@ public class Quote {
 
     @Id
     private String ticker;
+
+    @OneToOne
+    private SecurityOrder securityOrder;
 
     @Column(nullable = false)
     private Double lastPrice;
@@ -29,7 +33,7 @@ public class Quote {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "EEE MMM dd HH:mm:ss zzz yyyy")
     private Timestamp lastUpdated;
 
-    @JsonGetter("Ticker")
+  @JsonGetter("Ticker")
   public String getTicker() {
     return ticker;
   }

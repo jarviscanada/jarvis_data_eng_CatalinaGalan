@@ -34,7 +34,7 @@ public class TraderAccountService {
     }
   }
 
-  public void deleteTraderById(Long traderId) {
+  public void deleteTraderById(Integer traderId) {
 
     try {
       Trader trader = traderRepository.findById(traderId).get();
@@ -48,7 +48,7 @@ public class TraderAccountService {
 
   }
 
-  public Account deposit(Long traderId, Double amount) {
+  public Account deposit(Integer traderId, Double amount) {
     Trader trader;
     Account account;
     if (amount <= 0) {
@@ -62,14 +62,14 @@ public class TraderAccountService {
       throw new IllegalArgumentException("Trader not found. Please provide a valid Trader Id.", e);
     }
 
-    double newAmount = account.getAmount() + amount;
+    Double newAmount = account.getAmount() + amount;
     account.setAmount(newAmount);
     trader.setAccount(account);
     traderRepository.save(trader);
     return account;
   }
 
-  public Account withdraw(Long traderId, Double amount) {
+  public Account withdraw(Integer traderId, Double amount) {
     Trader trader;
     Account account;
     try {
@@ -85,14 +85,14 @@ public class TraderAccountService {
       throw new IllegalArgumentException("Requested withdraw exceeds available funds.");
     }
 
-    double newAmount = account.getAmount() - amount;
+    Double newAmount = account.getAmount() - amount;
     account.setAmount(newAmount);
     trader.setAccount(account);
     traderRepository.save(trader);
     return account;
   }
 
-  public Trader getTraderById(Long traderId) {
+  public Trader getTraderById(Integer traderId) {
     Optional<Trader> trader = traderRepository.findById(traderId);
     if (trader.isPresent()) {
       return trader.get();
