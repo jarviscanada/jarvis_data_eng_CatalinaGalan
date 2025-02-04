@@ -48,35 +48,22 @@ class QuoteServiceIntTest {
   }
 
   @Test
-  void updateMarketDataValidQuoteTest() {
+  void updateMarketDataQuoteQuoteTest() {
     String validDemoTicker = "IBM";
-    assertDoesNotThrow(() -> quoteService.updateMarketData(validDemoTicker));
-  }
-
-  @Test
-  void updateMarketDataInvalidQuoteTest() {
     String notSavedTicker = "MSFT";
-    assertThrows(DataAccessException.class, () -> quoteService.updateMarketData(notSavedTicker));
-  }
-
-  @Test
-  void updateMarketDataInvalidTickerTest() {
     String invalidTicker = "AppleInc.";
-    assertThrows(IllegalArgumentException.class, () -> quoteService.updateMarketData(invalidTicker));
-  }
-
-  @Test
-  void findAlphaQuoteByEmptyTickerTest() {
-    String emptyTicker = "";
-    assertThrows(IllegalArgumentException.class, () -> quoteService.findAlphaQuoteByTicker(emptyTicker));
+    assertDoesNotThrow(() -> quoteService.updateMarketDataQuote(validDemoTicker));
+    assertThrows(IllegalArgumentException.class, () -> quoteService.updateMarketDataQuote(notSavedTicker));
+    assertThrows(IllegalArgumentException.class, () -> quoteService.updateMarketDataQuote(invalidTicker));
   }
 
   @Test
   void findAlphaQuoteByValidTickerTest() {
     String validTicker = "IBM";
+    String emptyTicker = "";
     AlphaQuote alphaQuote = quoteService.findAlphaQuoteByTicker(validTicker);
-    System.out.println(alphaQuote);
     assertEquals("IBM", alphaQuote.getTicker());
+    assertThrows(IllegalArgumentException.class, () -> quoteService.findAlphaQuoteByTicker(emptyTicker));
   }
 
   @Test
@@ -103,27 +90,17 @@ class QuoteServiceIntTest {
     testAlphaQuote.setPrice(224.8000);
     testAlphaQuote.setLatestTradingDay(Date.from(Instant.now()));
     Quote testQuote = quoteService.buildQuoteFromAlphaQuote(testAlphaQuote);
-    System.out.println(testQuote.toString());
     assertEquals(224.8000, testQuote.getLastPrice());
   }
 
   @Test
-  void createNewQuoteValidDemoTickerTest() {
-    String validTicker = "300135.SHZ";
-    Quote newQuote = quoteService.saveQuote(validTicker);
-    System.out.println(newQuote);
-    assertEquals("300135.SHZ", newQuote.getTicker());
-  }
-
-  @Test
-  void createNewQuoteInvalidTickerTest() {
+  void createNewQuoteDemoTickerTest() {
+    String validDemoTicker = "300135.SHZ";
+    String emptyTicker = "";
     String invalidTicker = "AppleInc.";
-    assertThrows(IllegalArgumentException.class, () -> quoteService.saveQuote(invalidTicker));
-  }
-
-  @Test
-  void createNewQuoteEmptyTickerTest() {
-    String invalidTicker = "";
+    Quote newQuote = quoteService.saveQuote(validDemoTicker);
+    assertEquals("300135.SHZ", newQuote.getTicker());
+    assertThrows(IllegalArgumentException.class, () -> quoteService.saveQuote(emptyTicker));
     assertThrows(IllegalArgumentException.class, () -> quoteService.saveQuote(invalidTicker));
   }
 }

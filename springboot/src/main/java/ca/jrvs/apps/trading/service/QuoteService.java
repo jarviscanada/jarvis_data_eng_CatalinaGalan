@@ -7,14 +7,12 @@ import ca.jrvs.apps.trading.util.MarketDataHttpHelper;
 import ca.jrvs.apps.trading.util.ResourceNotFoundException;
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class QuoteService {
@@ -37,31 +35,30 @@ public class QuoteService {
    * @throws DataAccessException if unable to retrieve data
    * @throws IllegalArgumentException for invalid input
    */
-  public Quote updateMarketData(String ticker) throws ResourceNotFoundException, DataAccessException {
+  public Quote updateMarketDataQuote(String ticker) throws ResourceNotFoundException, DataAccessException {
 
     Quote updatedQuote;
-    Optional<Quote> quote = quoteRepository.findById(ticker);
 
-    try {
-      updatedQuote = saveQuote(ticker);
-      if (quote.isPresent()) {
+    if (quoteRepository.existsById(ticker)) {
+      try {
+          updatedQuote = saveQuote(ticker);
           return saveQuote(updatedQuote);
-      } else {
-        throw new IllegalArgumentException("Invalid Ticker: "
-            + "Quote for ticker " + ticker + " not found in Daily List.");
-      }
-    } catch (IllegalArgumentException e) {
-      if (e.getMessage().contains("Alpha Vantage")) {
-        throw new ResourceNotFoundException(e.getMessage(), e);
-      }
-      throw new IllegalArgumentException(e.getMessage());
-    } catch (DataRetrievalFailureException e) {
-      throw new DataAccessException(e.toString()) {
-        @Override
-        public Throwable getRootCause() {
-          return super.getRootCause();
+      } catch (IllegalArgumentException e) {
+        if (e.getMessage().contains("Alpha Vantage")) {
+          throw new ResourceNotFoundException(e.getMessage(), e);
         }
-      };
+        throw new IllegalArgumentException(e.getMessage());
+      } catch (DataRetrievalFailureException e) {
+        throw new DataAccessException(e.toString()) {
+          @Override
+          public Throwable getRootCause() {
+            return super.getRootCause();
+          }
+        };
+      }
+    } else {
+      throw new IllegalArgumentException("Invalid Ticker: "
+          + "Quote for ticker " + ticker + " not found in Daily List.");
     }
   }
 
@@ -72,19 +69,23 @@ public class QuoteService {
    * @throws IllegalArgumentException if ticker is invalid
    */
     public AlphaQuote findAlphaQuoteByTicker(String ticker) {
-      if (ticker.isEmpty()) {
-        System.out.println(
-            "form QuoteService - Throwing IllegalArgumentException for empty ticker");
-        throw new IllegalArgumentException("Ticker cannot be empty.");
+
+      AlphaQuote alphaQuote;
+
+      if (!ticker.isEmpty()) {
+        try {
+          Optional<AlphaQuote> alphaQuoteOpt = httpHelper.findQuoteByTicker(ticker);
+          alphaQuote = alphaQuoteOpt.get();
+        } catch (Exception e) {
+          System.out.println("from QuoteService - caught Exception from MarketDataHttpHelper: findQuoteByTicker");
+          throw e;
+        }
+        return alphaQuote;
       }
 
-      try {
-        Optional<AlphaQuote> alphaQuoteOpt = httpHelper.findQuoteByTicker(ticker);
-        return alphaQuoteOpt.get();
-      } catch (Exception e) {
-        System.out.println("from QuoteService - caught Exception from MarketDataHttpHelper: findQuoteByTicker");
-        throw e;
-      }
+      System.out.println(
+          "form QuoteService - Throwing IllegalArgumentException for empty ticker");
+      throw new IllegalArgumentException("Ticker cannot be empty.");
     }
 
   /**

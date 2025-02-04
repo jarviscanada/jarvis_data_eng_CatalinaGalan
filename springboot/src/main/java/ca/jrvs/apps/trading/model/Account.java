@@ -31,6 +31,8 @@ public class Account {
     this.id = id;
   }
 
+  public Long getId() { return id; }
+
   public double getAmount() {
     return amount;
   }
@@ -42,4 +44,5 @@ public class Account {
   public void setTrader(Trader trader) {
     this.trader = trader;
   }
+
 }
