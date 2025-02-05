@@ -1,7 +1,7 @@
 package ca.jrvs.apps.trading.service;
 
 import ca.jrvs.apps.trading.model.Account;
-import ca.jrvs.apps.trading.model.Position;
+//import ca.jrvs.apps.trading.model.Position;
 import ca.jrvs.apps.trading.model.Trader;
 import ca.jrvs.apps.trading.repository.TraderRepository;
 import java.util.Optional;

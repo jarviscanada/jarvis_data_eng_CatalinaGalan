@@ -5,8 +5,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(schema = "public")
@@ -22,6 +25,9 @@ public class Account {
   @JoinColumn(name = "id")
   @MapsId
   private Trader trader;
+
+  @OneToMany(mappedBy = "account")
+  private Set<SecurityOrder> orders;
 
   public void setId(Integer id) {
     this.id = id;

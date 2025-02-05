@@ -7,7 +7,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 
 @Entity
 public class SecurityOrder {
@@ -17,14 +16,15 @@ public class SecurityOrder {
   private Integer id;
 
   @ManyToOne
-  @JoinColumn(name = "account_id")
+  @JoinColumn(name = "account_id", nullable = false)
   private Account account;
+
+  @ManyToOne
+  @JoinColumn(name = "ticker", nullable = false)
+  private Quote quote;
 
   @Column
   private String status;
-
-  @Column
-  private String ticker;
 
   @Column
   private Integer size;
@@ -59,14 +59,6 @@ public class SecurityOrder {
     this.status = status;
   }
 
-  public String getTicker() {
-    return ticker;
-  }
-
-  public void setTicker(String ticker) {
-    this.ticker = ticker;
-  }
-
   public Integer getSize() {
     return size;
   }
@@ -89,5 +81,13 @@ public class SecurityOrder {
 
   public void setNotes(String notes) {
     this.notes = notes;
+  }
+
+  public Quote getQuote() {
+    return quote;
+  }
+
+  public void setQuote(Quote quote) {
+    this.quote = quote;
   }
 }

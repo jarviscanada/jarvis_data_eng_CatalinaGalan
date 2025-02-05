@@ -5,18 +5,23 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import java.sql.Timestamp;
+import java.util.Set;
 
 @Entity
 @Table(schema = "public")
 public class Quote {
 
     @Id
-//    @NotBlank(message = "Valid ticker must be provided.")
     private String ticker;
+
+    @OneToMany(mappedBy = "quote")
+    private Set<SecurityOrder> orders;
 
     @Column(nullable = false)
     private Double lastPrice;
