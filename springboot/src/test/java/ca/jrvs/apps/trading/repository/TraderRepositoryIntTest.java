@@ -34,7 +34,7 @@ class TraderRepositoryIntTest {
     trader.setLastName("Johns");
     trader.setCountry("Portugal");
     trader.setEmail("roberto@portugal.po");
-    trader.setDob("10-10-1990");
+    trader.setDob("1990-10-21");
     traderRepository.save(trader);
     validId = trader.getId();
     invalidId = -1;

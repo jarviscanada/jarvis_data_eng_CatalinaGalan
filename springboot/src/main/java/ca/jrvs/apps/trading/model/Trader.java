@@ -1,7 +1,6 @@
 package ca.jrvs.apps.trading.model;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,11 +8,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import java.sql.Date;
+import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Table(schema = "public")
@@ -25,12 +23,13 @@ public class Trader {
 
   @NotBlank(message = "First Name must be provided.")
   private String firstName;
+
   @NotBlank(message = "Last Name must be provided.")
   private String lastName;
 
   @NotBlank(message = "dob must be provided.")
 //  @Temporal(TemporalType.DATE)
-  private String dob;
+  private LocalDate dob;
 
   @NotBlank(message = "Country must be provided.")
   private String country;
@@ -75,12 +74,14 @@ public class Trader {
     this.lastName = lastName;
   }
 
-  public String getDob() {
+  public LocalDate getDob() {
     return dob;
   }
 
   public void setDob(String dob) {
-    this.dob = dob;
+//    try {
+      this.dob = LocalDate.parse(dob);
+//    } catch ()
   }
 
   public String getCountry() {

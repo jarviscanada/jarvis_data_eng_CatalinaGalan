@@ -31,7 +31,7 @@ class TraderAccountServiceIntTest {
     trader.setLastName("Johns");
     trader.setCountry("Portugal");
     trader.setEmail("roberto@portugal.po");
-    trader.setDob("10-10-1990");
+    trader.setDob("1991-10-21");
   }
 
   @AfterEach

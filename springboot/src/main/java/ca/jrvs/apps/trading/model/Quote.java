@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import java.sql.Timestamp;
 
 @Entity
@@ -14,10 +15,8 @@ import java.sql.Timestamp;
 public class Quote {
 
     @Id
+//    @NotBlank(message = "Valid ticker must be provided.")
     private String ticker;
-
-    @OneToOne
-    private SecurityOrder securityOrder;
 
     @Column(nullable = false)
     private Double lastPrice;

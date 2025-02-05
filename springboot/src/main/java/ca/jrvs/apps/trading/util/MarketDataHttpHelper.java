@@ -5,6 +5,7 @@ import ca.jrvs.apps.trading.config.MarketDataConfig;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.validation.Valid;
 import java.io.IOException;
 import java.util.Optional;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
@@ -48,35 +49,27 @@ public class MarketDataHttpHelper {
       responseBody = responseBodyOpt.get();
     }
     catch (DataRetrievalFailureException e) {
-      System.out.println("from MarketDataHttpHelper - caught DataRetrievalFailureException: "
-          + "findQuoteByTicker: executeGetRequest(url)");
-      throw new DataRetrievalFailureException(e.toString());
+      throw new DataRetrievalFailureException(e.getMessage());
     }
 
     try {
       objectMapper.configure(DeserializationFeature.UNWRAP_ROOT_VALUE, true);
-      System.out.println("from MarketDataHttpHelper - findQuoteById: deserializing JSON");
 
       AlphaQuote alphaQuote = objectMapper.readValue(responseBody, AlphaQuote.class);
 
       if (alphaQuote.getTicker() == null) {
-        throw new IllegalArgumentException("Symbol not found in Alpha Vantage. Please provide a valid Ticker.");
+        throw new IllegalArgumentException("Symbol not found in Alpha Vantage. "
+            + "Please provide a valid Ticker.");
       }
-
-//      alphaQuote.setLastUpdated(Timestamp.from(Instant.now()));
       return Optional.of(alphaQuote);
 
     } catch (JsonProcessingException e) {
-      System.out.println("from MarketDataHttpHelper - caught JsonProcessingException: "
-          + "findQuoteByTicker: objectMapper.readValue()");
-
       if (responseBody.contains("Information")) {
         throw new ResponseStatusException(HttpStatus.PAYMENT_REQUIRED, responseBody);
       } else if (responseBody.contains("Error")) {
         throw new DataRetrievalFailureException(responseBody);
       }
     }
-
     return Optional.empty();
   }
 
@@ -96,17 +89,12 @@ public class MarketDataHttpHelper {
       HttpEntity entity = response.getEntity();
       int status = response.getCode();
 
-      System.out.println("from MarketDataHttpHelper: executeGet: "
-          + "response status code = " + status);
-
       if (status == 404) {
         return Optional.empty();
       }
-
       return Optional.of(EntityUtils.toString(entity));
     }
     catch (ParseException | IOException e) {
-      System.out.println("from MarketDataHttpHelper - executeGet: DataRetrievalFailureException");
       throw new DataRetrievalFailureException(e.toString());
     }
   }
@@ -116,10 +104,10 @@ public class MarketDataHttpHelper {
    * @return a HttpClient
    */
   private CloseableHttpClient getHttpClient() {
+    return HttpClients.createMinimal(connectionManager);
 //    HttpClientConnectionManager leasaedConnection = HttpClientConnectionManager.lease();
 //    return HttpClients.createDefault();
 //    return client;
-    return HttpClients.createMinimal(connectionManager);
   }
 
 }

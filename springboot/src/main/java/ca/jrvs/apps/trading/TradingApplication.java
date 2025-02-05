@@ -41,7 +41,7 @@ public class TradingApplication implements CommandLineRunner {
 		System.out.println("Trading App running...");
 		try {
 			appController.greeting();
-			Trader trader = traderAccountController.createTrader("Carlos", "Fuentes", "1981-10-10",
+			Trader trader = traderAccountController.createTrader("Carlos", "Fuentes", "1981-10-21",
 					"Spain", "carlos@carlos.carlos");
 		} catch (Exception e) {
 			logger.error(e.getMessage());

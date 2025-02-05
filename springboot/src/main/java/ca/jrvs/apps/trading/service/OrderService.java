@@ -2,14 +2,11 @@ package ca.jrvs.apps.trading.service;
 
 import ca.jrvs.apps.trading.model.Account;
 import ca.jrvs.apps.trading.model.MarketOrder;
-import ca.jrvs.apps.trading.model.Quote;
 import ca.jrvs.apps.trading.model.SecurityOrder;
 import ca.jrvs.apps.trading.repository.PositionRepository;
 import ca.jrvs.apps.trading.repository.QuoteRepository;
 import ca.jrvs.apps.trading.repository.SecurityOrderRepository;
 import ca.jrvs.apps.trading.repository.TraderRepository;
-import java.util.Objects;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;

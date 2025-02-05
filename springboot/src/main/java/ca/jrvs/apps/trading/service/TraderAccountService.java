@@ -4,13 +4,9 @@ import ca.jrvs.apps.trading.model.Account;
 import ca.jrvs.apps.trading.model.Position;
 import ca.jrvs.apps.trading.model.Trader;
 import ca.jrvs.apps.trading.repository.TraderRepository;
-import jakarta.validation.ConstraintViolationException;
-import java.sql.Date;
-import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
 @Service
 public class TraderAccountService {

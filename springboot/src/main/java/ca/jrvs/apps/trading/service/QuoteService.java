@@ -70,21 +70,9 @@ public class QuoteService {
    */
     public AlphaQuote findAlphaQuoteByTicker(String ticker) {
 
-      AlphaQuote alphaQuote;
-
       if (!ticker.isEmpty()) {
-        try {
-          Optional<AlphaQuote> alphaQuoteOpt = httpHelper.findQuoteByTicker(ticker);
-          alphaQuote = alphaQuoteOpt.get();
-        } catch (Exception e) {
-          System.out.println("from QuoteService - caught Exception from MarketDataHttpHelper: findQuoteByTicker");
-          throw e;
-        }
-        return alphaQuote;
+        return httpHelper.findQuoteByTicker(ticker).get();
       }
-
-      System.out.println(
-          "form QuoteService - Throwing IllegalArgumentException for empty ticker");
       throw new IllegalArgumentException("Ticker cannot be empty.");
     }
 

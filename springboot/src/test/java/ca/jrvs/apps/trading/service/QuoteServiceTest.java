@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.web.server.ResponseStatusException;
 
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application-test.properties")
@@ -51,19 +52,26 @@ class QuoteServiceIntTest {
   void updateMarketDataQuoteQuoteTest() {
     String validDemoTicker = "IBM";
     String notSavedTicker = "MSFT";
-    String invalidTicker = "AppleInc.";
     assertDoesNotThrow(() -> quoteService.updateMarketDataQuote(validDemoTicker));
     assertThrows(IllegalArgumentException.class, () -> quoteService.updateMarketDataQuote(notSavedTicker));
-    assertThrows(IllegalArgumentException.class, () -> quoteService.updateMarketDataQuote(invalidTicker));
   }
 
   @Test
-  void findAlphaQuoteByValidTickerTest() {
+  void findAlphaQuoteByValidDemoTickerTest() {
     String validTicker = "IBM";
     String emptyTicker = "";
     AlphaQuote alphaQuote = quoteService.findAlphaQuoteByTicker(validTicker);
     assertEquals("IBM", alphaQuote.getTicker());
     assertThrows(IllegalArgumentException.class, () -> quoteService.findAlphaQuoteByTicker(emptyTicker));
+  }
+
+  @Test
+  void findAlphaQuoteByInvalidNotDemoTickerTest() {
+    String invalidTicker = "AppleInc.";
+    // when using Demo ApiKey:
+    assertThrows(ResponseStatusException.class, () -> quoteService.saveQuote(invalidTicker));
+    // when using real ApiKey:
+//    assertThrows(IllegalArgumentException.class, () -> quoteService.saveQuote(invalidTicker));
   }
 
   @Test
@@ -97,10 +105,11 @@ class QuoteServiceIntTest {
   void createNewQuoteDemoTickerTest() {
     String validDemoTicker = "300135.SHZ";
     String emptyTicker = "";
-    String invalidTicker = "AppleInc.";
     Quote newQuote = quoteService.saveQuote(validDemoTicker);
     assertEquals("300135.SHZ", newQuote.getTicker());
     assertThrows(IllegalArgumentException.class, () -> quoteService.saveQuote(emptyTicker));
-    assertThrows(IllegalArgumentException.class, () -> quoteService.saveQuote(invalidTicker));
+    // test for invalidTicker only when using real ApiKey (not demo)"
+//    String invalidTicker = "AppleInc.";
+//    assertThrows(IllegalArgumentException.class, () -> quoteService.saveQuote(invalidTicker));
   }
 }
