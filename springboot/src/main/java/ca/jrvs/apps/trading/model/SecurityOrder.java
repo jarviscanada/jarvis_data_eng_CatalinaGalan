@@ -7,8 +7,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.transaction.Transactional;
 
 @Entity
+@Transactional
 public class SecurityOrder {
 
   @Id
@@ -43,9 +45,9 @@ public class SecurityOrder {
     this.id = id;
   }
 
-  public Account getAccount() {
-    return account;
-  }
+//  public Account getAccount() {
+//    return account;
+//  }
 
   public void setAccount(Account account) {
     this.account = account;
@@ -89,5 +91,18 @@ public class SecurityOrder {
 
   public void setQuote(Quote quote) {
     this.quote = quote;
+  }
+
+  @Override
+  public String toString() {
+    return "SecurityOrder{" +
+        "id=" + id +
+        ", account=" + account +
+        ", quote=" + quote +
+        ", status='" + status + '\'' +
+        ", size=" + size +
+        ", price=" + price +
+        ", notes='" + notes + '\'' +
+        '}';
   }
 }

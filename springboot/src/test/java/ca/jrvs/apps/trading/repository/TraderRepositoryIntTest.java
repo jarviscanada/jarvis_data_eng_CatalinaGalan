@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import ca.jrvs.apps.trading.model.Trader;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import org.assertj.core.util.Lists;
@@ -29,12 +30,13 @@ class TraderRepositoryIntTest {
 
   @BeforeEach
   public void setUp() {
+    LocalDate dobParsed = LocalDate.parse("1990-10-21");
     trader = new Trader();
     trader.setFirstName("Roberto");
     trader.setLastName("Johns");
     trader.setCountry("Portugal");
     trader.setEmail("roberto@portugal.po");
-    trader.setDob("1990-10-21");
+    trader.setDob(dobParsed);
     traderRepository.save(trader);
     validId = trader.getId();
     invalidId = -1;

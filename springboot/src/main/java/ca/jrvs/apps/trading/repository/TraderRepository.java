@@ -15,4 +15,6 @@ public interface TraderRepository extends JpaRepository<Trader, Integer> {
     }
     return Optional.empty();
   };
+
+  Trader findByFirstName(String FirstName);
 }

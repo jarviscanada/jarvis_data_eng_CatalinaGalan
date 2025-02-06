@@ -47,11 +47,12 @@ public class TraderAccountController {
   public Trader createTrader(@PathVariable String firstName, @PathVariable String lastName,
       @PathVariable String dob, @PathVariable String country, @PathVariable String email) {
 
+    LocalDate dobParsed = LocalDate.parse(dob);
     Trader trader = new Trader();
     try {
       trader.setFirstName(firstName);
       trader.setLastName(lastName);
-      trader.setDob(dob);
+      trader.setDob(dobParsed);
       trader.setCountry(country);
       trader.setEmail(email);
       return createTrader(trader);

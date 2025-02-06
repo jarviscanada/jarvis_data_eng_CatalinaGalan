@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import ca.jrvs.apps.trading.model.Account;
 import ca.jrvs.apps.trading.model.Trader;
 import ca.jrvs.apps.trading.repository.TraderRepository;
+import java.time.LocalDate;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,7 +32,8 @@ class TraderAccountServiceIntTest {
     trader.setLastName("Johns");
     trader.setCountry("Portugal");
     trader.setEmail("roberto@portugal.po");
-    trader.setDob("1991-10-21");
+    LocalDate dob = LocalDate.parse("1991-10-21");
+    trader.setDob(dob);
   }
 
   @AfterEach

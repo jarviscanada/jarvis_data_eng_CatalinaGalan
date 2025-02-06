@@ -1,5 +1,6 @@
 package ca.jrvs.apps.trading.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -8,7 +9,7 @@ import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -26,8 +27,8 @@ public class Account {
   @MapsId
   private Trader trader;
 
-  @OneToMany(mappedBy = "account")
-  private Set<SecurityOrder> orders;
+  @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+  private Set<SecurityOrder> orders = new HashSet<>();
 
   public void setId(Integer id) {
     this.id = id;
@@ -47,4 +48,11 @@ public class Account {
     this.trader = trader;
   }
 
+  public Set<SecurityOrder> getOrders() {
+    return orders;
+  }
+
+  public void setOrder(SecurityOrder order) {
+    orders.add(order);
+  }
 }

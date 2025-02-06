@@ -10,8 +10,8 @@ import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Table(schema = "public")
@@ -21,14 +21,17 @@ public class Trader {
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Integer id;
 
+  @OneToOne(mappedBy = "trader", cascade = CascadeType.ALL)
+  @PrimaryKeyJoinColumn
+  private Account account;
+
   @NotBlank(message = "First Name must be provided.")
   private String firstName;
 
   @NotBlank(message = "Last Name must be provided.")
   private String lastName;
 
-  @NotBlank(message = "dob must be provided.")
-//  @Temporal(TemporalType.DATE)
+  @NotNull(message = "dob must be provided.")
   private LocalDate dob;
 
   @NotBlank(message = "Country must be provided.")
@@ -38,9 +41,6 @@ public class Trader {
   @Email(message = "Email must be valid.")
   private String email;
 
-  @OneToOne(mappedBy = "trader", cascade = CascadeType.ALL)
-  @PrimaryKeyJoinColumn
-  private Account account;
 
   public Integer getId() {
     return id;
@@ -78,10 +78,8 @@ public class Trader {
     return dob;
   }
 
-  public void setDob(String dob) {
-//    try {
-      this.dob = LocalDate.parse(dob);
-//    } catch ()
+  public void setDob(LocalDate dob) {
+      this.dob = dob;
   }
 
   public String getCountry() {

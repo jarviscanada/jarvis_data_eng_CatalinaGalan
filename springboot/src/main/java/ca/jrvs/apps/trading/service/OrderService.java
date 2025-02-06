@@ -75,7 +75,7 @@ public class OrderService {
         throw new IllegalArgumentException("Invalid input. Market Order size must not exceed ask size.");
       }
       try {
-        handleBuyMarketOrder(marketOrder, securityOrder);
+        handleBuyMarketOrder(marketOrder, securityOrder, account);
       } catch (IllegalArgumentException e) {
         securityOrder.setStatus("Transaction Failed: " + e.getMessage());
         securityOrderRepository.save(securityOrder);
@@ -87,7 +87,7 @@ public class OrderService {
         throw new IllegalArgumentException("Invalid input. Market Order size must not exceed bid size.");
       }
       try {
-        handleSellMarketOrder(marketOrder, securityOrder);
+        handleSellMarketOrder(marketOrder, securityOrder, account);
       } catch (IllegalArgumentException e) {
         securityOrder.setStatus("Transaction Failed: " + e.getMessage());
         securityOrderRepository.save(securityOrder);
@@ -113,8 +113,8 @@ public class OrderService {
    * @param marketOrder user order
    * @param securityOrder to be saved in database
    */
-  protected void handleBuyMarketOrder(MarketOrder marketOrder, SecurityOrder securityOrder) {
-    Account account = securityOrder.getAccount();
+  protected void handleBuyMarketOrder(MarketOrder marketOrder, SecurityOrder securityOrder, Account account) {
+//    Account account = securityOrder.getAccount();
     Quote quote = securityOrder.getQuote();
     Integer size = marketOrder.getSize();
     Double funds = account.getAmount();
@@ -135,8 +135,8 @@ public class OrderService {
    * @param marketOrder user order
    * @param securityOrder to be saved in database
    */
-  protected void handleSellMarketOrder(MarketOrder marketOrder, SecurityOrder securityOrder) {
-    Account account = securityOrder.getAccount();
+  protected void handleSellMarketOrder(MarketOrder marketOrder, SecurityOrder securityOrder, Account account) {
+//    Account account = securityOrder.getAccount();
     Quote quote = securityOrder.getQuote();
     Integer size = marketOrder.getSize();
     Double funds = account.getAmount();
