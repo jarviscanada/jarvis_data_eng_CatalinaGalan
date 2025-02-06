@@ -11,7 +11,10 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 import java.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 @Entity
 @Table(schema = "public")
@@ -31,7 +34,9 @@ public class Trader {
   @NotBlank(message = "Last Name must be provided.")
   private String lastName;
 
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
   @NotNull(message = "dob must be provided.")
+  @Past
   private LocalDate dob;
 
   @NotBlank(message = "Country must be provided.")

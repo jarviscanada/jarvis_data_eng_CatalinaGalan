@@ -1,10 +1,18 @@
 package ca.jrvs.apps.trading.model;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import org.springframework.lang.NonNull;
+
 public class MarketOrder {
 
+  @NotNull
   private String ticker;
+  @NotNull
   private int size;
+  @NotNull
   private int traderId;
+  @NotNull
   private Option option;
 
   public Option getOption() {

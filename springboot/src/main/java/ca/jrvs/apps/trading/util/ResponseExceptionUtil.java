@@ -1,6 +1,7 @@
 package ca.jrvs.apps.trading.util;
 
 import jakarta.validation.ValidationException;
+import java.time.format.DateTimeParseException;
 import org.hibernate.TransactionException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
@@ -21,7 +22,9 @@ public class ResponseExceptionUtil {
     if (e instanceof IllegalArgumentException) {
       logger.debug("Invalid Input.", e);
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-      
+    } else if (e instanceof DateTimeParseException) {
+      logger.debug("Invalid Input: incorrect date format.");
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Expected Date Format: YYYY-MM-DD. " + e.getMessage());
     } else if (e instanceof ConstraintViolationException) {
       logger.debug("Invalid Input.", e);
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());

@@ -19,6 +19,7 @@ public class TraderAccountService {
     if (trader.getId() != null) {
       throw new IllegalArgumentException("New trader id must be null");
     }
+
     try {
       Account account = new Account();
       account.setAmount(0.0);

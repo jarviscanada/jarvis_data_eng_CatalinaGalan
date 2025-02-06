@@ -32,7 +32,7 @@ class TraderAccountServiceIntTest {
     trader.setLastName("Johns");
     trader.setCountry("Portugal");
     trader.setEmail("roberto@portugal.po");
-    LocalDate dob = LocalDate.parse("1991-10-21");
+    LocalDate dob = LocalDate.parse("1990-10-21");
     trader.setDob(dob);
   }
 

@@ -8,6 +8,7 @@ import ca.jrvs.apps.trading.util.ResponseExceptionUtil;
 //import org.hibernate.exception.ConstraintViolationException;
 import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -47,12 +48,12 @@ public class TraderAccountController {
   public Trader createTrader(@PathVariable String firstName, @PathVariable String lastName,
       @PathVariable String dob, @PathVariable String country, @PathVariable String email) {
 
-    LocalDate dobParsed = LocalDate.parse(dob);
     Trader trader = new Trader();
+
     try {
       trader.setFirstName(firstName);
       trader.setLastName(lastName);
-      trader.setDob(dobParsed);
+      trader.setDob(LocalDate.parse(dob));
       trader.setCountry(country);
       trader.setEmail(email);
       return createTrader(trader);
