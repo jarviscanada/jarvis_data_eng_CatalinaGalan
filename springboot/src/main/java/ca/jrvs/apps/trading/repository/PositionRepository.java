@@ -1,23 +1,26 @@
 package ca.jrvs.apps.trading.repository;
 
 import ca.jrvs.apps.trading.model.Position;
-import java.util.Collection;
+import ca.jrvs.apps.trading.model.SecurityOrder;
+import java.util.List;
 import java.util.Optional;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.NoRepositoryBean;
 
 @NoRepositoryBean
 public interface PositionRepository extends ReadOnlyRepository<Position, Integer> {
 
-  Optional<Position> findByTickerAndTraderId(String ticker, Integer traderId);
+  @Query("CREATE OR REPLACE VIEW public.position\n"
+      + "AS\n"
+      + "SELECT account_id,\n"
+      + "       ticker,\n"
+      + "       sum(size) AS position\n"
+      + "FROM public.security_order\n"
+      + "WHERE status = 'FILLED'\n"
+      + "GROUP BY account_id, ticker;")
+  void save(SecurityOrder securityOrder);
 
-  List<Position> findAllByTraderId(Integer traderId);
+  Optional<Position> findByAccountIdAndTicker(Integer accountId, String ticker);
 
-  Position save(Position position);
-
-  default Position replace(Position position) {
-    delete(position);
-    return save(position);
-  }
-
-  void delete(Position position);
+  boolean existsByAccountIdAndTicker(Integer accountId, String ticker);
 }

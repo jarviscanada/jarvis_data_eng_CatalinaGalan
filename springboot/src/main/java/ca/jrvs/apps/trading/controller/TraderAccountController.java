@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -31,11 +32,9 @@ public class TraderAccountController {
   @PostMapping("/")
   @ResponseStatus(HttpStatus.CREATED)
   @ResponseBody
-  public Trader createTrader(Trader trader) {
+  public Trader createTrader(@RequestBody Trader trader) {
     try {
       return traderAccountService.createTraderAndAccount(trader);
-    } catch (IllegalArgumentException e) {
-      throw new IllegalArgumentException(e.getMessage());
     } catch (Exception e) {
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }
@@ -56,7 +55,7 @@ public class TraderAccountController {
       trader.setDob(LocalDate.parse(dob));
       trader.setCountry(country);
       trader.setEmail(email);
-      return createTrader(trader);
+      return traderAccountService.createTraderAndAccount(trader);
     } catch (Exception e) {
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }
@@ -79,7 +78,6 @@ public class TraderAccountController {
   public void deleteTrader(@PathVariable Integer traderId) {
     try {
       traderAccountService.deleteTraderById(traderId);
-      System.out.println("Trader and Account successfully deleted");
     } catch (Exception e) {
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }

@@ -12,8 +12,10 @@ import static org.mockito.Mockito.when;
 import ca.jrvs.apps.trading.model.Account;
 import ca.jrvs.apps.trading.model.MarketOrder;
 import ca.jrvs.apps.trading.model.Option;
+import ca.jrvs.apps.trading.model.Position;
 import ca.jrvs.apps.trading.model.Quote;
 import ca.jrvs.apps.trading.model.SecurityOrder;
+import ca.jrvs.apps.trading.repository.PositionRepository;
 import ca.jrvs.apps.trading.repository.QuoteRepository;
 import ca.jrvs.apps.trading.repository.SecurityOrderRepository;
 import ca.jrvs.apps.trading.repository.TraderRepository;
@@ -47,6 +49,8 @@ class OrderServiceTest {
   private TraderAccountService traderAccountService;
   @Mock
   private SecurityOrderRepository securityOrderRepository;
+  @Mock
+  private PositionRepository positionRepository;
 
   @InjectMocks
   private OrderService orderService = new OrderService();
