@@ -1,7 +1,10 @@
 package ca.jrvs.apps.trading.service;
 
+import static ca.jrvs.apps.trading.model.MarketOrder.Option.*;
+
 import ca.jrvs.apps.trading.model.Account;
 import ca.jrvs.apps.trading.model.MarketOrder;
+import ca.jrvs.apps.trading.model.MarketOrder.Option;
 import ca.jrvs.apps.trading.model.Position;
 import ca.jrvs.apps.trading.model.Quote;
 import ca.jrvs.apps.trading.model.SecurityOrder;
@@ -43,16 +46,16 @@ public class OrderService {
    *
    * NOTE: you are encouraged to make some helper methods (protected or private)
    *
-   * @param marketOrder market order
+   * @param marketOrder marketOrderData
    * @return SecurityOrder from security_order table
    * @throws DataAccessException if unable to get data from DAO
    * @throws IllegalArgumentException for invalid inputs
    */
-  public SecurityOrder executeMarketOrder(MarketOrder marketOrder) {
+  public SecurityOrder executeMarketOrder(MarketOrder marketOrder) throws DataAccessException {
     String ticker = marketOrder.getTicker();
     Integer size = marketOrder.getSize();
     Integer traderId = marketOrder.getTraderId();
-    String option = String.valueOf(marketOrder.getOption());
+    Option option = marketOrder.getOption();
 
     Account account;
     Quote quote;
@@ -65,29 +68,22 @@ public class OrderService {
     }
 
     SecurityOrder securityOrder = new SecurityOrder();
-    securityOrder.setNotes(option);
+    securityOrder.setNotes(String.valueOf(option));
     securityOrder.setSize(size);
     securityOrder.setAccount(account);
     securityOrder.setQuote(quote);
     securityOrder.setStatus("OPEN");
 
-    try{
-      if (option.equals("BUY")) {
-        handleBuyMarketOrder(marketOrder, securityOrder, account);
-      } else if (option.equals("SELL")) {
-        handleSellMarketOrder(marketOrder, securityOrder, account);
-      }
-    } catch (Exception e) {
-      throw new DataAccessException(e.getMessage()) {
-        @Override
-        public Throwable getRootCause() {
-          return super.getRootCause();
-        }
-      };
+    if (option.equals(BUY)) {
+      handleBuyMarketOrder(marketOrder, securityOrder, account);
+    } else if (option.equals(SELL)) {
+      handleSellMarketOrder(marketOrder, securityOrder, account);
     }
-    
+
     securityOrder.setStatus("FILLED");
-    return securityOrderRepository.save(securityOrder);
+    SecurityOrder savedSecurityOrder = securityOrderRepository.save(securityOrder);
+    positionRepository.save(savedSecurityOrder);
+    return savedSecurityOrder;
   }
 
 
@@ -108,8 +104,8 @@ public class OrderService {
           "Invalid input. Market Order size must not exceed ask size.");
     } else if (funds >= price * size) {
       traderAccountService.withdraw(account.getId(), price * size);
-      securityOrder.setStatus("FILLED");
-      positionRepository.save(securityOrder);
+//      securityOrder.setStatus("FILLED");
+//      positionRepository.save(securityOrder);
     } else {
       throw new IllegalArgumentException("Transaction Failed: Insufficient funds.");
     }
@@ -125,18 +121,29 @@ public class OrderService {
   protected void handleSellMarketOrder(MarketOrder marketOrder, SecurityOrder securityOrder, Account account) {
     Quote quote = securityOrder.getQuote();
     Integer size = marketOrder.getSize();
-    Double funds = account.getAmount();
     Double price = quote.getBidPrice();
+    String ticker = quote.getTicker();
+    Integer accountId = account.getId();
+    Position position;
+
+    if (positionRepository.existsByAccountIdAndTicker(accountId, ticker)) {
+      position = positionRepository.findByAccountIdAndTicker(account.getId(),
+          quote.getTicker()).get();
+    } else {
+      throw new IllegalArgumentException("Position for ticker " + ticker + " not found.");
+    }
 
     if (quote.getBidSize() < size) {
       throw new IllegalArgumentException(
           "Invalid input. Market Order size must not exceed bid size.");
-    } else if (funds >= price * size) {
-      traderAccountService.withdraw(account.getId(), price * size);
-      securityOrder.setStatus("FILLED");
-      positionRepository.save(securityOrder);
+    }
+
+    if (position.getPosition() >= size) {
+      traderAccountService.deposit(account.getId(), price * size);
+//      securityOrder.setStatus("FILLED");
+//      positionRepository.save(securityOrder);
     } else {
-      throw new IllegalArgumentException("Transaction Failed: -----.");
+      throw new IllegalArgumentException("Transaction Failed: Insufficient stocks to sell.");
     }
   }
 }

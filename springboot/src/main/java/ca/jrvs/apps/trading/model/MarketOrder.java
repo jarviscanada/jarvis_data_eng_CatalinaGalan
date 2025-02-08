@@ -7,13 +7,18 @@ public class MarketOrder {
 
   @NotNull
   private String ticker;
+
   @NotNull
   @Min(1)
   private int size;
+
   @NotNull
   private int traderId;
+
+  public enum Option { BUY, SELL };
   @NotNull
   private Option option;
+
 
   public Option getOption() {
     return option;

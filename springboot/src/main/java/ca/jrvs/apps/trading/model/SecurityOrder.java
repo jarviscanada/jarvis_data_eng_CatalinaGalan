@@ -8,27 +8,31 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.transaction.Transactional;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Transactional
 public class SecurityOrder {
 
   @Id
+  @NotNull
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Integer id;
 
   @ManyToOne
+  @NotNull
   @JoinColumn(name = "account_id", nullable = false)
   private Account account;
 
   @ManyToOne
+  @NotNull
   @JoinColumn(name = "ticker", nullable = false)
   private Quote quote;
 
-  @Column
+  @NotNull
   private String status;
 
-  @Column
+  @NotNull
   private Integer size;
 
   @Column

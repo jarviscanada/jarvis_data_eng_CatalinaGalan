@@ -1,17 +1,14 @@
 package ca.jrvs.apps.trading.service;
 
+import static ca.jrvs.apps.trading.model.MarketOrder.Option.*;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doReturn;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import ca.jrvs.apps.trading.model.Account;
 import ca.jrvs.apps.trading.model.MarketOrder;
-import ca.jrvs.apps.trading.model.Option;
 import ca.jrvs.apps.trading.model.Position;
 import ca.jrvs.apps.trading.model.Quote;
 import ca.jrvs.apps.trading.model.SecurityOrder;
@@ -23,8 +20,6 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.Optional;
-import org.checkerframework.checker.units.qual.A;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,7 +28,6 @@ import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @ExtendWith(MockitoExtension.class)
 class OrderServiceTest {
@@ -51,6 +45,8 @@ class OrderServiceTest {
   private SecurityOrderRepository securityOrderRepository;
   @Mock
   private PositionRepository positionRepository;
+  @Mock
+  private Position position;
 
   @InjectMocks
   private OrderService orderService = new OrderService();
@@ -87,35 +83,53 @@ class OrderServiceTest {
   }
 
   @Test
-  void executeMarketOrder() {
+  void executeMarketOrderTest() {
     Integer traderId = marketOrder.getTraderId();
     String ticker = marketOrder.getTicker();
-    SecurityOrder savedSecurityOrder = securityOrder;
 
-    when(traderRepository.findAccountById(traderId)).thenReturn(Optional.ofNullable(account));
-    when(quoteRepository.findById(ticker)).thenReturn(Optional.ofNullable(quote));
-    when(securityOrderRepository.save(any(SecurityOrder.class))).thenReturn(securityOrder);
-    when(securityOrderRepository.findById(savedSecurityOrder.getId())).thenReturn(Optional.of(securityOrder));
+    when(traderRepository.findAccountById(anyInt())).thenReturn(Optional.ofNullable(account));
+    when(quoteRepository.findById(anyString())).thenReturn(Optional.ofNullable(quote));
 
-    marketOrder.setOption(Arrays.stream(Option.values()).findAny().get());
+    marketOrder.setOption(Arrays.stream(MarketOrder.Option.values()).findAny().get());
     marketOrder.setSize(900);
+
+    orderService.executeMarketOrder(marketOrder);
+    verify(securityOrderRepository).save(captorSecurityOrder.capture());
+    SecurityOrder capturedSecurityOrder = captorSecurityOrder.getValue();
+    assertSame(capturedSecurityOrder.getClass(), SecurityOrder.class);
+
     assertDoesNotThrow(()-> orderService.executeMarketOrder(marketOrder));
+
     marketOrder.setSize(1000);
     assertThrows(IllegalArgumentException.class, ()-> orderService.executeMarketOrder(marketOrder));
   }
 
   @Test
   void handleBuyMarketOrder() {
-    marketOrder.setOption(Option.BUY);
+    marketOrder.setOption(BUY);
+    marketOrder.setSize(900);
+
+    assertDoesNotThrow(() -> orderService.handleBuyMarketOrder(marketOrder, securityOrder, account));
 
     marketOrder.setSize(1000);
     assertThrows(IllegalArgumentException.class,
         () -> orderService.handleBuyMarketOrder(marketOrder, securityOrder, account));
-    marketOrder.setSize(900);
-    assertDoesNotThrow(() -> orderService.handleBuyMarketOrder(marketOrder, securityOrder, account));
   }
 
   @Test
-  void handleSellMarketOrder() {
+  void handleSellMarketOrderTest() {
+    marketOrder.setOption(SELL);
+    marketOrder.setSize(900);
+
+    when(positionRepository.existsByAccountIdAndTicker(anyInt(), anyString())).thenReturn(true);
+    when(positionRepository.findByAccountIdAndTicker(anyInt(), anyString())).thenReturn(
+        Optional.of(position));
+    when(position.getPosition()).thenReturn(990);
+
+    assertDoesNotThrow(() -> orderService.handleSellMarketOrder(marketOrder, securityOrder, account));
+
+    marketOrder.setSize(1000);
+    assertThrows(IllegalArgumentException.class,
+        () -> orderService.handleSellMarketOrder(marketOrder, securityOrder, account));
   }
 }
