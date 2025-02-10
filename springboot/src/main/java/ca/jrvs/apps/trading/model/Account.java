@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Entity
 @Table(schema = "public")
@@ -30,7 +32,7 @@ public class Account {
   private Trader trader;
 
   @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
-  private List<SecurityOrder> orders = new ArrayList<>();
+  public Set<SecurityOrder> orders = new HashSet<>();
 
   public void setId(Integer id) {
     this.id = id;
@@ -50,7 +52,7 @@ public class Account {
     this.trader = trader;
   }
 
-  public List<SecurityOrder> getOrders() {
+  public Set<SecurityOrder> getOrders() {
     return orders;
   }
 

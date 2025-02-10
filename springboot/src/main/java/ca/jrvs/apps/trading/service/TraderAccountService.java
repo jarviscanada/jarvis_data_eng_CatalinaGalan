@@ -49,7 +49,8 @@ public class TraderAccountService {
     Trader trader;
     Account account;
     if (amount <= 0) {
-      throw new IllegalArgumentException("Deposit amount must be greater than 0. Please enter a valid amount.");
+      throw new IllegalArgumentException("Deposit amount must be greater than 0."
+          + " Please enter a valid amount.");
     }
 
     try {
@@ -77,7 +78,8 @@ public class TraderAccountService {
     }
 
     if (amount <= 0) {
-      throw new IllegalArgumentException("Withdraw amount must be greater than 0. Please enter a valid withdraw amount.");
+      throw new IllegalArgumentException("Withdraw amount must be greater than 0."
+          + " Please enter a valid withdraw amount.");
     } else if (amount > account.getAmount()) {
       throw new IllegalArgumentException("Requested withdraw exceeds available funds.");
     }

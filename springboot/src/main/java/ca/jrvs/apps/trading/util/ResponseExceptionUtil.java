@@ -43,7 +43,7 @@ public class ResponseExceptionUtil {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
 
     } else {
-      logger.error("Internal Error.", e);
+      logger.error("Internal Error: " + e.getMessage(), e);
       throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
           "Internal Error: please contact admin.");
     }

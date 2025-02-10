@@ -70,8 +70,11 @@ class SecurityOrderRepositoryTest {
     securityOrder.setPrice(150.0);
     securityOrder.setStatus("Awesome.");
     securityOrder.setNotes("BUY");
-    account.setOrder(securityOrder);
     securityOrderRepository.save(securityOrder);
+
+//    account.setOrder(securityOrder);
+//    trader.setAccount(account);
+//    traderRepository.save(trader);
   }
 
   @AfterEach
@@ -95,8 +98,17 @@ class SecurityOrderRepositoryTest {
   }
 
   @Test
-  public void findAccountTest() {
-    List<SecurityOrder> accountOrders = account.getOrders();
+  public void findOrdersInAccountTest() {
+//    account.setOrder(securityOrder);
+//    trader.setAccount(account);
+//    traderRepository.save(trader);
+
+//    account = traderRepository.findById(trader.getId()).get().getAccount();
+
+    Account account = traderRepository.findAccountById(trader.getId()).get();
+
+    Set<SecurityOrder> accountOrders = account.getOrders();
+    System.out.println(accountOrders.toString());
     assertFalse(accountOrders.isEmpty());
   }
 
@@ -109,13 +121,15 @@ class SecurityOrderRepositoryTest {
     securityOrder2.setPrice(150.0);
     securityOrder2.setStatus("SO AMAZING.");
     securityOrder2.setNotes("SELL");
-    account.setOrder(securityOrder2);
     securityOrderRepository.save(securityOrder2);
+//    account.setOrder(securityOrder2);
 
+    account = traderRepository.findAccountById(trader.getId()).get();
     Set<SecurityOrder> ordersByAccount = securityOrderRepository.findAllByAccount(account);
 //    for(SecurityOrder order : ordersByAccount) { System.out.println(order.toString()); }
     assertFalse(ordersByAccount.isEmpty());
     assertEquals(2, ordersByAccount.size());
+    System.out.println(ordersByAccount);
   }
 
   @Test

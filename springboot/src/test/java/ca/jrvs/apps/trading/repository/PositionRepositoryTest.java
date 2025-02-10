@@ -124,7 +124,7 @@ class PositionRepositoryTest {
 
   @Test
   void findAllByAccountTest() {
-    List<SecurityOrder> ordersByAccount = account.getOrders();
+    Set<SecurityOrder> ordersByAccount = account.getOrders();
     List<Position> positions = new ArrayList<>();
 
     for (SecurityOrder order : ordersByAccount) {

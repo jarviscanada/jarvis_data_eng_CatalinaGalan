@@ -8,6 +8,7 @@ import ca.jrvs.apps.trading.model.MarketOrder.Option;
 import ca.jrvs.apps.trading.model.Position;
 import ca.jrvs.apps.trading.model.Quote;
 import ca.jrvs.apps.trading.model.SecurityOrder;
+import ca.jrvs.apps.trading.model.Trader;
 import ca.jrvs.apps.trading.repository.PositionRepository;
 import ca.jrvs.apps.trading.repository.QuoteRepository;
 import ca.jrvs.apps.trading.repository.SecurityOrderRepository;
@@ -70,9 +71,9 @@ public class OrderService {
 
     SecurityOrder securityOrder = new SecurityOrder();
     securityOrder.setNotes(String.valueOf(option));
-    securityOrder.setAccount(account);
     securityOrder.setQuote(quote);
     securityOrder.setStatus("OPEN");
+    securityOrder.setAccount(account);
 
     if (option.equals(BUY)) {
       securityOrder.setSize(size);
@@ -83,7 +84,13 @@ public class OrderService {
     }
 
     securityOrder.setStatus("FILLED");
-    return securityOrderRepository.save(securityOrder);
+    SecurityOrder savedSecurityOrder = securityOrderRepository.save(securityOrder);
+    Trader trader = traderRepository.findById(traderId).get();
+
+    account.setOrder(savedSecurityOrder);
+    trader.setAccount(account);
+    traderRepository.save(trader);
+    return savedSecurityOrder;
   }
 
 
