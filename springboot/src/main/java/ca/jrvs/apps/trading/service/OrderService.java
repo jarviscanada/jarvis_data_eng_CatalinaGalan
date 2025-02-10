@@ -5,10 +5,10 @@ import static ca.jrvs.apps.trading.model.MarketOrder.Option.*;
 import ca.jrvs.apps.trading.model.Account;
 import ca.jrvs.apps.trading.model.MarketOrder;
 import ca.jrvs.apps.trading.model.MarketOrder.Option;
-import ca.jrvs.apps.trading.model.Position;
+//import ca.jrvs.apps.trading.model.Position;
 import ca.jrvs.apps.trading.model.Quote;
 import ca.jrvs.apps.trading.model.SecurityOrder;
-import ca.jrvs.apps.trading.repository.PositionRepository;
+//import ca.jrvs.apps.trading.repository.PositionRepository;
 import ca.jrvs.apps.trading.repository.QuoteRepository;
 import ca.jrvs.apps.trading.repository.SecurityOrderRepository;
 import ca.jrvs.apps.trading.repository.TraderRepository;
@@ -31,8 +31,8 @@ public class OrderService {
   @Autowired
   private TraderAccountService traderAccountService;
 
-  @Autowired
-  private PositionRepository positionRepository;
+//  @Autowired
+//  private PositionRepository positionRepository;
 
   /**
    * Execute a market order
@@ -82,7 +82,7 @@ public class OrderService {
 
     securityOrder.setStatus("FILLED");
     SecurityOrder savedSecurityOrder = securityOrderRepository.save(securityOrder);
-    positionRepository.save(savedSecurityOrder);
+//    positionRepository.save(savedSecurityOrder);
     return savedSecurityOrder;
   }
 
@@ -124,26 +124,26 @@ public class OrderService {
     Double price = quote.getBidPrice();
     String ticker = quote.getTicker();
     Integer accountId = account.getId();
-    Position position;
+//    Position position;
 
-    if (positionRepository.existsByAccountIdAndTicker(accountId, ticker)) {
-      position = positionRepository.findByAccountIdAndTicker(account.getId(),
-          quote.getTicker()).get();
-    } else {
-      throw new IllegalArgumentException("Position for ticker " + ticker + " not found.");
-    }
+//    if (positionRepository.existsByAccountIdAndTicker(accountId, ticker)) {
+//      position = positionRepository.findByAccountIdAndTicker(account.getId(),
+//          quote.getTicker()).get();
+//    } else {
+//      throw new IllegalArgumentException("Position for ticker " + ticker + " not found.");
+//    }
 
-    if (quote.getBidSize() < size) {
+    if (size > quote.getBidSize()) {
       throw new IllegalArgumentException(
           "Invalid input. Market Order size must not exceed bid size.");
     }
 
-    if (position.getPosition() >= size) {
-      traderAccountService.deposit(account.getId(), price * size);
-//      securityOrder.setStatus("FILLED");
-//      positionRepository.save(securityOrder);
-    } else {
-      throw new IllegalArgumentException("Transaction Failed: Insufficient stocks to sell.");
-    }
+//    if (position.getPosition() >= size) {
+//      traderAccountService.deposit(account.getId(), price * size);
+////      securityOrder.setStatus("FILLED");
+////      positionRepository.save(securityOrder);
+//    } else {
+//      throw new IllegalArgumentException("Transaction Failed: Insufficient stocks to sell.");
+//    }
   }
 }

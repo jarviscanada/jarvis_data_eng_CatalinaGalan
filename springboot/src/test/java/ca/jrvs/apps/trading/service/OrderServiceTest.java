@@ -9,10 +9,10 @@ import static org.mockito.Mockito.when;
 
 import ca.jrvs.apps.trading.model.Account;
 import ca.jrvs.apps.trading.model.MarketOrder;
-import ca.jrvs.apps.trading.model.Position;
+//import ca.jrvs.apps.trading.model.Position;
 import ca.jrvs.apps.trading.model.Quote;
 import ca.jrvs.apps.trading.model.SecurityOrder;
-import ca.jrvs.apps.trading.repository.PositionRepository;
+//import ca.jrvs.apps.trading.repository.PositionRepository;
 import ca.jrvs.apps.trading.repository.QuoteRepository;
 import ca.jrvs.apps.trading.repository.SecurityOrderRepository;
 import ca.jrvs.apps.trading.repository.TraderRepository;
@@ -43,10 +43,10 @@ class OrderServiceTest {
   private TraderAccountService traderAccountService;
   @Mock
   private SecurityOrderRepository securityOrderRepository;
-  @Mock
-  private PositionRepository positionRepository;
-  @Mock
-  private Position position;
+//  @Mock
+//  private PositionRepository positionRepository;
+//  @Mock
+//  private Position position;
 
   @InjectMocks
   private OrderService orderService = new OrderService();
@@ -121,14 +121,14 @@ class OrderServiceTest {
     marketOrder.setOption(SELL);
     marketOrder.setSize(900);
 
-    when(positionRepository.existsByAccountIdAndTicker(anyInt(), anyString())).thenReturn(true);
-    when(positionRepository.findByAccountIdAndTicker(anyInt(), anyString())).thenReturn(
-        Optional.of(position));
-    when(position.getPosition()).thenReturn(990);
+//    when(positionRepository.existsByAccountIdAndTicker(anyInt(), anyString())).thenReturn(true);
+//    when(positionRepository.findByAccountIdAndTicker(anyInt(), anyString())).thenReturn(
+//        Optional.of(position));
+//    when(position.getPosition()).thenReturn(990);
 
     assertDoesNotThrow(() -> orderService.handleSellMarketOrder(marketOrder, securityOrder, account));
 
-    marketOrder.setSize(1000);
+    marketOrder.setSize(1100);
     assertThrows(IllegalArgumentException.class,
         () -> orderService.handleSellMarketOrder(marketOrder, securityOrder, account));
   }
