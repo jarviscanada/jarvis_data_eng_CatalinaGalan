@@ -83,8 +83,6 @@ public class OrderService {
     }
 
     securityOrder.setStatus("FILLED");
-    //    Position position = new Position();
-//    positionRepository.save(securityOrder);
     return securityOrderRepository.save(securityOrder);
   }
 

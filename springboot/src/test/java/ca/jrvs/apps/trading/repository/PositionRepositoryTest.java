@@ -46,7 +46,6 @@ class PositionRepositoryTest {
   Quote quote;
   Quote quote2;
   Optional<Position> optPosition;
-//  Position position;
 
 
   @BeforeEach
