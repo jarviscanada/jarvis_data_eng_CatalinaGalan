@@ -52,8 +52,6 @@ class SecurityOrderRepositoryTest {
     account.setAmount(15500.00);
     trader.setAccount(account);
     traderRepository.save(trader);
-    account = trader.getAccount();
-    Integer traderId = traderRepository.findByFirstName("John").getId();
 
     quote = new Quote();
     quote.setTicker("IBM");
@@ -66,8 +64,8 @@ class SecurityOrderRepositoryTest {
     quoteRepository.save(quote);
 
     securityOrder = new SecurityOrder();
-    securityOrder.setQuote(quoteRepository.findById("IBM").get());
-    securityOrder.setAccount(traderRepository.findAccountById(traderId).get());
+    securityOrder.setQuote(quote);
+    securityOrder.setAccount(account);
     securityOrder.setSize(10);
     securityOrder.setPrice(150.0);
     securityOrder.setStatus("Awesome.");
@@ -98,16 +96,26 @@ class SecurityOrderRepositoryTest {
 
   @Test
   public void findAccountTest() {
-    Set<SecurityOrder> accountOrders = account.getOrders();
+    List<SecurityOrder> accountOrders = account.getOrders();
     assertFalse(accountOrders.isEmpty());
   }
 
   @Test
   public void findAllByAccountTest() {
+    SecurityOrder securityOrder2 = new SecurityOrder();
+    securityOrder2.setQuote(quote);
+    securityOrder2.setAccount(account);
+    securityOrder2.setSize(-5);
+    securityOrder2.setPrice(150.0);
+    securityOrder2.setStatus("SO AMAZING.");
+    securityOrder2.setNotes("SELL");
+    account.setOrder(securityOrder2);
+    securityOrderRepository.save(securityOrder2);
+
     Set<SecurityOrder> ordersByAccount = securityOrderRepository.findAllByAccount(account);
-    System.out.println(ordersByAccount.toString());
-    for(SecurityOrder order : ordersByAccount) { System.out.println(order.toString()); }
+//    for(SecurityOrder order : ordersByAccount) { System.out.println(order.toString()); }
     assertFalse(ordersByAccount.isEmpty());
+    assertEquals(2, ordersByAccount.size());
   }
 
   @Test

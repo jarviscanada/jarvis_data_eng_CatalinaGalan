@@ -7,11 +7,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Transactional
 public class SecurityOrder {
 
   @Id
@@ -55,6 +53,7 @@ public class SecurityOrder {
 
   public void setAccount(Account account) {
     this.account = account;
+    account.setOrder(this);
   }
 
   public String getStatus() {

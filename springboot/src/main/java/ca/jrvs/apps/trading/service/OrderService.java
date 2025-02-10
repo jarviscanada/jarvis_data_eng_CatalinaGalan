@@ -70,21 +70,22 @@ public class OrderService {
 
     SecurityOrder securityOrder = new SecurityOrder();
     securityOrder.setNotes(String.valueOf(option));
-    securityOrder.setSize(size);
     securityOrder.setAccount(account);
     securityOrder.setQuote(quote);
     securityOrder.setStatus("OPEN");
 
     if (option.equals(BUY)) {
+      securityOrder.setSize(size);
       handleBuyMarketOrder(marketOrder, securityOrder, account);
     } else if (option.equals(SELL)) {
+      securityOrder.setSize(size * -1);
       handleSellMarketOrder(marketOrder, securityOrder, account);
     }
 
     securityOrder.setStatus("FILLED");
-    SecurityOrder savedSecurityOrder = securityOrderRepository.save(securityOrder);
-    positionRepository.save();
-    return savedSecurityOrder;
+    //    Position position = new Position();
+//    positionRepository.save(securityOrder);
+    return securityOrderRepository.save(securityOrder);
   }
 
 

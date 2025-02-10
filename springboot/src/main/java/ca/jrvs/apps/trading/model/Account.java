@@ -9,7 +9,9 @@ import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,7 +30,7 @@ public class Account {
   private Trader trader;
 
   @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
-  private Set<SecurityOrder> orders = new HashSet<>();
+  private List<SecurityOrder> orders = new ArrayList<>();
 
   public void setId(Integer id) {
     this.id = id;
@@ -48,7 +50,7 @@ public class Account {
     this.trader = trader;
   }
 
-  public Set<SecurityOrder> getOrders() {
+  public List<SecurityOrder> getOrders() {
     return orders;
   }
 
