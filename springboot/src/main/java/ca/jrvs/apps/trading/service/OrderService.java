@@ -5,13 +5,14 @@ import static ca.jrvs.apps.trading.model.MarketOrder.Option.*;
 import ca.jrvs.apps.trading.model.Account;
 import ca.jrvs.apps.trading.model.MarketOrder;
 import ca.jrvs.apps.trading.model.MarketOrder.Option;
-//import ca.jrvs.apps.trading.model.Position;
+import ca.jrvs.apps.trading.model.Position;
 import ca.jrvs.apps.trading.model.Quote;
 import ca.jrvs.apps.trading.model.SecurityOrder;
-//import ca.jrvs.apps.trading.repository.PositionRepository;
+import ca.jrvs.apps.trading.repository.PositionRepository;
 import ca.jrvs.apps.trading.repository.QuoteRepository;
 import ca.jrvs.apps.trading.repository.SecurityOrderRepository;
 import ca.jrvs.apps.trading.repository.TraderRepository;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -31,8 +32,8 @@ public class OrderService {
   @Autowired
   private TraderAccountService traderAccountService;
 
-//  @Autowired
-//  private PositionRepository positionRepository;
+  @Autowired
+  private PositionRepository positionRepository;
 
   /**
    * Execute a market order
@@ -82,7 +83,7 @@ public class OrderService {
 
     securityOrder.setStatus("FILLED");
     SecurityOrder savedSecurityOrder = securityOrderRepository.save(securityOrder);
-//    positionRepository.save(savedSecurityOrder);
+    positionRepository.save();
     return savedSecurityOrder;
   }
 
@@ -99,16 +100,14 @@ public class OrderService {
     Double funds = account.getAmount();
     Double price = quote.getAskPrice();
 
-    if (quote.getAskSize() < size) {
+    if (size > quote.getAskSize()) {
       throw new IllegalArgumentException(
           "Invalid input. Market Order size must not exceed ask size.");
-    } else if (funds >= price * size) {
-      traderAccountService.withdraw(account.getId(), price * size);
-//      securityOrder.setStatus("FILLED");
-//      positionRepository.save(securityOrder);
-    } else {
+    } else if (funds < price * size) {
       throw new IllegalArgumentException("Transaction Failed: Insufficient funds.");
     }
+
+    traderAccountService.withdraw(account.getId(), price * size);
   }
 
 
@@ -124,26 +123,19 @@ public class OrderService {
     Double price = quote.getBidPrice();
     String ticker = quote.getTicker();
     Integer accountId = account.getId();
-//    Position position;
-
-//    if (positionRepository.existsByAccountIdAndTicker(accountId, ticker)) {
-//      position = positionRepository.findByAccountIdAndTicker(account.getId(),
-//          quote.getTicker()).get();
-//    } else {
-//      throw new IllegalArgumentException("Position for ticker " + ticker + " not found.");
-//    }
+    Optional<Position> position = positionRepository.findByAccountIdAndTicker(accountId, ticker);
 
     if (size > quote.getBidSize()) {
       throw new IllegalArgumentException(
           "Invalid input. Market Order size must not exceed bid size.");
+    } else if (position.isEmpty()) {
+      throw new IllegalArgumentException("Position for ticker " + ticker + " not found.");
     }
 
-//    if (position.getPosition() >= size) {
-//      traderAccountService.deposit(account.getId(), price * size);
-////      securityOrder.setStatus("FILLED");
-////      positionRepository.save(securityOrder);
-//    } else {
-//      throw new IllegalArgumentException("Transaction Failed: Insufficient stocks to sell.");
-//    }
+    if (position.get().getPosition() >= size) {
+      traderAccountService.deposit(account.getId(), price * size);
+    } else {
+      throw new IllegalArgumentException("Transaction Failed: Insufficient stocks to sell.");
+    }
   }
 }
