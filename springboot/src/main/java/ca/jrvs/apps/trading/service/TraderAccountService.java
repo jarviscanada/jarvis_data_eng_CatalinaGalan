@@ -24,7 +24,7 @@ public class TraderAccountService {
       Account account = new Account();
       account.setAmount(0.0);
       account.setTrader(trader);
-      trader.setAccount(account);
+//      trader.setAccount(account);
       return traderRepository.save(trader);
     } catch (Exception e) {
       throw new IllegalArgumentException("All required fields must be present and must be valid.");
@@ -62,7 +62,7 @@ public class TraderAccountService {
 
     Double newAmount = account.getAmount() + amount;
     account.setAmount(newAmount);
-    trader.setAccount(account);
+//    trader.setAccount(account);
     traderRepository.save(trader);
     return account;
   }

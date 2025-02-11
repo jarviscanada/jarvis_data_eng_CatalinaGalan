@@ -1,5 +1,9 @@
 package ca.jrvs.apps.trading.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -37,6 +41,7 @@ public class Trader {
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
   @NotNull(message = "dob must be provided.")
   @Past
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MMM dd yyyy")
   private LocalDate dob;
 
   @NotBlank(message = "Country must be provided.")
@@ -79,6 +84,7 @@ public class Trader {
     this.lastName = lastName;
   }
 
+  @JsonSerialize(using = LocalDateSerializer.class)
   public LocalDate getDob() {
     return dob;
   }

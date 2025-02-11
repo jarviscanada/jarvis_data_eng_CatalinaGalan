@@ -1,6 +1,7 @@
 package ca.jrvs.apps.trading;
 
 import static ca.jrvs.apps.trading.model.MarketOrder.Option.BUY;
+import static ca.jrvs.apps.trading.model.MarketOrder.Option.SELL;
 
 import ca.jrvs.apps.trading.config.AppConfig;
 import ca.jrvs.apps.trading.controller.AppController;
@@ -67,6 +68,12 @@ public class TradingApplication implements CommandLineRunner {
 		marketOrder.setTicker("IBM");
 		marketOrder.setTraderId(1);;
 
+		MarketOrder marketOrder2 = new MarketOrder();
+		marketOrder2.setSize(100);
+		marketOrder2.setOption(SELL);
+		marketOrder2.setTicker("IBM");
+		marketOrder2.setTraderId(1);;
+
 		try {
 			Quote quote = quoteController.createNewQuote("IBM");
 			System.out.println(quote.toString());
@@ -74,10 +81,11 @@ public class TradingApplication implements CommandLineRunner {
 			logger.error(e.getMessage());
 		}
 
-//		try {
-//			SecurityOrder securityOrder = orderController.postMarketOrder(marketOrder);
-//		} catch (Exception e) {
-//			logger.error(e.getMessage());
-//		}
+		try {
+			SecurityOrder securityOrder = orderController.postMarketOrder(marketOrder);
+			SecurityOrder securityOrder2 = orderController.postMarketOrder(marketOrder2);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
 	}
 }

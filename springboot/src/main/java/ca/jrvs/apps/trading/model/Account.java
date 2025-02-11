@@ -3,6 +3,7 @@ package ca.jrvs.apps.trading.model;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapsId;
@@ -31,7 +32,7 @@ public class Account {
   @MapsId
   private Trader trader;
 
-  @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "account",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   public Set<SecurityOrder> orders = new HashSet<>();
 
   public void setId(Integer id) {
@@ -50,6 +51,7 @@ public class Account {
 
   public void setTrader(Trader trader) {
     this.trader = trader;
+    trader.setAccount(this);
   }
 
   public Set<SecurityOrder> getOrders() {

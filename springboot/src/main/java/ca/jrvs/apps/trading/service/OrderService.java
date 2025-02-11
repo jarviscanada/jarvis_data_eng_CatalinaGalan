@@ -77,19 +77,16 @@ public class OrderService {
 
     if (option.equals(BUY)) {
       securityOrder.setSize(size);
+      securityOrder.setPrice(quote.getAskPrice());
       handleBuyMarketOrder(marketOrder, securityOrder, account);
     } else if (option.equals(SELL)) {
       securityOrder.setSize(size * -1);
+      securityOrder.setPrice(quote.getBidPrice());
       handleSellMarketOrder(marketOrder, securityOrder, account);
     }
 
     securityOrder.setStatus("FILLED");
     SecurityOrder savedSecurityOrder = securityOrderRepository.save(securityOrder);
-    Trader trader = traderRepository.findById(traderId).get();
-
-    account.setOrder(savedSecurityOrder);
-    trader.setAccount(account);
-    traderRepository.save(trader);
     return savedSecurityOrder;
   }
 
