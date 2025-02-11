@@ -17,7 +17,7 @@ import org.hibernate.annotations.Immutable;
 import org.hibernate.annotations.Subselect;
 
 @Entity
-@Immutable
+//@Immutable
 @Subselect("SELECT account_id,\n"
     + "       ticker,\n"
     + "       sum(size) AS position\n"

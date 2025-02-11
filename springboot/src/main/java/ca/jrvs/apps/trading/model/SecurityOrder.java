@@ -7,10 +7,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.transaction.annotation.Transactional;
 
 @Entity
+@Table(schema = "public")
 public class SecurityOrder {
 
   @Id
@@ -27,6 +29,8 @@ public class SecurityOrder {
   @NotNull
   @JoinColumn(name = "ticker", nullable = false)
   private Quote quote;
+
+//  private String ticker;
 
   @NotNull
   private String status;
@@ -97,6 +101,14 @@ public class SecurityOrder {
     this.quote = quote;
   }
 
+//  public String getTicker() {
+//    return ticker;
+//  }
+//
+//  public void setTicker(Quote quote) {
+//    this.ticker = quote.getTicker();
+//  }
+
   @Override
   public String toString() {
     return "SecurityOrder{" +
@@ -109,4 +121,5 @@ public class SecurityOrder {
         ", notes='" + notes + '\'' +
         '}';
   }
+
 }
