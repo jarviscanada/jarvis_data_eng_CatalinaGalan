@@ -123,20 +123,6 @@ class PositionRepositoryTest {
   }
 
   @Test
-  void findAllByAccountTest() {
-    Set<SecurityOrder> ordersByAccount = account.getOrders();
-    List<Position> positions = new ArrayList<>();
-
-    for (SecurityOrder order : ordersByAccount) {
-      Optional<Position> position =
-          positionRepository.findByAccountIdAndTicker(account.getId(), order.getQuote().getTicker());
-      positions.add(position.get());
-    }
-
-    assertEquals(2, positions.size());
-  }
-
-  @Test
   void updatePosition() {
     optPosition =
         positionRepository.findByAccountIdAndTicker(account.getId(), "IBM");
@@ -156,5 +142,12 @@ class PositionRepositoryTest {
         positionRepository.findByAccountIdAndTicker(account.getId(), "IBM");
     position = optPosition.get();
     assertEquals(700, position.getPosition());
+  }
+
+  @Test
+  public void findAllTest() {
+    List<Position> positions = positionRepository.findAll();
+    System.out.println(positions);
+    assertFalse(positions.isEmpty());
   }
 }

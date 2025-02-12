@@ -16,13 +16,4 @@ public interface PositionRepository extends ReadOnlyRepository<Position, Integer
 
   boolean existsByAccountIdAndTicker(Integer accountId, String ticker);
 
-  default List<Position> findAllByAccount(Account account) {
-    Set<SecurityOrder> orders = account.getOrders();
-    List<Position> positions = new ArrayList<>();
-    for (SecurityOrder order : orders) {
-      Optional<Position> position = findByAccountIdAndTicker(account.getId(), order.getQuote().getTicker());
-      positions.add(position.get());
-    }
-    return positions;
-  }
 }

@@ -5,14 +5,17 @@ import static ca.jrvs.apps.trading.model.MarketOrder.Option.SELL;
 
 import ca.jrvs.apps.trading.config.AppConfig;
 import ca.jrvs.apps.trading.controller.AppController;
+import ca.jrvs.apps.trading.controller.DashboardController;
 import ca.jrvs.apps.trading.controller.OrderController;
 import ca.jrvs.apps.trading.controller.QuoteController;
 import ca.jrvs.apps.trading.controller.TraderAccountController;
 import ca.jrvs.apps.trading.model.MarketOrder;
+import ca.jrvs.apps.trading.model.Position;
 import ca.jrvs.apps.trading.model.Quote;
 import ca.jrvs.apps.trading.model.SecurityOrder;
 import ca.jrvs.apps.trading.model.Trader;
 import ca.jrvs.apps.trading.service.TraderAccountService;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +41,9 @@ public class TradingApplication implements CommandLineRunner {
 
 	@Autowired
 	private TraderAccountController traderAccountController;
+
+	@Autowired
+	private DashboardController dashboardController;
 
 	@Autowired
 	private OrderController orderController;
@@ -87,5 +93,6 @@ public class TradingApplication implements CommandLineRunner {
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
+
 	}
 }
