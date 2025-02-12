@@ -22,6 +22,9 @@ public class DashboardService {
   private TraderAccountService traderAccountService;
 
   @Autowired
+  private TraderRepository traderRepository;
+
+  @Autowired
   private PositionService positionService;
 
   @Autowired
@@ -32,13 +35,18 @@ public class DashboardService {
 
   public TraderAccountView getTraderAccountViewByTraderId(Integer traderId) {
 
-    return traderAccountViewRepository.findById(traderId).get();
+    Optional<TraderAccountView> traderAccountView = traderAccountViewRepository.findById(traderId);
+    if (traderAccountView.isEmpty()) {
+      throw new IllegalArgumentException("Invalid Input: Trader not found."
+          + " Please provide a valid TraderId.");
+    }
+
+    return traderAccountView.get();
   }
 
   public PortfolioView getProfileViewByTraderId(Integer traderId){
 
     Set<Position> positions = positionService.getAllPositionsByAccountId(traderId);
-
     return new PortfolioView(traderId, positions);
   }
 }

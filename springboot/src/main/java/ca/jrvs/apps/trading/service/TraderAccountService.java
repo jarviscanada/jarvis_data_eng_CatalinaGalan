@@ -62,7 +62,6 @@ public class TraderAccountService {
 
     Double newAmount = account.getAmount() + amount;
     account.setAmount(newAmount);
-//    trader.setAccount(account);
     traderRepository.save(trader);
     return account;
   }
@@ -93,10 +92,10 @@ public class TraderAccountService {
 
   public Trader getTraderById(Integer traderId) {
     Optional<Trader> trader = traderRepository.findById(traderId);
-    if (trader.isPresent()) {
-      return trader.get();
+    if (trader.isEmpty()) {
+      throw new IllegalArgumentException("Trader nor found. Please provide a valid Trader Id.");
     }
-    throw new IllegalArgumentException("Trader nor found. Please provide a valid Trader Id.");
+    return trader.get();
   }
 }
 
