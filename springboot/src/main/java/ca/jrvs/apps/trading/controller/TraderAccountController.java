@@ -61,7 +61,7 @@ public class TraderAccountController {
     }
   }
 
-  @GetMapping("/{traderId}")
+  @GetMapping("/traderId/{traderId}")
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
   public Trader showTrader(@PathVariable Integer traderId) {
@@ -72,7 +72,7 @@ public class TraderAccountController {
     }
   }
 
-  @DeleteMapping("/{traderId}")
+  @DeleteMapping("/traderId/{traderId}")
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
   public void deleteTrader(@PathVariable Integer traderId) {
@@ -83,7 +83,7 @@ public class TraderAccountController {
     }
   }
 
-  @PutMapping("/{traderId}/deposit/amount/{amount}")
+  @PutMapping("/traderId/{traderId}/deposit/amount/{amount}")
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
   public Account depositFunds(@PathVariable Integer traderId, @PathVariable Double amount) {
@@ -94,7 +94,7 @@ public class TraderAccountController {
     }
   }
 
-  @PutMapping("/{traderId}/withdraw/amount/{amount}")
+  @PutMapping("/traderId/{traderId}/withdraw/amount/{amount}")
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
   public Account withdrawFunds(@PathVariable Integer traderId, @PathVariable Double amount) {

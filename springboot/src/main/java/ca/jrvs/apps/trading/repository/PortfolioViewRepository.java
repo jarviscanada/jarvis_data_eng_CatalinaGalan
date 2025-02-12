@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PortfolioViewRepository extends ReadOnlyRepository<PortfolioView, Integer> {
 
-  Optional<PortfolioView> findById(Integer accountId);
+//  Optional<PortfolioView> findById(Integer accountId);
 
 }
