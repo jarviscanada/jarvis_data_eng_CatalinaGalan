@@ -4,9 +4,14 @@ import ca.jrvs.apps.trading.model.Account;
 import ca.jrvs.apps.trading.model.Trader;
 import ca.jrvs.apps.trading.service.TraderAccountService;
 import ca.jrvs.apps.trading.util.ResponseExceptionUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+@Api(value = "trader", produces = MediaType.APPLICATION_JSON_VALUE)
 @Controller
 @RequestMapping("/trader")
 public class TraderAccountController {
@@ -25,6 +31,7 @@ public class TraderAccountController {
   @Autowired
   private TraderAccountService traderAccountService;
 
+  @ApiOperation(value = "Creates new Trader and Trader Account.")
   @PostMapping("/")
   @ResponseStatus(HttpStatus.CREATED)
   @ResponseBody
@@ -38,6 +45,7 @@ public class TraderAccountController {
 
   }
 
+  @ApiOperation(value = "Creates new Trader and Trader Account.")
   @PostMapping("/firstName/{firstName}/lastName/{lastName}/dob/{dob}/country/{country}/"
       + "email/{email}")
   @ResponseStatus(HttpStatus.CREATED)
@@ -60,6 +68,9 @@ public class TraderAccountController {
 
   }
 
+  @ApiOperation(value = "Show all Trader details by Id.",
+      notes = "Account and all Security Orders associated are accessed by Trader.")
+  @ApiResponses(value = {@ApiResponse(code = 404, message = "Trader not found for given Trader Id.")})
   @GetMapping("/traderId/{traderId}")
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
@@ -73,6 +84,8 @@ public class TraderAccountController {
 
   }
 
+  @ApiOperation(value = "Delete Trade by Id.")
+  @ApiResponses(value = {@ApiResponse(code = 404, message = "Trader not found for given Trader Id.")})
   @DeleteMapping("/traderId/{traderId}")
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
@@ -86,6 +99,9 @@ public class TraderAccountController {
 
   }
 
+  @ApiOperation(value = "Deposit funds in Trader Account by Trader Id.")
+  @ApiResponses(value = {@ApiResponse(code = 404, message = "Trader not found for given Trader Id."),
+      @ApiResponse(code = 400, message = "Invalid amount input.")})
   @PutMapping("/traderId/{traderId}/deposit/amount/{amount}")
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
@@ -99,6 +115,9 @@ public class TraderAccountController {
 
   }
 
+  @ApiOperation(value = "Withdraw funds from Trader Account by Trader Id.")
+  @ApiResponses(value = {@ApiResponse(code = 404, message = "Trader not found for given Trader Id."),
+      @ApiResponse(code = 400, message = "Invalid amount input.")})
   @PutMapping("/traderId/{traderId}/withdraw/amount/{amount}")
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
