@@ -27,44 +27,52 @@ public class QuoteController {
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
   public AlphaQuote getQuote(@PathVariable String ticker) {
+
     try {
       return quoteService.findAlphaQuoteByTicker(ticker);
     } catch (Exception e) {
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }
+
   }
 
   @PutMapping("/update/{ticker}")
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
   public Quote updateQuoteMarketData(@PathVariable String ticker) {
+
     try {
       return quoteService.updateMarketDataQuote(ticker);
     } catch (Exception e) {
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }
+
   }
 
   @PostMapping("/tickerId/{ticker}")
   @ResponseStatus(HttpStatus.CREATED)
   @ResponseBody
   public Quote createNewQuote(@PathVariable String ticker) {
+
     try {
       Quote newQuote = quoteService.saveQuote(ticker);
       return quoteService.saveQuote(newQuote);
     } catch (Exception e) {
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }
+
   }
 
   @GetMapping("/dailyList")
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
   public List<Quote> getDailyList() {
+
     try {
       return quoteService.findAllQuotes();
     } catch (Exception e) {
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }
+
   }
 }

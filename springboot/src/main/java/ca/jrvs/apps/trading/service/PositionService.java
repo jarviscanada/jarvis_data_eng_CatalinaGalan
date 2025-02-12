@@ -33,6 +33,8 @@ public class PositionService {
         accountPositions.add(position);
       }
     }
+
     return accountPositions;
+
   }
 }

@@ -8,7 +8,6 @@ import ca.jrvs.apps.trading.model.MarketOrder.Option;
 import ca.jrvs.apps.trading.model.Position;
 import ca.jrvs.apps.trading.model.Quote;
 import ca.jrvs.apps.trading.model.SecurityOrder;
-import ca.jrvs.apps.trading.model.Trader;
 import ca.jrvs.apps.trading.repository.PositionRepository;
 import ca.jrvs.apps.trading.repository.QuoteRepository;
 import ca.jrvs.apps.trading.repository.SecurityOrderRepository;
@@ -54,6 +53,7 @@ public class OrderService {
    * @throws IllegalArgumentException for invalid inputs
    */
   public SecurityOrder executeMarketOrder(MarketOrder marketOrder) throws DataAccessException {
+
     String ticker = marketOrder.getTicker();
     Integer size = marketOrder.getSize();
     Integer traderId = marketOrder.getTraderId();
@@ -87,7 +87,9 @@ public class OrderService {
 
     securityOrder.setStatus("FILLED");
     SecurityOrder savedSecurityOrder = securityOrderRepository.save(securityOrder);
+
     return savedSecurityOrder;
+
   }
 
 
@@ -98,6 +100,7 @@ public class OrderService {
    * @param securityOrder to be saved in database
    */
   protected void handleBuyMarketOrder(MarketOrder marketOrder, SecurityOrder securityOrder, Account account) {
+
     Quote quote = securityOrder.getQuote();
     Integer size = marketOrder.getSize();
     Double funds = account.getAmount();
@@ -111,6 +114,7 @@ public class OrderService {
     }
 
     traderAccountService.withdraw(account.getId(), price * size);
+
   }
 
 
@@ -121,6 +125,7 @@ public class OrderService {
    * @param securityOrder to be saved in database
    */
   protected void handleSellMarketOrder(MarketOrder marketOrder, SecurityOrder securityOrder, Account account) {
+
     Quote quote = securityOrder.getQuote();
     Integer size = marketOrder.getSize();
     Double price = quote.getBidPrice();
@@ -140,5 +145,6 @@ public class OrderService {
     } else {
       throw new IllegalArgumentException("Transaction Failed: Insufficient stocks to sell.");
     }
+
   }
 }

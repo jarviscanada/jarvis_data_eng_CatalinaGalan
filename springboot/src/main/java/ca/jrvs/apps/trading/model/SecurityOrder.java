@@ -9,7 +9,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
-import org.springframework.transaction.annotation.Transactional;
 
 @Entity
 @Table(schema = "public")
@@ -30,8 +29,6 @@ public class SecurityOrder {
   @JoinColumn(name = "ticker", nullable = false)
   private Quote quote;
 
-//  private String ticker;
-
   @NotNull
   private String status;
 
@@ -51,10 +48,6 @@ public class SecurityOrder {
   public void setId(Integer id) {
     this.id = id;
   }
-
-//  public Account getAccount() {
-//    return account;
-//  }
 
   public void setAccount(Account account) {
     this.account = account;
@@ -100,26 +93,4 @@ public class SecurityOrder {
   public void setQuote(Quote quote) {
     this.quote = quote;
   }
-
-//  public String getTicker() {
-//    return ticker;
-//  }
-//
-//  public void setTicker(Quote quote) {
-//    this.ticker = quote.getTicker();
-//  }
-
-  @Override
-  public String toString() {
-    return "SecurityOrder{" +
-        "id=" + id +
-        ", account=" + account +
-        ", quote=" + quote +
-        ", status='" + status + '\'' +
-        ", size=" + size +
-        ", price=" + price +
-        ", notes='" + notes + '\'' +
-        '}';
-  }
-
 }

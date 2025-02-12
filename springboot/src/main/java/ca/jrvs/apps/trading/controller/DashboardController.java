@@ -24,11 +24,13 @@ public class DashboardController {
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)
   public TraderAccountView showTraderProfile(@PathVariable Integer traderId) {
+
     try {
       return dashboardService.getTraderAccountViewByTraderId(traderId);
     } catch (Exception e) {
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }
+
   }
 
 
@@ -36,10 +38,12 @@ public class DashboardController {
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)
   public PortfolioView showTraderPortfolio(@PathVariable Integer traderId) {
+
     try {
       return dashboardService.getProfileViewByTraderId(traderId);
     } catch (Exception e) {
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }
+
   }
 }

@@ -39,6 +39,7 @@ class SecurityOrderRepositoryTest {
 
   @BeforeEach
   public void setUp() {
+
     trader = new Trader();
     trader.setFirstName("John");
     trader.setLastName("Snow");
@@ -72,48 +73,48 @@ class SecurityOrderRepositoryTest {
     securityOrder.setNotes("BUY");
     securityOrderRepository.save(securityOrder);
 
-//    account.setOrder(securityOrder);
-//    trader.setAccount(account);
-//    traderRepository.save(trader);
   }
 
   @AfterEach
   public void cleaDb() {
+
     traderRepository.deleteAll();
     quoteRepository.deleteAll();
+
   }
 
   @Test
   public void findByIdTest() {
+
     Integer securityOrderId = securityOrder.getId();
     Integer size = 10;
     assertEquals(size, securityOrderRepository.findById(securityOrderId).get().getSize());
     assertEquals(Optional.empty(), securityOrderRepository.findById(-1));
+
   }
 
   @Test
   public void findAllTest() {
+
     List<SecurityOrder> orders = securityOrderRepository.findAll();
     assertFalse(orders.isEmpty());
+
   }
 
   @Test
   public void findOrdersInAccountTest() {
-//    account.setOrder(securityOrder);
-//    trader.setAccount(account);
-//    traderRepository.save(trader);
-
-//    account = traderRepository.findById(trader.getId()).get().getAccount();
 
     Account account = traderRepository.findAccountById(trader.getId()).get();
 
     Set<SecurityOrder> accountOrders = account.getOrders();
     System.out.println(accountOrders.toString());
     assertFalse(accountOrders.isEmpty());
+
   }
 
   @Test
   public void findAllByAccountTest() {
+
     SecurityOrder securityOrder2 = new SecurityOrder();
     securityOrder2.setQuote(quote);
     securityOrder2.setAccount(account);
@@ -122,39 +123,46 @@ class SecurityOrderRepositoryTest {
     securityOrder2.setStatus("SO AMAZING.");
     securityOrder2.setNotes("SELL");
     securityOrderRepository.save(securityOrder2);
-//    account.setOrder(securityOrder2);
 
     account = traderRepository.findAccountById(trader.getId()).get();
     Set<SecurityOrder> ordersByAccount = securityOrderRepository.findAllByAccount(account);
-//    for(SecurityOrder order : ordersByAccount) { System.out.println(order.toString()); }
+
     assertFalse(ordersByAccount.isEmpty());
     assertEquals(2, ordersByAccount.size());
-    System.out.println(ordersByAccount);
+
   }
 
   @Test
   public void countTest() {
+
     assertTrue(securityOrderRepository.count() >= 1);
+
   }
 
   @Test
   public void existsByIdTest() {
+
     Integer id = securityOrder.getId();
     assertTrue(securityOrderRepository.existsById(id));
+
   }
 
   @Test
   public void deleteByIdTest() {
+
     Integer id = securityOrder.getId();
     securityOrderRepository.deleteById(id);
     assertTrue(securityOrderRepository.findById(id).isEmpty());
+
   }
 
   @Test
   public void deleteAll() {
+
     Integer id = securityOrder.getId();
     securityOrderRepository.deleteAll();
     assertTrue(securityOrderRepository.findAll().isEmpty());
+
   }
 
 }

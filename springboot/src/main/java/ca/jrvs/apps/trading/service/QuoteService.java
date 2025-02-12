@@ -8,7 +8,6 @@ import ca.jrvs.apps.trading.util.ResourceNotFoundException;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
@@ -22,7 +21,6 @@ public class QuoteService {
 
   @Autowired
   private MarketDataHttpHelper httpHelper;
-
 
   /**
    * Update quote table against IEX source
@@ -40,6 +38,7 @@ public class QuoteService {
     Quote updatedQuote;
 
     if (quoteRepository.existsById(ticker)) {
+
       try {
           updatedQuote = saveQuote(ticker);
           return saveQuote(updatedQuote);
@@ -56,10 +55,14 @@ public class QuoteService {
           }
         };
       }
+
     } else {
+
       throw new IllegalArgumentException("Invalid Ticker: "
           + "Quote for ticker " + ticker + " not found in Daily List.");
+
     }
+
   }
 
   /**
@@ -73,7 +76,9 @@ public class QuoteService {
       if (!ticker.isEmpty()) {
         return httpHelper.findQuoteByTicker(ticker).get();
       }
+
       throw new IllegalArgumentException("Ticker cannot be empty.");
+
     }
 
   /**
@@ -83,9 +88,12 @@ public class QuoteService {
    * @return the saved quote entity
    */
   public Quote saveQuote(Quote quote) {
+
     quoteRepository.save(quote);
     quote.setLastUpdated(Timestamp.from(Instant.now()));
+
     return quoteRepository.findById(quote.getTicker()).get();
+
   }
 
   /**
@@ -93,7 +101,9 @@ public class QuoteService {
    * @return a list of quotes
    */
   public List<Quote> findAllQuotes() {
+
     return quoteRepository.findAll();
+
   }
 
   /**
@@ -119,6 +129,7 @@ public class QuoteService {
       quote.setLastUpdated(Timestamp.from(alphaQuote.getLatestTradingDay().toInstant()));
 
       return quote;
+
     }
 
   /**
@@ -129,6 +140,7 @@ public class QuoteService {
    * @throws IllegalArgumentException if ticker is not found in Alpha Vantage
    */
   public Quote saveQuote(String ticker) {
+
       try {
         AlphaQuote alphaQuote = findAlphaQuoteByTicker(ticker);
         Quote newQuote = buildQuoteFromAlphaQuote(alphaQuote);
@@ -137,5 +149,6 @@ public class QuoteService {
       } catch (IllegalArgumentException e) {
         throw new IllegalArgumentException(e.getMessage());
       }
+
     }
 }

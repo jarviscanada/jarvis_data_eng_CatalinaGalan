@@ -5,11 +5,8 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
 import java.sql.Timestamp;
 import java.util.Set;
 
@@ -98,16 +95,4 @@ public class Quote {
     this.lastUpdated = lastUpdated;
   }
 
-  @Override
-  public String toString() {
-    return "Quote{" +
-        "ticker='" + ticker + '\'' +
-        ", lastPrice=" + lastPrice +
-        ", bidPrice=" + bidPrice +
-        ", bidSize=" + bidSize +
-        ", askPrice=" + askPrice +
-        ", askSize=" + askSize +
-        ", lastUpdated=" + lastUpdated +
-        '}';
-  }
 }

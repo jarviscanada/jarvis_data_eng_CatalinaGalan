@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import java.time.Instant;
 import java.util.Date;
 
 /**
@@ -125,29 +124,4 @@ public class AlphaQuote {
     this.changePercent = changePercent;
   }
 
-//  @JsonGetter("Last Updated")
-//  public Timestamp getLastUpdated() {
-//    return lastUpdated;
-//  }
-//
-//  public void setLastUpdated(Timestamp lastUpdated) {
-//    this.lastUpdated = lastUpdated;
-//  }
-
-  @Override
-  public String toString() {
-    return "AlphaQuote {" +
-        "ticker ='" + ticker + '\'' +
-        ", open =" + open +
-        ", high =" + high +
-        ", low =" + low +
-        ", price =" + price +
-        ", volume =" + volume +
-        ", latest trading day =" + latestTradingDay +
-        ", close=" + previousClose +
-        ", change=" + change +
-        ", change percent=" + changePercent +
-//        ", last updated=" + lastUpdated + '\'' +
-        '}';
-  }
 }

@@ -8,5 +8,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SecurityOrderRepository extends JpaRepository<SecurityOrder, Integer> {
+
   Set<SecurityOrder> findAllByAccount(Account account);
+
 }

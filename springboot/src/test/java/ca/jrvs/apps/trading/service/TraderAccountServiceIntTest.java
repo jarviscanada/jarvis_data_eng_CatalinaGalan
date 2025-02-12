@@ -27,6 +27,7 @@ class TraderAccountServiceIntTest {
 
   @BeforeEach
   void setUp() {
+
     trader = new Trader();
     trader.setFirstName("Roberto");
     trader.setLastName("Johns");
@@ -34,34 +35,45 @@ class TraderAccountServiceIntTest {
     trader.setEmail("roberto@portugal.po");
     LocalDate dob = LocalDate.parse("1990-10-21");
     trader.setDob(dob);
+
   }
 
   @AfterEach
   void tearDown() {
+
     traderRepository.deleteAll();
+
   }
 
   @Test
   void createTraderAndAccountTest() {
+
     Trader savedTraderAccount = traderAccountService.createTraderAndAccount(trader);
     Account savedAccount = savedTraderAccount.getAccount();
+
     assertTrue(traderRepository.existsById(savedTraderAccount.getId()));
     assertEquals(0.0, savedAccount.getAmount());
+
   }
 
   @Test
   void deleteTraderByIdTest() {
+
     Trader savedTraderAccount = traderAccountService.createTraderAndAccount(trader);
     Integer savedId = savedTraderAccount.getId();
     traderAccountService.deleteTraderById(savedId);
+
     assertTrue(traderRepository.findById(savedId).isEmpty());
+
   }
 
   @Test
   void depositTest() {
+
     Trader savedTraderAccount = traderAccountService.createTraderAndAccount(trader);
     Integer traderId = savedTraderAccount.getId();
     Account updatedAccount = traderAccountService.deposit(traderId, 100.0);
+
     assertEquals(100.0, updatedAccount.getAmount());
     assertEquals(updatedAccount.getAmount(),
         traderRepository.findAccountById(traderId).get().getAmount());
@@ -71,10 +83,12 @@ class TraderAccountServiceIntTest {
         traderAccountService.deposit(traderId, 0.0));
     assertThrows(IllegalArgumentException.class, () ->
         traderAccountService.deposit( -1, 100.0));
+
   }
 
   @Test
   void withdrawTest() {
+
     Trader savedTraderAccount = traderAccountService.createTraderAndAccount(trader);
     Integer traderId = savedTraderAccount.getId();
     traderAccountService.deposit(traderId, 100.0);
@@ -91,13 +105,17 @@ class TraderAccountServiceIntTest {
         traderAccountService.withdraw(traderId, 100.0));
     assertThrows(IllegalArgumentException.class, () ->
         traderAccountService.withdraw( -1, 10.0));
+
   }
 
   @Test
   void getTraderById() {
+
     Trader savedTraderAccount = traderAccountService.createTraderAndAccount(trader);
     Integer traderId = savedTraderAccount.getId();
+
     assertEquals("Portugal", traderAccountService.getTraderById(traderId).getCountry());
     assertThrows(IllegalArgumentException.class, () -> traderAccountService.getTraderById( -1));
+
   }
 }

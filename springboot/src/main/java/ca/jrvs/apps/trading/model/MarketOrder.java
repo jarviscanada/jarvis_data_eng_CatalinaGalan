@@ -19,7 +19,6 @@ public class MarketOrder {
   @NotNull
   private Option option;
 
-
   public Option getOption() {
     return option;
   }
@@ -27,7 +26,6 @@ public class MarketOrder {
   public void setOption(Option option) {
     this.option = option;
   }
-
 
   public String getTicker() {
     return ticker;

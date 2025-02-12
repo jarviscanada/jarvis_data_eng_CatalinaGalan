@@ -1,7 +1,6 @@
 package ca.jrvs.apps.trading.service;
 
 import ca.jrvs.apps.trading.model.Account;
-//import ca.jrvs.apps.trading.model.Position;
 import ca.jrvs.apps.trading.model.Trader;
 import ca.jrvs.apps.trading.repository.TraderRepository;
 import java.util.Optional;
@@ -24,11 +23,11 @@ public class TraderAccountService {
       Account account = new Account();
       account.setAmount(0.0);
       account.setTrader(trader);
-//      trader.setAccount(account);
       return traderRepository.save(trader);
     } catch (Exception e) {
       throw new IllegalArgumentException("All required fields must be present and must be valid.");
     }
+
   }
 
   public void deleteTraderById(Integer traderId) {
@@ -46,8 +45,10 @@ public class TraderAccountService {
   }
 
   public Account deposit(Integer traderId, Double amount) {
+
     Trader trader;
     Account account;
+
     if (amount <= 0) {
       throw new IllegalArgumentException("Deposit amount must be greater than 0."
           + " Please enter a valid amount.");
@@ -63,12 +64,16 @@ public class TraderAccountService {
     Double newAmount = account.getAmount() + amount;
     account.setAmount(newAmount);
     traderRepository.save(trader);
+
     return account;
+
   }
 
   public Account withdraw(Integer traderId, Double amount) {
+
     Trader trader;
     Account account;
+
     try {
       trader = traderRepository.findById(traderId).get();
       account = trader.getAccount();
@@ -87,15 +92,20 @@ public class TraderAccountService {
     account.setAmount(newAmount);
     trader.setAccount(account);
     traderRepository.save(trader);
+
     return account;
+
   }
 
   public Trader getTraderById(Integer traderId) {
+
     Optional<Trader> trader = traderRepository.findById(traderId);
     if (trader.isEmpty()) {
       throw new IllegalArgumentException("Trader nor found. Please provide a valid Trader Id.");
     }
+
     return trader.get();
+
   }
 }
 

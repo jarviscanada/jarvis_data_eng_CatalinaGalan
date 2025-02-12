@@ -27,20 +27,19 @@ public class MarketDataHttpHelperTest {
 
   @Test
   void findQuoteByValidTickerTest() {
+
     AlphaQuote alphaQuote = marketDataHttpHelper.findQuoteByTicker("IBM").get();
     assertEquals("IBM", alphaQuote.getTicker());
+
   }
 
   @Test
   public void findQuoteByInvalidTickerTest() {
+
     assertThrowsExactly(IllegalArgumentException.class, () -> {
       marketDataHttpHelper.findQuoteByTicker("AppleInc");
     });
 
-//    String expectedMessage = "Invalid Ticker.";
-//    String actualMessage = exception.getMessage();
-//
-//    assertTrue(actualMessage.contains(expectedMessage));
   }
 
 //  @Test

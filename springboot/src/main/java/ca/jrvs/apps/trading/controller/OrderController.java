@@ -22,10 +22,12 @@ public class OrderController {
   @ResponseStatus(HttpStatus.CREATED)
   @ResponseBody
   public SecurityOrder postMarketOrder(@RequestBody MarketOrder marketOrder) {
+
     try {
       return orderService.executeMarketOrder(marketOrder);
     } catch (Exception e) {
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }
+
   }
 }

@@ -31,6 +31,7 @@ class QuoteServiceIntTest {
 
   @BeforeEach
   public void saveDemoQuote() {
+
     savedQuote = new Quote();
     savedQuote.setTicker("IBM");
     savedQuote.setAskPrice(200.5);
@@ -40,6 +41,7 @@ class QuoteServiceIntTest {
     savedQuote.setLastPrice(200.00);
     savedQuote.setLastUpdated(Timestamp.from(Instant.now()));
     quoteRepository.save(savedQuote);
+
   }
 
   @AfterEach
@@ -49,59 +51,72 @@ class QuoteServiceIntTest {
 
   @Test
   void updateMarketDataQuoteQuoteTest() {
+
     String validDemoTicker = "IBM";
     String notSavedTicker = "MSFT";
     assertDoesNotThrow(() -> quoteService.updateMarketDataQuote(validDemoTicker));
     assertThrows(IllegalArgumentException.class, () -> quoteService.updateMarketDataQuote(notSavedTicker));
+
   }
 
   @Test
   void findAlphaQuoteByValidDemoTickerTest() {
+
     String validTicker = "IBM";
     String emptyTicker = "";
     AlphaQuote alphaQuote = quoteService.findAlphaQuoteByTicker(validTicker);
     assertEquals("IBM", alphaQuote.getTicker());
     assertThrows(IllegalArgumentException.class, () -> quoteService.findAlphaQuoteByTicker(emptyTicker));
+
   }
 
   @Test
   void findAlphaQuoteByInvalidNotDemoTickerTest() {
+
     String invalidTicker = "AppleInc.";
     // when using Demo ApiKey:
     assertThrows(ResponseStatusException.class, () -> quoteService.saveQuote(invalidTicker));
     // when using real ApiKey:
 //    assertThrows(IllegalArgumentException.class, () -> quoteService.saveQuote(invalidTicker));
+
   }
 
   @Test
   void saveQuoteObject() throws InterruptedException {
+
     savedQuote.setAskSize(15);
     Thread.sleep(1000);
     Quote updatedQuote = quoteService.saveQuote(savedQuote);
     assertEquals(15, updatedQuote.getAskSize());
     assertNotEquals(savedQuote.getLastUpdated(), updatedQuote.getLastUpdated());
+
   }
 
   @Test
   void findAllQuotesTest() {
+
     Quote newQuote = quoteService.saveQuote("300135.SHZ");
     quoteService.saveQuote(newQuote);
     List<Quote> allSavedQuotes = quoteService.findAllQuotes();
     assertEquals(2, allSavedQuotes.size());
+
   }
 
   @Test
   void buildQuoteFromAlphaQuoteTest() {
+
     AlphaQuote testAlphaQuote = new AlphaQuote();
     testAlphaQuote.setTicker("IBM");
     testAlphaQuote.setPrice(224.8000);
     testAlphaQuote.setLatestTradingDay(Date.from(Instant.now()));
     Quote testQuote = quoteService.buildQuoteFromAlphaQuote(testAlphaQuote);
     assertEquals(224.8000, testQuote.getLastPrice());
+
   }
 
   @Test
   void createNewQuoteDemoTickerTest() {
+
     String validDemoTicker = "300135.SHZ";
     String emptyTicker = "";
     Quote newQuote = quoteService.saveQuote(validDemoTicker);

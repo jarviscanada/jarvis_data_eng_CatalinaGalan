@@ -10,11 +10,8 @@ import ca.jrvs.apps.trading.model.Trader;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -46,7 +43,6 @@ class PositionRepositoryTest {
   Quote quote;
   Quote quote2;
   Optional<Position> optPosition;
-
 
   @BeforeEach
   public void setUp() {
@@ -108,22 +104,27 @@ class PositionRepositoryTest {
 
   @Test
   void findByAccountIdAndTickerTest() {
+
     optPosition =
         positionRepository.findByAccountIdAndTicker(account.getId(), "IBM");
     position = optPosition.get();
 
     assertEquals(1000, position.getPosition());
+
   }
 
   @Test
   void existsByAccountIdAndTickerTest() {
+
     assertTrue(positionRepository.existsByAccountIdAndTicker(account.getId(), "IBM"));
     assertFalse(positionRepository.existsByAccountIdAndTicker(account.getId(), "zero"));
     assertTrue(positionRepository.existsByAccountIdAndTicker(account.getId(), "MSFT"));
+
   }
 
   @Test
   void updatePosition() {
+
     optPosition =
         positionRepository.findByAccountIdAndTicker(account.getId(), "IBM");
     position = optPosition.get();
@@ -142,12 +143,15 @@ class PositionRepositoryTest {
         positionRepository.findByAccountIdAndTicker(account.getId(), "IBM");
     position = optPosition.get();
     assertEquals(700, position.getPosition());
+
   }
 
   @Test
   public void findAllTest() {
+
     List<Position> positions = positionRepository.findAll();
     System.out.println(positions);
     assertFalse(positions.isEmpty());
+
   }
 }

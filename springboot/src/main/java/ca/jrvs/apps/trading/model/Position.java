@@ -1,18 +1,7 @@
 package ca.jrvs.apps.trading.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
-import jakarta.transaction.Transactional;
-import java.util.List;
 import org.hibernate.annotations.Immutable;
 import org.hibernate.annotations.Subselect;
 

@@ -5,7 +5,6 @@ import ca.jrvs.apps.trading.config.MarketDataConfig;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.validation.Valid;
 import java.io.IOException;
 import java.util.Optional;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
@@ -70,7 +69,9 @@ public class MarketDataHttpHelper {
         throw new DataRetrievalFailureException(responseBody);
       }
     }
+
     return Optional.empty();
+
   }
 
   /**
@@ -97,6 +98,7 @@ public class MarketDataHttpHelper {
     catch (ParseException | IOException e) {
       throw new DataRetrievalFailureException(e.toString());
     }
+
   }
 
   /**
@@ -104,10 +106,8 @@ public class MarketDataHttpHelper {
    * @return a HttpClient
    */
   private CloseableHttpClient getHttpClient() {
-    return HttpClients.createMinimal(connectionManager);
-//    HttpClientConnectionManager leasaedConnection = HttpClientConnectionManager.lease();
-//    return HttpClients.createDefault();
-//    return client;
-  }
 
+    return HttpClients.createMinimal(connectionManager);
+
+  }
 }
