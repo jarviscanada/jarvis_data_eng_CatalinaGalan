@@ -7,7 +7,9 @@ import ca.jrvs.apps.trading.util.MarketDataHttpHelper;
 import ca.jrvs.apps.trading.util.ResourceNotFoundException;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
@@ -22,94 +24,104 @@ public class QuoteService {
   @Autowired
   private MarketDataHttpHelper httpHelper;
 
+
   /**
-   * Update quote table against IEX source
-   * - get quote for given ticker from the db
-   * - get IexQuote for set ticker
-   * - convert IexQuote to Quote entity
-   * - persist quote to db
+   * Find an AlphaQuote from Alpha Vantage Api.
    *
-   * @throws ResourceNotFoundException if ticker is not found from IEX
-   * @throws DataAccessException if unable to retrieve data
-   * @throws IllegalArgumentException for invalid input
+   * @param ticker
+   * @return AlphaQuote object.
+   * @throws IllegalArgumentException for invalid input.
+   * @throws ResourceNotFoundException if ticker is not found in Alpha Vantage.
    */
-  public Quote updateMarketDataQuote(String ticker) throws ResourceNotFoundException, DataAccessException {
+  public AlphaQuote findAlphaQuoteByTicker(String ticker) throws ResourceNotFoundException {
 
-    Quote updatedQuote;
-
-    if (quoteRepository.existsById(ticker)) {
-
-      try {
-          updatedQuote = saveQuote(ticker);
-          return saveQuote(updatedQuote);
-      } catch (IllegalArgumentException e) {
-        if (e.getMessage().contains("Alpha Vantage")) {
-          throw new ResourceNotFoundException(e.getMessage(), e);
-        }
-        throw new IllegalArgumentException(e.getMessage());
-      } catch (DataRetrievalFailureException e) {
-        throw new DataAccessException(e.toString()) {
-          @Override
-          public Throwable getRootCause() {
-            return super.getRootCause();
-          }
-        };
-      }
-
-    } else {
-
-      throw new IllegalArgumentException("Invalid Ticker: "
-          + "Quote for ticker " + ticker + " not found in Daily List.");
-
+    if ((ticker.length() > 5) || !ticker.matches("[:upper:]")
+        || ticker.isEmpty() || ticker.isBlank()) {
+      throw new IllegalArgumentException("Invalid Input.");
     }
 
+    Optional<AlphaQuote> alphaQuote = httpHelper.findQuoteByTicker(ticker);
+
+    if (alphaQuote.isEmpty() || alphaQuote.get().getTicker() == null) {
+      throw new ResourceNotFoundException("Symbol not found in Alpha Vantage.");
+    }
+
+    return alphaQuote.get();
   }
 
+
   /**
-   * Find an AlphaQuote
-   * @param ticker
-   * @return AlphaQuote object
-   * @throws IllegalArgumentException if ticker is invalid
+   * Update quote table against Alpha Vantage source.
+   * - NOTE: Alpha Vantage provides a maximum of 25 API calls for free ApiKey.
+   *
+   * @throws IllegalArgumentException for invalid input.
+   * @throws ResourceNotFoundException if ticker is not found in Alpha Vantage.
    */
-    public AlphaQuote findAlphaQuoteByTicker(String ticker) {
+  public void updateMarketData() throws ResourceNotFoundException {
 
-      if (!ticker.isEmpty()) {
-        return httpHelper.findQuoteByTicker(ticker).get();
-      }
+    List<Quote> dailyList = findAllQuotes();
+    List<String> tickers = new ArrayList<>();
 
-      throw new IllegalArgumentException("Ticker cannot be empty.");
-
+    for (Quote quote : dailyList) {
+      tickers.add(quote.getTicker());
     }
 
+    saveQuotes(tickers);
+  }
+
+
   /**
-   * Update a given quote to the quote table without validation
+   * Update a given quote to the quote table without validation.
    *
-   * @param quote entity to save
-   * @return the saved quote entity
+   * @param quote entity to save.
+   * @return the saved Quote entity.
    */
   public Quote saveQuote(Quote quote) {
-
-    quoteRepository.save(quote);
-    quote.setLastUpdated(Timestamp.from(Instant.now()));
-
-    return quoteRepository.findById(quote.getTicker()).get();
-
+    return quoteRepository.save(quote);
   }
 
+
   /**
-   * Find all quotes from the quote table
-   * @return a list of quotes
+   * Saves a new Quote to quote table from Alpha Vantage.
+   * - NOTE: Alpha Vantage provides a maximum of 25 API calls for free ApiKey.
+   *
+   * @param ticker
+   * @return created Quote entity.
+   * @throws ResourceNotFoundException if ticker is not found in Alpha Vantage.
+   */
+  public Quote saveQuote(String ticker) throws ResourceNotFoundException {
+
+    AlphaQuote alphaQuote = findAlphaQuoteByTicker(ticker);
+    Quote newQuote = buildQuoteFromAlphaQuote(alphaQuote);
+//        newQuote.setLastUpdated(Timestamp.from(Instant.now()));
+    return quoteRepository.save(newQuote);
+  }
+
+
+  /**
+   * @throws DataAccessException if unable to retrieve data.
+   * @return List of Quote entities from db.
    */
   public List<Quote> findAllQuotes() {
 
-    return quoteRepository.findAll();
-
+    try {
+      return quoteRepository.findAll();
+    } catch (Exception e) {
+      throw new DataAccessException(e.getMessage()) {
+        @Override
+        public Throwable getRootCause() {
+          return super.getRootCause();
+        }
+      };
+    }
   }
 
+
   /**
-   * Helper method to map an AlphaQuote to a Quote entity
-   * Note: 'alphaQuote.getPrice() == null' if the stock market is closed
-   * Default values for number field(s)
+   * Helper method to map an AlphaQuote to a Quote entity.
+   *
+   * @param alphaQuote object to map.
+   * @return Quote entity.
    */
     protected static Quote buildQuoteFromAlphaQuote(AlphaQuote alphaQuote) {
 
@@ -129,26 +141,25 @@ public class QuoteService {
       quote.setLastUpdated(Timestamp.from(alphaQuote.getLatestTradingDay().toInstant()));
 
       return quote;
-
     }
+
 
   /**
-   * Helper method to validate and save a single ticker
-   * Not to be confused with saveQuote(Quote quote)
-   * @param ticker
-   * @return Quote
-   * @throws IllegalArgumentException if ticker is not found in Alpha Vantage
+   * Helper method to update a list of Quotes in quote table with Alpha Vantage data.
+   * - NOTE: Alpha Vantage provides a maximum of 25 API calls for free ApiKey.
+   *
+   * @param tickers
+   * @return list of converted quote entities.
+   * @throws ResourceNotFoundException if ticker is not found from Alpha Quote.
    */
-  public Quote saveQuote(String ticker) {
+  protected List<Quote> saveQuotes(List<String> tickers) throws ResourceNotFoundException {
 
-      try {
-        AlphaQuote alphaQuote = findAlphaQuoteByTicker(ticker);
-        Quote newQuote = buildQuoteFromAlphaQuote(alphaQuote);
-        newQuote.setLastUpdated(Timestamp.from(Instant.now()));
-        return newQuote;
-      } catch (IllegalArgumentException e) {
-        throw new IllegalArgumentException(e.getMessage());
-      }
-
+    for (String ticker : tickers) {
+      AlphaQuote alphaQuote = findAlphaQuoteByTicker(ticker);
+      Quote quote = buildQuoteFromAlphaQuote(alphaQuote);
+      saveQuote(quote);
     }
+
+    return findAllQuotes();
+  }
 }

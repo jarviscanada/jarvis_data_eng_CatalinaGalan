@@ -35,8 +35,7 @@ public class MarketDataHttpHelper {
    * Get an IexQuote
    *
    * @param ticker
-   * @throws IllegalArgumentException if a given ticker is invalid
-   * @throws DataRetrievalFailureException if HTTP request failed
+   * @throws DataRetrievalFailureException if HTTP request failed.
    */
   public Optional<AlphaQuote> findQuoteByTicker(String ticker) {
 
@@ -47,19 +46,14 @@ public class MarketDataHttpHelper {
       Optional<String> responseBodyOpt = executeGetRequest(url);
       responseBody = responseBodyOpt.get();
     }
-    catch (DataRetrievalFailureException e) {
+    catch (Exception e) {
       throw new DataRetrievalFailureException(e.getMessage());
     }
 
     try {
       objectMapper.configure(DeserializationFeature.UNWRAP_ROOT_VALUE, true);
-
       AlphaQuote alphaQuote = objectMapper.readValue(responseBody, AlphaQuote.class);
 
-      if (alphaQuote.getTicker() == null) {
-        throw new IllegalArgumentException("Symbol not found in Alpha Vantage. "
-            + "Please provide a valid Ticker.");
-      }
       return Optional.of(alphaQuote);
 
     } catch (JsonProcessingException e) {
@@ -71,7 +65,6 @@ public class MarketDataHttpHelper {
     }
 
     return Optional.empty();
-
   }
 
   /**

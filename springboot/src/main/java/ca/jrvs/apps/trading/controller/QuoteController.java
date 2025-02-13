@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -22,6 +23,7 @@ public class QuoteController {
 
   @Autowired
   private QuoteService quoteService;
+
 
   @GetMapping("/alpha/ticker/{ticker}")
   @ResponseStatus(HttpStatus.OK)
@@ -39,10 +41,10 @@ public class QuoteController {
   @PutMapping("/update/{ticker}")
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
-  public Quote updateQuoteMarketData(@PathVariable String ticker) {
+  public Quote putQuote(@RequestBody Quote quote) {
 
     try {
-      return quoteService.updateMarketDataQuote(ticker);
+      return quoteService.saveQuote(quote);
     } catch (Exception e) {
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }
@@ -55,8 +57,8 @@ public class QuoteController {
   public Quote createNewQuote(@PathVariable String ticker) {
 
     try {
-      Quote newQuote = quoteService.saveQuote(ticker);
-      return quoteService.saveQuote(newQuote);
+      Quote quote = quoteService.saveQuote(ticker);
+      return quoteService.saveQuote(quote);
     } catch (Exception e) {
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }
