@@ -5,6 +5,7 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -32,9 +33,13 @@ public class ResponseExceptionUtil {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
       }
 
+      case DataRetrievalFailureException retrievalFailureException -> {
+        logger.debug("Http request to Alpha Vantage Api failed.", e);
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+      }
       case DataAccessException dataAccessException -> {
-        logger.debug("Failed Alpha Vantage api request.", e);
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
+        logger.debug("Failed to retrieve db data.", e);
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
       }
 
       case ResponseStatusException responseStatusException -> {
@@ -44,7 +49,7 @@ public class ResponseExceptionUtil {
       }
 
       case ResourceNotFoundException resourceNotFoundException -> {
-        logger.debug("Invalid Ticker: not found.", e);
+        logger.debug("Invalid Ticker: ", e);
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
       }
 

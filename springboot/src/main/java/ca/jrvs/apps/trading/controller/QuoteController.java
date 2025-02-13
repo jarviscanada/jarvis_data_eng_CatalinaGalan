@@ -25,56 +25,58 @@ public class QuoteController {
   private QuoteService quoteService;
 
 
-  @GetMapping("/alpha/ticker/{ticker}")
+  @GetMapping("/alphaVantage/ticker/{ticker}")
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
   public AlphaQuote getQuote(@PathVariable String ticker) {
-
     try {
       return quoteService.findAlphaQuoteByTicker(ticker);
     } catch (Exception e) {
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }
-
   }
 
-  @PutMapping("/update/{ticker}")
+  @PutMapping("/alphaVantageMarketData")
+  @ResponseStatus(HttpStatus.OK)
+  public void UpdateMarketData() {
+    try {
+      quoteService.updateMarketData();
+    } catch (Exception e) {
+      throw ResponseExceptionUtil.getResponseStatusException(e);
+    }
+  }
+
+  @PutMapping("/")
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
   public Quote putQuote(@RequestBody Quote quote) {
-
     try {
       return quoteService.saveQuote(quote);
     } catch (Exception e) {
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }
-
   }
 
   @PostMapping("/tickerId/{ticker}")
   @ResponseStatus(HttpStatus.CREATED)
   @ResponseBody
   public Quote createNewQuote(@PathVariable String ticker) {
-
     try {
       Quote quote = quoteService.saveQuote(ticker);
       return quoteService.saveQuote(quote);
     } catch (Exception e) {
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }
-
   }
 
   @GetMapping("/dailyList")
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
   public List<Quote> getDailyList() {
-
     try {
       return quoteService.findAllQuotes();
     } catch (Exception e) {
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }
-
   }
 }

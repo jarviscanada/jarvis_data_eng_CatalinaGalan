@@ -5,7 +5,6 @@ import ca.jrvs.apps.trading.config.MarketDataConfig;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.IOException;
 import java.util.Optional;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
@@ -13,7 +12,6 @@ import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.client5.http.io.HttpClientConnectionManager;
 import org.apache.hc.core5.http.HttpEntity;
-import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataRetrievalFailureException;
@@ -32,10 +30,14 @@ public class MarketDataHttpHelper {
   private ObjectMapper objectMapper;
 
   /**
-   * Get an IexQuote
+   * Get an AlphaQuote.
+   * - NOTE: Alpha Vantage provides a maximum of 25 API calls for free ApiKey.
+   * - NOTE: A DemoKey: "demo" can be used for testing purposes to allow free unlimited
+   * access to "IBM" and "MSFT" quotes.
    *
    * @param ticker
    * @throws DataRetrievalFailureException if HTTP request failed.
+   * @throws ResponseStatusException if number of daily API calls to Alpha Vantage are exceeded for free ApiKey.
    */
   public Optional<AlphaQuote> findQuoteByTicker(String ticker) {
 
@@ -67,12 +69,13 @@ public class MarketDataHttpHelper {
     return Optional.empty();
   }
 
+
   /**
-   * Execute a GET request and return http entity/body as a string
+   * Execute a GET request and return http entity/body as a string.
    *
-   * @param url resource URL
-   * @return http response body or Optional.empty for 404 response
-   * @throws DataRetrievalFailureException if HTTP failed or status code is unexpected
+   * @param url resource URL.
+   * @return http response body or Optional.empty() for 404 response.
+   * @throws DataRetrievalFailureException if HTTP failed or status code is unexpected.
    */
   private Optional<String> executeGetRequest(String url) {
 
@@ -80,27 +83,27 @@ public class MarketDataHttpHelper {
     CloseableHttpClient client = getHttpClient();
 
     try (CloseableHttpResponse response = client.execute(getRequest)) {
+
       HttpEntity entity = response.getEntity();
       int status = response.getCode();
-
       if (status == 404) {
         return Optional.empty();
       }
+
       return Optional.of(EntityUtils.toString(entity));
-    }
-    catch (ParseException | IOException e) {
+
+    } catch (Exception e) {
       throw new DataRetrievalFailureException(e.toString());
     }
-
   }
 
+
   /**
-   * Borrow a HTTP client from the HttpClientConnectionManager
-   * @return a HttpClient
+   * Borrow an HTTP client from the HttpClientConnectionManager.
+   *
+   * @return an HttpClient.
    */
   private CloseableHttpClient getHttpClient() {
-
     return HttpClients.createMinimal(connectionManager);
-
   }
 }

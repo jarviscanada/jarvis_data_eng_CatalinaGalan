@@ -6,13 +6,11 @@ import ca.jrvs.apps.trading.repository.QuoteRepository;
 import ca.jrvs.apps.trading.util.MarketDataHttpHelper;
 import ca.jrvs.apps.trading.util.ResourceNotFoundException;
 import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.stereotype.Service;
 
 @Service
