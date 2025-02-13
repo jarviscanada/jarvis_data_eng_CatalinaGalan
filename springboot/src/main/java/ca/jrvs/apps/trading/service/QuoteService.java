@@ -33,7 +33,7 @@ public class QuoteService {
    */
   public AlphaQuote findAlphaQuoteByTicker(String ticker) throws ResourceNotFoundException {
 
-    if ((ticker.length() > 5) || !ticker.matches("[:upper:]")
+    if (!ticker.matches("^[A-Z]+$") || (ticker.length() > 5)
         || ticker.isEmpty() || ticker.isBlank()) {
       throw new IllegalArgumentException("Invalid Input.");
     }
@@ -52,13 +52,16 @@ public class QuoteService {
    * Update quote table against Alpha Vantage source.
    * - NOTE: Alpha Vantage provides a maximum of 25 API calls for free ApiKey.
    *
-   * @throws IllegalArgumentException for invalid input.
-   * @throws ResourceNotFoundException if ticker is not found in Alpha Vantage.
+   * @throws ResourceNotFoundException if ticker is not found in Alpha Vantage or db quote table is empty.
    */
   public void updateMarketData() throws ResourceNotFoundException {
 
     List<Quote> dailyList = findAllQuotes();
     List<String> tickers = new ArrayList<>();
+
+    if (dailyList.isEmpty()) {
+      throw new ResourceNotFoundException("Unable to update: Daily list is empty.");
+    }
 
     for (Quote quote : dailyList) {
       tickers.add(quote.getTicker());

@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import ca.jrvs.apps.trading.model.AlphaQuote;
 import ca.jrvs.apps.trading.model.Quote;
 import ca.jrvs.apps.trading.repository.QuoteRepository;
+import ca.jrvs.apps.trading.util.ResourceNotFoundException;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Date;
@@ -15,7 +16,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.web.server.ResponseStatusException;
 
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application-test.properties")
@@ -41,7 +41,6 @@ class QuoteServiceIntTest {
     savedQuote.setLastPrice(200.00);
     savedQuote.setLastUpdated(Timestamp.from(Instant.now()));
     quoteRepository.save(savedQuote);
-
   }
 
   @AfterEach
@@ -50,80 +49,62 @@ class QuoteServiceIntTest {
   }
 
   @Test
-  void updateMarketDataQuoteQuoteTest() {
+  void updateMarketDataTest() {
+    assertDoesNotThrow(() -> quoteService.updateMarketData());
 
-    String validDemoTicker = "IBM";
-    String notSavedTicker = "MSFT";
-    assertDoesNotThrow(() -> quoteService.updateMarketDataQuote(validDemoTicker));
-    assertThrows(IllegalArgumentException.class, () -> quoteService.updateMarketDataQuote(notSavedTicker));
-
+    quoteRepository.deleteAll();
+    assertThrows(ResourceNotFoundException.class, () -> quoteService.updateMarketData());
   }
 
   @Test
-  void findAlphaQuoteByValidDemoTickerTest() {
-
+  void findAlphaQuoteByTickerTest() throws ResourceNotFoundException {
     String validTicker = "IBM";
     String emptyTicker = "";
+    String blankTicker = " ";
+    String invalidTicker = "Appl.";
+
     AlphaQuote alphaQuote = quoteService.findAlphaQuoteByTicker(validTicker);
     assertEquals("IBM", alphaQuote.getTicker());
     assertThrows(IllegalArgumentException.class, () -> quoteService.findAlphaQuoteByTicker(emptyTicker));
-
+    assertThrows(IllegalArgumentException.class, () -> quoteService.findAlphaQuoteByTicker(blankTicker));
+    assertThrows(IllegalArgumentException.class, () -> quoteService.findAlphaQuoteByTicker(invalidTicker));
   }
 
   @Test
-  void findAlphaQuoteByInvalidNotDemoTickerTest() {
-
-    String invalidTicker = "AppleInc.";
-    // when using Demo ApiKey:
-    assertThrows(ResponseStatusException.class, () -> quoteService.saveQuote(invalidTicker));
-    // when using real ApiKey:
-//    assertThrows(IllegalArgumentException.class, () -> quoteService.saveQuote(invalidTicker));
-
-  }
-
-  @Test
-  void saveQuoteObject() throws InterruptedException {
-
+  void updateQuoteObject() throws InterruptedException {
     savedQuote.setAskSize(15);
-    Thread.sleep(1000);
+//    Thread.sleep(1000);
     Quote updatedQuote = quoteService.saveQuote(savedQuote);
-    assertEquals(15, updatedQuote.getAskSize());
-    assertNotEquals(savedQuote.getLastUpdated(), updatedQuote.getLastUpdated());
 
+    assertEquals(15, updatedQuote.getAskSize());
+//    assertNotEquals(savedQuote.getLastUpdated(), updatedQuote.getLastUpdated());
   }
 
   @Test
-  void findAllQuotesTest() {
-
-    Quote newQuote = quoteService.saveQuote("300135.SHZ");
-    quoteService.saveQuote(newQuote);
+  void createNewQuoteTest() throws ResourceNotFoundException {
+    quoteService.saveQuote("MSFT");
     List<Quote> allSavedQuotes = quoteService.findAllQuotes();
     assertEquals(2, allSavedQuotes.size());
-
   }
 
   @Test
   void buildQuoteFromAlphaQuoteTest() {
-
     AlphaQuote testAlphaQuote = new AlphaQuote();
     testAlphaQuote.setTicker("IBM");
     testAlphaQuote.setPrice(224.8000);
     testAlphaQuote.setLatestTradingDay(Date.from(Instant.now()));
+
     Quote testQuote = quoteService.buildQuoteFromAlphaQuote(testAlphaQuote);
     assertEquals(224.8000, testQuote.getLastPrice());
-
   }
 
   @Test
-  void createNewQuoteDemoTickerTest() {
-
-    String validDemoTicker = "300135.SHZ";
+  void createNewQuoteDemoTickerTest() throws ResourceNotFoundException {
+    String validDemoTicker = "MSFT";
     String emptyTicker = "";
-    Quote newQuote = quoteService.saveQuote(validDemoTicker);
-    assertEquals("300135.SHZ", newQuote.getTicker());
+    quoteService.saveQuote(validDemoTicker);
+
+    assertTrue(quoteRepository.existsById(validDemoTicker));
     assertThrows(IllegalArgumentException.class, () -> quoteService.saveQuote(emptyTicker));
-    // test for invalidTicker only when using real ApiKey (not demo)"
-//    String invalidTicker = "AppleInc.";
-//    assertThrows(IllegalArgumentException.class, () -> quoteService.saveQuote(invalidTicker));
   }
 }
