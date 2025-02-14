@@ -25,7 +25,8 @@ public class TraderAccountService {
       account.setTrader(trader);
       return traderRepository.save(trader);
     } catch (Exception e) {
-      throw new IllegalArgumentException("All required fields must be present and must be valid.");
+      throw new IllegalArgumentException("All required fields must be present and must be valid: "
+          + e.getCause().getCause().getMessage());
     }
 
   }

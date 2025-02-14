@@ -5,6 +5,7 @@ import ca.jrvs.apps.trading.model.Trader;
 import ca.jrvs.apps.trading.service.TraderAccountService;
 import ca.jrvs.apps.trading.util.ResponseExceptionUtil;
 import java.time.LocalDate;
+import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
