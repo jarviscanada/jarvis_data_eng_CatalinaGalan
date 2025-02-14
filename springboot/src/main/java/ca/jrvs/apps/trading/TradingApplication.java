@@ -11,7 +11,6 @@ import ca.jrvs.apps.trading.controller.QuoteController;
 import ca.jrvs.apps.trading.controller.TraderAccountController;
 import ca.jrvs.apps.trading.model.MarketOrder;
 import ca.jrvs.apps.trading.model.Quote;
-import ca.jrvs.apps.trading.model.SecurityOrder;
 import ca.jrvs.apps.trading.model.Trader;
 import ca.jrvs.apps.trading.service.TraderAccountService;
 import org.slf4j.Logger;
@@ -62,38 +61,37 @@ public class TradingApplication implements CommandLineRunner {
 
 		try {
 			appController.greeting();
-//			Trader trader = traderAccountController.createTrader("Carlos", "Fuentes", "1990-10-21",
-//					"Spain", "carlos@carlos.carlos");
-//			traderAccountService.deposit(1,15000000.00);
+			Trader trader = traderAccountController.createTrader("Carlos", "Fuentes", "1990-10-21",
+					"Spain", "carlos@carlos.carlos");
+			traderAccountService.deposit(1,15000000.00);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
 
-//		MarketOrder marketOrder = new MarketOrder();
-//		marketOrder.setSize(400);
-//		marketOrder.setOption(BUY);
-//		marketOrder.setTicker("IBM");
-//		marketOrder.setTraderId(1);;
-//
-//		MarketOrder marketOrder2 = new MarketOrder();
-//		marketOrder2.setSize(100);
-//		marketOrder2.setOption(SELL);
-//		marketOrder2.setTicker("IBM");
-//		marketOrder2.setTraderId(1);;
+		MarketOrder marketOrder = new MarketOrder();
+		marketOrder.setSize(400);
+		marketOrder.setOption(BUY);
+		marketOrder.setTicker("IBM");
+		marketOrder.setTraderId(1);;
 
-//		try {
-//			Quote quote = quoteController.createNewQuote("IBM");
-//			System.out.println(quote.toString());
-//		} catch (Exception e) {
-//			logger.error(e.getMessage());
-//		}
-//
-//		try {
-//			SecurityOrder securityOrder = orderController.postMarketOrder(marketOrder);
-//			SecurityOrder securityOrder2 = orderController.postMarketOrder(marketOrder2);
-//		} catch (Exception e) {
-//			logger.error(e.getMessage());
-//		}
+		MarketOrder marketOrder2 = new MarketOrder();
+		marketOrder2.setSize(100);
+		marketOrder2.setOption(SELL);
+		marketOrder2.setTicker("IBM");
+		marketOrder2.setTraderId(1);;
 
+		try {
+			Quote quote = quoteController.createNewQuote("IBM");
+			System.out.println(quote.toString());
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+
+		try {
+			orderController.postMarketOrder(marketOrder);
+			orderController.postMarketOrder(marketOrder2);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
 	}
 }

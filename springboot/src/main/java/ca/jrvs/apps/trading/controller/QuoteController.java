@@ -4,6 +4,9 @@ import ca.jrvs.apps.trading.model.AlphaQuote;
 import ca.jrvs.apps.trading.model.Quote;
 import ca.jrvs.apps.trading.service.QuoteService;
 import ca.jrvs.apps.trading.util.ResponseExceptionUtil;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,6 +41,7 @@ public class QuoteController {
 
   @PutMapping("/alphaVantageMarketData")
   @ResponseStatus(HttpStatus.OK)
+  @ResponseBody
   public void UpdateMarketData() {
     try {
       quoteService.updateMarketData();
@@ -62,8 +66,8 @@ public class QuoteController {
   @ResponseBody
   public Quote createNewQuote(@PathVariable String ticker) {
     try {
-      Quote quote = quoteService.saveQuote(ticker);
-      return quoteService.saveQuote(quote);
+//      Quote quote = quoteService.saveQuote(ticker);
+      return quoteService.saveQuote(ticker);
     } catch (Exception e) {
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }

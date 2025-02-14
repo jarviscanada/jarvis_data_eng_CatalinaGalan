@@ -72,12 +72,16 @@ public class QuoteService {
 
 
   /**
+   * This method is for debugging purposes only, so no Api call is necessary.
    * Update a given quote to the quote table without validation.
    *
    * @param quote entity to save.
    * @return the saved Quote entity.
    */
   public Quote saveQuote(Quote quote) {
+    if (!quoteRepository.existsById(quote.getTicker())) {
+      throw new IllegalArgumentException("Can't update Quote because it's not found in db.");
+    }
     return quoteRepository.save(quote);
   }
 
@@ -156,9 +160,7 @@ public class QuoteService {
   protected List<Quote> saveQuotes(List<String> tickers) throws ResourceNotFoundException {
 
     for (String ticker : tickers) {
-      AlphaQuote alphaQuote = findAlphaQuoteByTicker(ticker);
-      Quote quote = buildQuoteFromAlphaQuote(alphaQuote);
-      saveQuote(quote);
+      saveQuote(ticker);
     }
 
     return findAllQuotes();

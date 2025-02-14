@@ -36,7 +36,6 @@ public class TraderAccountController {
     } catch (Exception e) {
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }
-
   }
 
   @PostMapping("/firstName/{firstName}/lastName/{lastName}/dob/{dob}/country/{country}/"
@@ -54,11 +53,12 @@ public class TraderAccountController {
       trader.setDob(LocalDate.parse(dob));
       trader.setCountry(country);
       trader.setEmail(email);
+
       return traderAccountService.createTraderAndAccount(trader);
+
     } catch (Exception e) {
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }
-
   }
 
   @GetMapping("/traderId/{traderId}")
@@ -71,7 +71,6 @@ public class TraderAccountController {
     } catch (Exception e) {
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }
-
   }
 
   @DeleteMapping("/traderId/{traderId}")
@@ -84,7 +83,6 @@ public class TraderAccountController {
     } catch (Exception e) {
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }
-
   }
 
   @PutMapping("/traderId/{traderId}/deposit/amount/{amount}")
@@ -97,7 +95,6 @@ public class TraderAccountController {
     } catch (Exception e) {
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }
-
   }
 
   @PutMapping("/traderId/{traderId}/withdraw/amount/{amount}")
@@ -110,6 +107,5 @@ public class TraderAccountController {
     } catch (Exception e) {
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }
-
   }
 }

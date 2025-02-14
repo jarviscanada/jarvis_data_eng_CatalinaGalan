@@ -18,7 +18,7 @@ public class OrderController {
   @Autowired
   private OrderService orderService;
 
-  @PostMapping("/marketOrder")
+  @PostMapping(value = "/marketOrder")
   @ResponseStatus(HttpStatus.CREATED)
   @ResponseBody
   public SecurityOrder postMarketOrder(@RequestBody MarketOrder marketOrder) {
@@ -28,6 +28,5 @@ public class OrderController {
     } catch (Exception e) {
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }
-
   }
 }

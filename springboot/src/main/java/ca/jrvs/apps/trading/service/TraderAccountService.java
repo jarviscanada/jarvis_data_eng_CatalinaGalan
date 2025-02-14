@@ -23,12 +23,13 @@ public class TraderAccountService {
       Account account = new Account();
       account.setAmount(0.0);
       account.setTrader(trader);
+
       return traderRepository.save(trader);
+
     } catch (Exception e) {
       throw new IllegalArgumentException("All required fields must be present and must be valid: "
           + e.getCause().getCause().getMessage());
     }
-
   }
 
   public void deleteTraderById(Integer traderId) {
@@ -38,11 +39,12 @@ public class TraderAccountService {
       if (trader.getAccount().getAmount() != 0) {
         throw new IllegalArgumentException("Unable to delete Trader: Account balance must be 0.");
       }
+
       traderRepository.deleteById(traderId);
+
     } catch (Exception e) {
       throw new IllegalArgumentException(e.getMessage());
     }
-
   }
 
   public Account deposit(Integer traderId, Double amount) {
@@ -67,7 +69,6 @@ public class TraderAccountService {
     traderRepository.save(trader);
 
     return account;
-
   }
 
   public Account withdraw(Integer traderId, Double amount) {
@@ -95,7 +96,6 @@ public class TraderAccountService {
     traderRepository.save(trader);
 
     return account;
-
   }
 
   public Trader getTraderById(Integer traderId) {
@@ -106,7 +106,6 @@ public class TraderAccountService {
     }
 
     return trader.get();
-
   }
 }
 

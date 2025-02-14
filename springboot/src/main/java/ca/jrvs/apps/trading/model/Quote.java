@@ -1,6 +1,7 @@
 package ca.jrvs.apps.trading.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -91,6 +92,7 @@ public class Quote {
     return lastUpdated;
   }
 
+  @JsonFormat(shape = Shape.ANY)
   public void setLastUpdated(Timestamp lastUpdated) {
     this.lastUpdated = lastUpdated;
   }
