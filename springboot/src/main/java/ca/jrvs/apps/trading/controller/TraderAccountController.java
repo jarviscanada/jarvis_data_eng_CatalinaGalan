@@ -4,8 +4,8 @@ import ca.jrvs.apps.trading.model.Account;
 import ca.jrvs.apps.trading.model.Trader;
 import ca.jrvs.apps.trading.service.TraderAccountService;
 import ca.jrvs.apps.trading.util.ResponseExceptionUtil;
+import io.swagger.v3.oas.annotations.Operation;
 import java.time.LocalDate;
-import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -26,6 +26,14 @@ public class TraderAccountController {
   @Autowired
   private TraderAccountService traderAccountService;
 
+
+  @Operation(summary = "Create a new Trader and Account.",
+      description = "Create a new trader from JSON data mapped to Trader Object. "
+          + "NOTE: Due to a problem with the Swagger UI it is necessary to "
+          + "manually edit the JSON for correct mapping: setting Id to null, "
+          + "adding a wrapper {\"Trader\": ... }, "
+          + "setting dob with format \"MMM dd yyyy (example: Oct 12 1990)\" "
+          + "and deleting the \"Account:\" field (and everything contained in it)")
   @PostMapping("/")
   @ResponseStatus(HttpStatus.CREATED)
   @ResponseBody
@@ -38,6 +46,9 @@ public class TraderAccountController {
     }
   }
 
+  @Operation(summary = "Create a new Trader and Account",
+      description = "Create a new Trader from passed arguments in the url. "
+          + "NOTE: dob accepted format is YYYY-MM-DD")
   @PostMapping("/firstName/{firstName}/lastName/{lastName}/dob/{dob}/country/{country}/"
       + "email/{email}")
   @ResponseStatus(HttpStatus.CREATED)
@@ -61,6 +72,8 @@ public class TraderAccountController {
     }
   }
 
+  @Operation(summary = "Get a Trader by Id.",
+      description = "Fetch Trader and Account information by Id.")
   @GetMapping("/traderId/{traderId}")
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
@@ -73,6 +86,8 @@ public class TraderAccountController {
     }
   }
 
+  @Operation(summary = "Delete a Trader.",
+      description = "Delete a Trader by Id. NOTE: Account amount must be 0.")
   @DeleteMapping("/traderId/{traderId}")
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
@@ -85,6 +100,8 @@ public class TraderAccountController {
     }
   }
 
+  @Operation(summary = "Deposit funds into Trader's Account.",
+      description = "Add funds to Trader Account's amount by Trader ID.")
   @PutMapping("/traderId/{traderId}/deposit/amount/{amount}")
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
@@ -97,6 +114,8 @@ public class TraderAccountController {
     }
   }
 
+  @Operation(summary = "Withdraw funds into Trader's Account.",
+      description = "Subtract funds from Trader Account's amount by Trader ID.")
   @PutMapping("/traderId/{traderId}/withdraw/amount/{amount}")
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody

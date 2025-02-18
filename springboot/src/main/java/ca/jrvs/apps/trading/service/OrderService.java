@@ -12,6 +12,7 @@ import ca.jrvs.apps.trading.repository.PositionRepository;
 import ca.jrvs.apps.trading.repository.QuoteRepository;
 import ca.jrvs.apps.trading.repository.SecurityOrderRepository;
 import ca.jrvs.apps.trading.repository.TraderRepository;
+import ca.jrvs.apps.trading.util.PositionId;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -86,10 +87,7 @@ public class OrderService {
     }
 
     securityOrder.setStatus("FILLED");
-    SecurityOrder savedSecurityOrder = securityOrderRepository.save(securityOrder);
-
-    return savedSecurityOrder;
-
+    return securityOrderRepository.save(securityOrder);
   }
 
 
@@ -114,7 +112,6 @@ public class OrderService {
     }
 
     traderAccountService.withdraw(account.getId(), price * size);
-
   }
 
 
@@ -131,7 +128,7 @@ public class OrderService {
     Double price = quote.getBidPrice();
     String ticker = quote.getTicker();
     Integer accountId = account.getId();
-    Optional<Position> position = positionRepository.findByAccountIdAndTicker(accountId, ticker);
+    Optional<Position> position = positionRepository.findByPositionId(new PositionId(accountId, ticker));
 
     if (size > quote.getBidSize()) {
       throw new IllegalArgumentException(
@@ -145,6 +142,5 @@ public class OrderService {
     } else {
       throw new IllegalArgumentException("Transaction Failed: Insufficient stocks to sell.");
     }
-
   }
 }

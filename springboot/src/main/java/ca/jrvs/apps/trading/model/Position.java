@@ -1,32 +1,42 @@
 package ca.jrvs.apps.trading.model;
 
+import ca.jrvs.apps.trading.util.PositionId;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import org.hibernate.annotations.Immutable;
 import org.hibernate.annotations.Subselect;
 
 @Entity
-@Immutable
+//@Immutable
 @Subselect("SELECT account_id,\n"
     + "       ticker,\n"
     + "       sum(size) AS position\n"
     + "FROM public.security_order\n"
     + "WHERE status = 'FILLED'\n"
-    + "GROUP BY account_id, ticker")
+    + "GROUP BY id, account_id, ticker")
 public class Position {
 
-  @Id
-  private Integer accountId;
-  private String ticker;
+
+  @EmbeddedId
+  private PositionId positionId;
+//  private Integer accountId;
+//  private String ticker;
   private Integer position;
+//
+//  public Position(PositionId positionId) {
+//    this.positionId = positionId;
+//  }
 
-  public Integer getAccountId() {
-    return accountId;
+  public PositionId getPositionId() {
+    return positionId;
   }
 
-  public String getTicker() {
-    return ticker;
-  }
+//  public Integer getAccountId() {
+//    return accountId;
+//  }
+//
+//  public String getTicker() {
+//    return ticker;
+//  }
 
   public Integer getPosition() {
     return position;

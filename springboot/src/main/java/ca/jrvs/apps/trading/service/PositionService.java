@@ -1,9 +1,13 @@
 package ca.jrvs.apps.trading.service;
 
+import ca.jrvs.apps.trading.model.Account;
 import ca.jrvs.apps.trading.model.Position;
+import ca.jrvs.apps.trading.model.SecurityOrder;
 import ca.jrvs.apps.trading.repository.PositionRepository;
+import ca.jrvs.apps.trading.repository.SecurityOrderRepository;
 import ca.jrvs.apps.trading.repository.TraderRepository;
-import java.util.HashSet;
+import ca.jrvs.apps.trading.util.PositionId;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,25 +20,30 @@ public class PositionService {
   private PositionRepository positionRepository;
 
   @Autowired
+  private SecurityOrderRepository securityOrderRepository;
+
+  @Autowired
   private TraderRepository traderRepository;
 
-  public Set<Position> getAllPositionsByAccountId(Integer accountId) {
+  public List<Position> getAllPositionsByAccountId(Integer accountId) {
 
     if (!traderRepository.existsById(accountId)) {
       throw new IllegalArgumentException("Invalid Input: Trader not found. "
           + "Please provide a valid TraderId.");
     }
 
-    List<Position> positions = positionRepository.findAll();
-    Set<Position> accountPositions = new HashSet<>();
+    Account account = traderRepository.findAccountById(accountId).get();
+    Set<SecurityOrder> orders = account.getOrders();
+    List<Position> accountPositions = new ArrayList<>();
 
-    for (Position position : positions) {
-      if (position.getAccountId() == accountId) {
-        accountPositions.add(position);
-      }
+    for (SecurityOrder order : orders) {
+      System.out.println(order.getQuote().getTicker() + order.getSize());
+      String ticker = order.getQuote().getTicker();
+      Position position = positionRepository.findByPositionId(new PositionId(accountId, ticker)).get();
+      System.out.println(position.getPositionId());
+      accountPositions.add(position);
     }
 
     return accountPositions;
-
   }
 }

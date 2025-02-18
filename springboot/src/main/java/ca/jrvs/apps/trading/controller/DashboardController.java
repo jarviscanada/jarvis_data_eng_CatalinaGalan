@@ -4,6 +4,7 @@ import ca.jrvs.apps.trading.model.view.PortfolioView;
 import ca.jrvs.apps.trading.model.view.TraderAccountView;
 import ca.jrvs.apps.trading.service.DashboardService;
 import ca.jrvs.apps.trading.util.ResponseExceptionUtil;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,8 @@ public class DashboardController {
   @Autowired
   private DashboardService dashboardService;
 
+
+  @Operation(summary = "Get Trader profile.", description = "Fetch Trader and Account information by Id.")
   @GetMapping("/profile/traderId/{traderId}")
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)
@@ -34,6 +37,7 @@ public class DashboardController {
   }
 
 
+  @Operation(summary = "Get Trader portfolio.", description = "Fetch all Trader's Positions by Id.")
   @GetMapping("/portfolio/traderId/{traderId}")
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)

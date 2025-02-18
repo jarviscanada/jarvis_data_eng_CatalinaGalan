@@ -4,9 +4,7 @@ import ca.jrvs.apps.trading.model.AlphaQuote;
 import ca.jrvs.apps.trading.model.Quote;
 import ca.jrvs.apps.trading.service.QuoteService;
 import ca.jrvs.apps.trading.util.ResponseExceptionUtil;
-import com.fasterxml.jackson.annotation.JsonRootName;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.Operation;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,6 +26,8 @@ public class QuoteController {
   private QuoteService quoteService;
 
 
+  @Operation(summary = "Get a quote from Alpha Vantage Api.",
+      description = "Fetch a quote by its ticker/symbol.")
   @GetMapping("/alphaVantage/ticker/{ticker}")
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
@@ -39,6 +39,8 @@ public class QuoteController {
     }
   }
 
+  @Operation(summary = "Update Daily List",
+      description = "Update all quotes in Daily List with data from Alpha Vantage Api.")
   @PutMapping("/alphaVantageMarketData")
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
@@ -50,6 +52,10 @@ public class QuoteController {
     }
   }
 
+  @Operation(summary = "Update a quote.",
+      description = "For testing purposes only, update a quote object. "
+          + "NOTE: Due to a problem with the Swagger UI it is necessary to manually add a wrapper "
+          + "{\"Quote\": ... } directly to the JSON, for correct mapping.")
   @PutMapping("/")
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
@@ -61,6 +67,8 @@ public class QuoteController {
     }
   }
 
+  @Operation(summary = "Create a new Quote.",
+      description = "Add a new Quote to the Daily List. Fetch quote data from Api by its ticker.")
   @PostMapping("/tickerId/{ticker}")
   @ResponseStatus(HttpStatus.CREATED)
   @ResponseBody
@@ -73,6 +81,7 @@ public class QuoteController {
     }
   }
 
+  @Operation(summary = "Get all Quotes.", description = "Fetch all Quotes from database.")
   @GetMapping("/dailyList")
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody

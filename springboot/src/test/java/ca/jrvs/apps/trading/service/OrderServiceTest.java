@@ -16,6 +16,7 @@ import ca.jrvs.apps.trading.repository.PositionRepository;
 import ca.jrvs.apps.trading.repository.QuoteRepository;
 import ca.jrvs.apps.trading.repository.SecurityOrderRepository;
 import ca.jrvs.apps.trading.repository.TraderRepository;
+import ca.jrvs.apps.trading.util.PositionId;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Arrays;
@@ -127,7 +128,7 @@ class OrderServiceTest {
     marketOrder.setOption(SELL);
     marketOrder.setSize(900);
 
-    when(positionRepository.findByAccountIdAndTicker(anyInt(), anyString()))
+    when(positionRepository.findByPositionId(new PositionId(anyInt(), anyString())))
         .thenReturn(optPosition);
     when(optPosition.isEmpty()).thenReturn(false);
     when(optPosition.get()).thenReturn(position);

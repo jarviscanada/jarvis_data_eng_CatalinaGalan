@@ -4,6 +4,7 @@ import ca.jrvs.apps.trading.model.Position;
 import ca.jrvs.apps.trading.model.view.PortfolioView;
 import ca.jrvs.apps.trading.model.view.TraderAccountView;
 import ca.jrvs.apps.trading.repository.TraderAccountViewRepository;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +29,11 @@ public class DashboardService {
     }
 
     return traderAccountView.get();
-
   }
 
   public PortfolioView getProfileViewByTraderId(Integer traderId){
 
-    Set<Position> positions = positionService.getAllPositionsByAccountId(traderId);
+    List<Position> positions = positionService.getAllPositionsByAccountId(traderId);
     return new PortfolioView(traderId, positions);
 
   }

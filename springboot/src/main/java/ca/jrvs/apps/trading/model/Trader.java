@@ -1,7 +1,9 @@
 package ca.jrvs.apps.trading.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -26,17 +28,12 @@ public class Trader {
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Integer id;
 
-  @OneToOne(mappedBy = "trader", cascade = CascadeType.ALL)
-  @PrimaryKeyJoinColumn
-  private Account account;
-
   @NotBlank(message = "First Name must be provided.")
   private String firstName;
 
   @NotBlank(message = "Last Name must be provided.")
   private String lastName;
 
-  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
   @NotNull(message = "dob must be provided.")
   @Past
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MMM dd yyyy")
@@ -49,6 +46,9 @@ public class Trader {
   @Email(message = "Email must be valid.")
   private String email;
 
+  @OneToOne(mappedBy = "trader", cascade = CascadeType.ALL)
+  @PrimaryKeyJoinColumn
+  private Account account;
 
   public Integer getId() {
     return id;
@@ -87,6 +87,7 @@ public class Trader {
     return dob;
   }
 
+  @JsonDeserialize(using = LocalDateDeserializer.class)
   public void setDob(LocalDate dob) {
       this.dob = dob;
   }

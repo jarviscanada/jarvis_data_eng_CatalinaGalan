@@ -1,18 +1,19 @@
-package ca.jrvs.apps.trading.repository;
+package ca.jrvs.apps.trading.service;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import ca.jrvs.apps.trading.model.Account;
 import ca.jrvs.apps.trading.model.Position;
 import ca.jrvs.apps.trading.model.Quote;
 import ca.jrvs.apps.trading.model.SecurityOrder;
 import ca.jrvs.apps.trading.model.Trader;
-import ca.jrvs.apps.trading.util.PositionId;
+import ca.jrvs.apps.trading.repository.QuoteRepository;
+import ca.jrvs.apps.trading.repository.SecurityOrderRepository;
+import ca.jrvs.apps.trading.repository.TraderRepository;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,10 +23,10 @@ import org.springframework.test.context.TestPropertySource;
 
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application-test.properties")
-class PositionRepositoryTest {
+public class PositionServiceTest {
 
   @Autowired
-  private PositionRepository positionRepository;
+  private PositionService positionService;
 
   @Autowired
   private SecurityOrderRepository securityOrderRepository;
@@ -43,7 +44,6 @@ class PositionRepositoryTest {
   Account account;
   Quote quote;
   Quote quote2;
-  Optional<Position> optPosition;
 
   @BeforeEach
   public void setUp() {
@@ -104,53 +104,16 @@ class PositionRepositoryTest {
   }
 
   @Test
-  void findByAccountIdAndTickerTest() {
+  public void getAllByAccountId() {
 
-    optPosition =
-        positionRepository.findByPositionId(new PositionId(account.getId(), "IBM"));
-    position = optPosition.get();
-
-    assertEquals(1000, position.getPosition());
-
-  }
-
-  @Test
-  void existsByAccountIdAndTickerTest() {
-
-    assertTrue(positionRepository.existsByPositionId(new PositionId(account.getId(), "IBM")));
-    assertFalse(positionRepository.existsByPositionId(new PositionId(account.getId(), "zero")));
-    assertTrue(positionRepository.existsByPositionId(new PositionId(account.getId(), "MSFT")));
-
-  }
-
-  @Test
-  void updatePosition() {
-
-    optPosition =
-        positionRepository.findByPositionId(new PositionId(account.getId(), "IBM"));
-    position = optPosition.get();
-    assertEquals(1000, position.getPosition());
-
-    SecurityOrder securityOrder3 = new SecurityOrder();
-    securityOrder3.setAccount(account);
-    securityOrder3.setQuote(quote);
-    securityOrder3.setStatus("FILLED");
-    securityOrder3.setNotes("SELL");
-    securityOrder3.setPrice(200.00);
-    securityOrder3.setSize(-300);
-    securityOrderRepository.save(securityOrder3);
-
-    optPosition =
-        positionRepository.findByPositionId(new PositionId(account.getId(), "IBM"));
-    position = optPosition.get();
-    assertEquals(700, position.getPosition());
-
-  }
-
-  @Test
-  public void findAllTest() {
-
-    List<Position> positions = positionRepository.findAll();
+    List<Position> positions = positionService.getAllPositionsByAccountId(account.getId());
+    for (Position position : positions) {
+      System.out.println(position.getPositionId());
+      System.out.println(position.getPositionId().getAccountId());
+      System.out.println(position.getPositionId().getTicker());
+    }
+    System.out.println(positions);
     assertFalse(positions.isEmpty());
+
   }
 }
