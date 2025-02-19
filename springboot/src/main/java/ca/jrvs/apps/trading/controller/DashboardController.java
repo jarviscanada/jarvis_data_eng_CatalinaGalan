@@ -5,6 +5,8 @@ import ca.jrvs.apps.trading.model.view.TraderAccountView;
 import ca.jrvs.apps.trading.service.DashboardService;
 import ca.jrvs.apps.trading.util.ResponseExceptionUtil;
 import io.swagger.v3.oas.annotations.Operation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @RequestMapping("/dashboard")
 public class DashboardController {
 
+  private static final Logger logger = LoggerFactory.getLogger(DashboardController.class);
+
   @Autowired
   private DashboardService dashboardService;
 
@@ -29,8 +33,10 @@ public class DashboardController {
   public TraderAccountView showTraderProfile(@PathVariable Integer traderId) {
 
     try {
+      logger.info("Profile created.");
       return dashboardService.getTraderAccountViewByTraderId(traderId);
     } catch (Exception e) {
+      logger.debug(e.getMessage(), e.getCause());
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }
   }
@@ -45,8 +51,8 @@ public class DashboardController {
     try {
       return dashboardService.getProfileViewByTraderId(traderId);
     } catch (Exception e) {
+      logger.debug(e.getMessage(), e.getCause());
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }
-
   }
 }

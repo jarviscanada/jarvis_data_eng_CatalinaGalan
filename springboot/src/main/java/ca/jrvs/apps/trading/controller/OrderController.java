@@ -5,6 +5,8 @@ import ca.jrvs.apps.trading.model.SecurityOrder;
 import ca.jrvs.apps.trading.service.OrderService;
 import ca.jrvs.apps.trading.util.ResponseExceptionUtil;
 import io.swagger.v3.oas.annotations.Operation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Controller
 public class OrderController {
+
+  private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
 
   @Autowired
   private OrderService orderService;
@@ -30,8 +34,10 @@ public class OrderController {
   public SecurityOrder postMarketOrder(@RequestBody MarketOrder marketOrder) {
 
     try {
+      logger.info("Market Order executed.");
       return orderService.executeMarketOrder(marketOrder);
     } catch (Exception e) {
+      logger.debug(e.getMessage(), e.getCause());
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }
   }

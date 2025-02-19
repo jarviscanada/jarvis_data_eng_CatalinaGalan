@@ -6,6 +6,8 @@ import ca.jrvs.apps.trading.service.QuoteService;
 import ca.jrvs.apps.trading.util.ResponseExceptionUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @RequestMapping("/quote")
 public class QuoteController {
 
+  private static final Logger logger = LoggerFactory.getLogger(QuoteController.class);
+
   @Autowired
   private QuoteService quoteService;
 
@@ -33,8 +37,10 @@ public class QuoteController {
   @ResponseBody
   public AlphaQuote getQuote(@PathVariable String ticker) {
     try {
+      logger.info("New AlphaQuote fetched.");
       return quoteService.findAlphaQuoteByTicker(ticker);
     } catch (Exception e) {
+      logger.debug(e.getMessage(), e.getCause());
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }
   }
@@ -47,8 +53,10 @@ public class QuoteController {
   @ResponseBody
   public void UpdateMarketData() {
     try {
+      logger.info("Daily List updated.");
       quoteService.updateMarketData();
     } catch (Exception e) {
+      logger.debug(e.getMessage(), e.getCause());
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }
   }
@@ -63,8 +71,10 @@ public class QuoteController {
   @ResponseBody
   public Quote putQuote(@RequestBody Quote quote) {
     try {
+      logger.info("Quote updated.");
       return quoteService.saveQuote(quote);
     } catch (Exception e) {
+      logger.debug(e.getMessage(), e.getCause());
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }
   }
@@ -77,9 +87,10 @@ public class QuoteController {
   @ResponseBody
   public Quote createNewQuote(@PathVariable String ticker) {
     try {
-//      Quote quote = quoteService.saveQuote(ticker);
+      logger.info("New Quote created.");
       return quoteService.saveQuote(ticker);
     } catch (Exception e) {
+      logger.debug(e.getMessage(), e.getCause());
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }
   }
@@ -93,6 +104,7 @@ public class QuoteController {
     try {
       return quoteService.findAllQuotes();
     } catch (Exception e) {
+      logger.debug(e.getMessage(), e.getCause());
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }
   }

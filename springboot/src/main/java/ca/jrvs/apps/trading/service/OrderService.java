@@ -101,10 +101,19 @@ public class OrderService {
     Double price = quote.getAskPrice();
 
     if (size > quote.getAskSize()) {
+      securityOrder.setStatus("REJECTED");
+      securityOrder.setNotes("Buy Order Failed: Market Order size must not exceed ask size.");
+      securityOrderRepository.save(securityOrder);
+
       logger.debug("Invalid Input.");
       throw new IllegalArgumentException(
           "Invalid input. Market Order size must not exceed ask size.");
+
     } else if (funds < price * size) {
+      securityOrder.setStatus("REJECTED");
+      securityOrder.setNotes("Buy Order Failed: Insufficient funds.");
+      securityOrderRepository.save(securityOrder);
+
       logger.debug("Invalid Input.");
       throw new IllegalArgumentException("Transaction Failed: Insufficient funds.");
     }
@@ -132,12 +141,22 @@ public class OrderService {
     Optional<Position> position = positionRepository.findByPositionId(new PositionId(accountId, ticker));
 
     if (size > quote.getBidSize()) {
+      securityOrder.setStatus("REJECTED");
+      securityOrder.setNotes("Sell Order Failed: Market Order size must not exceed ask size.");
+      securityOrderRepository.save(securityOrder);
+
       logger.debug("Invalid Input.");
       throw new IllegalArgumentException(
           "Invalid input. Market Order size must not exceed bid size.");
+
     } else if (position.isEmpty()) {
+      securityOrder.setStatus("REJECTED");
+      securityOrder.setNotes("Position for Ticker " + ticker + " not found.");
+      securityOrderRepository.save(securityOrder);
+
       logger.debug("Invalid Input.");
-      throw new IllegalArgumentException("Position for ticker " + ticker + " not found.");
+      throw new IllegalArgumentException("Position for TraderID " + accountId + " and Ticker "
+           + ticker + " not found.");
     }
 
     if (position.get().getPosition() >= size) {
@@ -145,6 +164,7 @@ public class OrderService {
       securityOrder.setStatus("FILLED");
       securityOrderRepository.save(securityOrder);
       logger.info("new sell SecurityOrder created.");
+
     } else {
       logger.debug("Failed to execute sell MarketOrder.");
       throw new IllegalArgumentException("Transaction Failed: Insufficient stocks to sell.");

@@ -3,7 +3,6 @@ package ca.jrvs.apps.trading;
 import static ca.jrvs.apps.trading.model.MarketOrder.Option.BUY;
 import static ca.jrvs.apps.trading.model.MarketOrder.Option.SELL;
 
-import ca.jrvs.apps.trading.config.AppConfig;
 import ca.jrvs.apps.trading.controller.AppController;
 import ca.jrvs.apps.trading.controller.DashboardController;
 import ca.jrvs.apps.trading.controller.OrderController;
@@ -25,7 +24,7 @@ import org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration
 //		DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 public class TradingApplication implements CommandLineRunner {
 
-	private Logger logger = LoggerFactory.getLogger(AppConfig.class);
+	private static Logger logger = LoggerFactory.getLogger(TradingApplication.class);
 
 	@Autowired
 	private AppController appController;
@@ -48,7 +47,11 @@ public class TradingApplication implements CommandLineRunner {
 	public static void main(String[] args) {
 
 		SpringApplication app = new SpringApplication(TradingApplication.class);
-		app.run(args);
+		try {
+			app.run(args);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e.getCause());
+		}
 
 	}
 
@@ -67,7 +70,7 @@ public class TradingApplication implements CommandLineRunner {
 			traderAccountService.deposit(1,150000.00);
 			traderAccountService.deposit(2,150000.00);
 		} catch (Exception e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage(), e.getCause());
 		}
 
 		MarketOrder marketOrder0 = new MarketOrder();

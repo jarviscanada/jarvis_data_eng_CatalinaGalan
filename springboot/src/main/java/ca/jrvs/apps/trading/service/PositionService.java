@@ -8,6 +8,7 @@ import ca.jrvs.apps.trading.repository.SecurityOrderRepository;
 import ca.jrvs.apps.trading.repository.TraderRepository;
 import ca.jrvs.apps.trading.util.PositionId;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,11 +49,9 @@ public class PositionService {
     Set<Position> accountPositions = new HashSet<>();
 
     for (SecurityOrder order : orders) {
-      System.out.println(order.getQuote().getTicker() + order.getSize());
       String ticker = order.getQuote().getTicker();
-      Position position = positionRepository.findByPositionId(new PositionId(accountId, ticker)).get();
-      System.out.println(position.getPositionId());
-      accountPositions.add(position);
+      Optional<Position> position = positionRepository.findByPositionId(new PositionId(accountId, ticker));
+      position.ifPresent(accountPositions::add);
     }
 
     return accountPositions;
