@@ -33,7 +33,6 @@ public class DashboardController {
     } catch (Exception e) {
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }
-
   }
 
 

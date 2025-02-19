@@ -9,12 +9,16 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 @Service
 public class QuoteService {
+
+  private static final Logger logger = LoggerFactory.getLogger(QuoteService.class);
 
   @Autowired
   private QuoteRepository quoteRepository;
@@ -26,7 +30,7 @@ public class QuoteService {
   /**
    * Find an AlphaQuote from Alpha Vantage Api.
    *
-   * @param ticker
+   * @param ticker to be found.
    * @return AlphaQuote object.
    * @throws IllegalArgumentException for invalid input.
    * @throws ResourceNotFoundException if ticker is not found in Alpha Vantage.
@@ -35,12 +39,14 @@ public class QuoteService {
 
     if (!ticker.matches("^[A-Z]+$") || (ticker.length() > 5)
         || ticker.isEmpty() || ticker.isBlank()) {
-      throw new IllegalArgumentException("Invalid Input.");
+      logger.debug("Invalid Ticker.");
+      throw new IllegalArgumentException("Invalid Ticker.");
     }
 
     Optional<AlphaQuote> alphaQuote = httpHelper.findQuoteByTicker(ticker);
 
     if (alphaQuote.isEmpty() || alphaQuote.get().getTicker() == null) {
+      logger.debug("Invalid Input.");
       throw new ResourceNotFoundException("Symbol not found in Alpha Vantage.");
     }
 
@@ -60,6 +66,7 @@ public class QuoteService {
     List<String> tickers = new ArrayList<>();
 
     if (dailyList.isEmpty()) {
+      logger.debug("No Quotes found in database.");
       throw new ResourceNotFoundException("Unable to update: Daily list is empty.");
     }
 
@@ -68,6 +75,7 @@ public class QuoteService {
     }
 
     saveQuotes(tickers);
+    logger.info("Daily List updated.");
   }
 
 
@@ -80,8 +88,10 @@ public class QuoteService {
    */
   public Quote saveQuote(Quote quote) {
     if (!quoteRepository.existsById(quote.getTicker())) {
+      logger.debug("Quote not found.");
       throw new IllegalArgumentException("Can't update Quote because it's not found in db.");
     }
+
     return quoteRepository.save(quote);
   }
 
@@ -90,7 +100,7 @@ public class QuoteService {
    * Saves a new Quote to quote table from Alpha Vantage.
    * - NOTE: Alpha Vantage provides a maximum of 25 API calls for free ApiKey.
    *
-   * @param ticker
+   * @param ticker to find in Alpha Vantage.
    * @return created Quote entity.
    * @throws ResourceNotFoundException if ticker is not found in Alpha Vantage.
    */
@@ -98,7 +108,7 @@ public class QuoteService {
 
     AlphaQuote alphaQuote = findAlphaQuoteByTicker(ticker);
     Quote newQuote = buildQuoteFromAlphaQuote(alphaQuote);
-//        newQuote.setLastUpdated(Timestamp.from(Instant.now()));
+
     return quoteRepository.save(newQuote);
   }
 
@@ -112,6 +122,7 @@ public class QuoteService {
     try {
       return quoteRepository.findAll();
     } catch (Exception e) {
+      logger.debug(e.getMessage(), e.getCause());
       throw new DataAccessException(e.getMessage()) {
         @Override
         public Throwable getRootCause() {
@@ -153,7 +164,7 @@ public class QuoteService {
    * Helper method to update a list of Quotes in quote table with Alpha Vantage data.
    * - NOTE: Alpha Vantage provides a maximum of 25 API calls for free ApiKey.
    *
-   * @param tickers
+   * @param tickers from existing quotes.
    * @return list of converted quote entities.
    * @throws ResourceNotFoundException if ticker is not found from Alpha Quote.
    */

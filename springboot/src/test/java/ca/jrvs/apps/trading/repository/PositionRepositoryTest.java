@@ -111,7 +111,6 @@ class PositionRepositoryTest {
     position = optPosition.get();
 
     assertEquals(1000, position.getPosition());
-
   }
 
   @Test
@@ -120,7 +119,6 @@ class PositionRepositoryTest {
     assertTrue(positionRepository.existsByPositionId(new PositionId(account.getId(), "IBM")));
     assertFalse(positionRepository.existsByPositionId(new PositionId(account.getId(), "zero")));
     assertTrue(positionRepository.existsByPositionId(new PositionId(account.getId(), "MSFT")));
-
   }
 
   @Test
@@ -144,7 +142,6 @@ class PositionRepositoryTest {
         positionRepository.findByPositionId(new PositionId(account.getId(), "IBM"));
     position = optPosition.get();
     assertEquals(700, position.getPosition());
-
   }
 
   @Test

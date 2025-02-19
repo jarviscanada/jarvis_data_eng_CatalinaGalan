@@ -46,6 +46,7 @@ public class TraderAccountController {
     }
   }
 
+
   @Operation(summary = "Create a new Trader and Account",
       description = "Create a new Trader from passed arguments in the url. "
           + "NOTE: dob accepted format is YYYY-MM-DD")
@@ -72,6 +73,7 @@ public class TraderAccountController {
     }
   }
 
+
   @Operation(summary = "Get a Trader by Id.",
       description = "Fetch Trader and Account information by Id.")
   @GetMapping("/traderId/{traderId}")
@@ -85,6 +87,7 @@ public class TraderAccountController {
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }
   }
+
 
   @Operation(summary = "Delete a Trader.",
       description = "Delete a Trader by Id. NOTE: Account amount must be 0.")
@@ -100,6 +103,7 @@ public class TraderAccountController {
     }
   }
 
+
   @Operation(summary = "Deposit funds into Trader's Account.",
       description = "Add funds to Trader Account's amount by Trader ID.")
   @PutMapping("/traderId/{traderId}/deposit/amount/{amount}")
@@ -113,6 +117,7 @@ public class TraderAccountController {
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }
   }
+
 
   @Operation(summary = "Withdraw funds into Trader's Account.",
       description = "Subtract funds from Trader Account's amount by Trader ID.")

@@ -14,12 +14,16 @@ import ca.jrvs.apps.trading.repository.SecurityOrderRepository;
 import ca.jrvs.apps.trading.repository.TraderRepository;
 import ca.jrvs.apps.trading.util.PositionId;
 import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 @Service
 public class OrderService {
+
+  private static final Logger logger = LoggerFactory.getLogger(OrderService.class);
 
   @Autowired
   private TraderRepository traderRepository;
@@ -36,22 +40,13 @@ public class OrderService {
   @Autowired
   private PositionRepository positionRepository;
 
+
   /**
-   * Execute a market order
-   * - validate the order (e.g. size and ticker)
-   * - create a securityOrder
-   * - handle buy or sell orders
-   * 	- buy order : check account balance
-   * 	- sell order : check position for the ticker/symbol
-   * 	- do not forget to update the securityOrder.status
-   * - save and return securityOrder
+   * Method to execute a MarketOrder for a specific Trader.
    *
-   * NOTE: you are encouraged to make some helper methods (protected or private)
-   *
-   * @param marketOrder marketOrderData
-   * @return SecurityOrder from security_order table
-   * @throws DataAccessException if unable to get data from DAO
-   * @throws IllegalArgumentException for invalid inputs
+   * @param marketOrder DTO.
+   * @return SecurityOrder created from executing the MarketOrder.
+   * @throws DataAccessException if Data can't be accessed.
    */
   public SecurityOrder executeMarketOrder(MarketOrder marketOrder) throws DataAccessException {
 
@@ -67,6 +62,7 @@ public class OrderService {
       account = traderRepository.findAccountById(traderId).get();
       quote = quoteRepository.findById(ticker).get();
     } catch (Exception e) {
+      logger.debug("Invalid Input.");
       throw new IllegalArgumentException("Invalid input. Please verify TraderId and Ticker.");
     }
 
@@ -75,9 +71,10 @@ public class OrderService {
     securityOrder.setQuote(quote);
     securityOrder.setStatus("OPEN");
     securityOrder.setAccount(account);
+    securityOrder.setSize(size);
+    securityOrderRepository.save(securityOrder);
 
     if (option.equals(BUY)) {
-      securityOrder.setSize(size);
       securityOrder.setPrice(quote.getAskPrice());
       handleBuyMarketOrder(marketOrder, securityOrder, account);
     } else if (option.equals(SELL)) {
@@ -86,16 +83,15 @@ public class OrderService {
       handleSellMarketOrder(marketOrder, securityOrder, account);
     }
 
-    securityOrder.setStatus("FILLED");
-    return securityOrderRepository.save(securityOrder);
+    return securityOrder;
   }
 
 
   /**
-   * Helper method to execute a buy order
+   * Helper method to execute a buy order.
    *
-   * @param marketOrder user order
-   * @param securityOrder to be saved in database
+   * @param marketOrder user order.
+   * @param securityOrder to be updated in database when buy order is successfully executed.
    */
   protected void handleBuyMarketOrder(MarketOrder marketOrder, SecurityOrder securityOrder, Account account) {
 
@@ -105,21 +101,26 @@ public class OrderService {
     Double price = quote.getAskPrice();
 
     if (size > quote.getAskSize()) {
+      logger.debug("Invalid Input.");
       throw new IllegalArgumentException(
           "Invalid input. Market Order size must not exceed ask size.");
     } else if (funds < price * size) {
+      logger.debug("Invalid Input.");
       throw new IllegalArgumentException("Transaction Failed: Insufficient funds.");
     }
 
     traderAccountService.withdraw(account.getId(), price * size);
+    securityOrder.setStatus("FILLED");
+    securityOrderRepository.save(securityOrder);
+    logger.info("new buy SecurityOrder created.");
   }
 
 
   /**
-   * Helper method to execute a sell order
+   * Helper method to execute a sell order.
    *
-   * @param marketOrder user order
-   * @param securityOrder to be saved in database
+   * @param marketOrder user order.
+   * @param securityOrder to be updated when sell order is successfully executed.
    */
   protected void handleSellMarketOrder(MarketOrder marketOrder, SecurityOrder securityOrder, Account account) {
 
@@ -131,15 +132,21 @@ public class OrderService {
     Optional<Position> position = positionRepository.findByPositionId(new PositionId(accountId, ticker));
 
     if (size > quote.getBidSize()) {
+      logger.debug("Invalid Input.");
       throw new IllegalArgumentException(
           "Invalid input. Market Order size must not exceed bid size.");
     } else if (position.isEmpty()) {
+      logger.debug("Invalid Input.");
       throw new IllegalArgumentException("Position for ticker " + ticker + " not found.");
     }
 
     if (position.get().getPosition() >= size) {
       traderAccountService.deposit(account.getId(), price * size);
+      securityOrder.setStatus("FILLED");
+      securityOrderRepository.save(securityOrder);
+      logger.info("new sell SecurityOrder created.");
     } else {
+      logger.debug("Failed to execute sell MarketOrder.");
       throw new IllegalArgumentException("Transaction Failed: Insufficient stocks to sell.");
     }
   }

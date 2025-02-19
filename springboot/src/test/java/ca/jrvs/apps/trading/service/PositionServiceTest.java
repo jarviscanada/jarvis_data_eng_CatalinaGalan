@@ -13,7 +13,7 @@ import ca.jrvs.apps.trading.repository.TraderRepository;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -106,7 +106,7 @@ public class PositionServiceTest {
   @Test
   public void getAllByAccountId() {
 
-    List<Position> positions = positionService.getAllPositionsByAccountId(account.getId());
+    Set<Position> positions = positionService.getAllPositionsByAccountId(account.getId());
     for (Position position : positions) {
       System.out.println(position.getPositionId());
       System.out.println(position.getPositionId().getAccountId());

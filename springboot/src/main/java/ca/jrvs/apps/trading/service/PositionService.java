@@ -7,14 +7,17 @@ import ca.jrvs.apps.trading.repository.PositionRepository;
 import ca.jrvs.apps.trading.repository.SecurityOrderRepository;
 import ca.jrvs.apps.trading.repository.TraderRepository;
 import ca.jrvs.apps.trading.util.PositionId;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PositionService {
+
+  private static final Logger logger = LoggerFactory.getLogger(PositionService.class);
 
   @Autowired
   private PositionRepository positionRepository;
@@ -25,16 +28,24 @@ public class PositionService {
   @Autowired
   private TraderRepository traderRepository;
 
-  public List<Position> getAllPositionsByAccountId(Integer accountId) {
+
+  /**
+   * Method to returns all Positions associated with an Account.
+   *
+   * @param accountId of the account in question.
+   * @return Set of Positions for this account.
+   */
+  public Set<Position> getAllPositionsByAccountId(Integer accountId) {
 
     if (!traderRepository.existsById(accountId)) {
+      logger.debug("Invalid Input.");
       throw new IllegalArgumentException("Invalid Input: Trader not found. "
           + "Please provide a valid TraderId.");
     }
 
     Account account = traderRepository.findAccountById(accountId).get();
     Set<SecurityOrder> orders = account.getOrders();
-    List<Position> accountPositions = new ArrayList<>();
+    Set<Position> accountPositions = new HashSet<>();
 
     for (SecurityOrder order : orders) {
       System.out.println(order.getQuote().getTicker() + order.getSize());

@@ -13,6 +13,14 @@ public class ResponseExceptionUtil {
 
   private static final Logger logger = LoggerFactory.getLogger(ResponseExceptionUtil.class);
 
+
+  /**
+   * Create new ResponseStatusException with HttpStatus and message for exceptions caught
+   * at Controller level.
+   *
+   * @param e Exception.
+   * @return a case by case specific ResponseStatusException.
+   */
   public static ResponseStatusException getResponseStatusException(Exception e) {
 
     switch (e) {

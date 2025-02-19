@@ -29,13 +29,14 @@ public class MarketDataHttpHelper {
   @Autowired
   private ObjectMapper objectMapper;
 
+
   /**
    * Get an AlphaQuote.
    * - NOTE: Alpha Vantage provides a maximum of 25 API calls for free ApiKey.
    * - NOTE: A DemoKey: "demo" can be used for testing purposes to allow free unlimited
    * access to "IBM" and "MSFT" quotes.
    *
-   * @param ticker
+   * @param ticker to be fetched from Api.
    * @throws DataRetrievalFailureException if HTTP request failed.
    * @throws ResponseStatusException if number of daily API calls to Alpha Vantage are exceeded for free ApiKey.
    */

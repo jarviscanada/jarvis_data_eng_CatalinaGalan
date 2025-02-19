@@ -12,7 +12,7 @@ import org.hibernate.annotations.Immutable;
 @Immutable
 public class PortfolioView {
 
-  public PortfolioView(Integer traderId, List<Position> positions) {
+  public PortfolioView(Integer traderId, Set<Position> positions) {
     this.traderId = traderId;
     this.positions = positions;
   }
@@ -21,13 +21,13 @@ public class PortfolioView {
   private Integer traderId;
 
   @ElementCollection
-  private List<Position> positions;
+  private Set<Position> positions;
 
   public Integer getTraderId() {
     return traderId;
   }
 
-  public List<Position> getPositions() {
+  public Set<Position> getPositions() {
     return positions;
   }
 }

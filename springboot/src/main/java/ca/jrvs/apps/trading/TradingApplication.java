@@ -75,7 +75,6 @@ public class TradingApplication implements CommandLineRunner {
 		marketOrder0.setOption(BUY);
 		marketOrder0.setTicker("IBM");
 		marketOrder0.setTraderId(1);
-//		Position position1 = positionService.getPositionBy
 
 		MarketOrder marketOrder1 = new MarketOrder();
 		marketOrder1.setSize(10);

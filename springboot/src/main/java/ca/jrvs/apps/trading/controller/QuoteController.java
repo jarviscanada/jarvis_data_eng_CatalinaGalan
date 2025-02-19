@@ -39,6 +39,7 @@ public class QuoteController {
     }
   }
 
+
   @Operation(summary = "Update Daily List",
       description = "Update all quotes in Daily List with data from Alpha Vantage Api.")
   @PutMapping("/alphaVantageMarketData")
@@ -51,6 +52,7 @@ public class QuoteController {
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }
   }
+
 
   @Operation(summary = "Update a quote.",
       description = "For testing purposes only, update a quote object. "
@@ -67,6 +69,7 @@ public class QuoteController {
     }
   }
 
+
   @Operation(summary = "Create a new Quote.",
       description = "Add a new Quote to the Daily List. Fetch quote data from Api by its ticker.")
   @PostMapping("/tickerId/{ticker}")
@@ -80,6 +83,7 @@ public class QuoteController {
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }
   }
+
 
   @Operation(summary = "Get all Quotes.", description = "Fetch all Quotes from database.")
   @GetMapping("/dailyList")

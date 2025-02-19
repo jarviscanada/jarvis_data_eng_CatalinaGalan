@@ -2,6 +2,7 @@ package ca.jrvs.apps.trading.service;
 
 import static ca.jrvs.apps.trading.model.MarketOrder.Option.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
@@ -105,7 +106,6 @@ class OrderServiceTest {
 
     marketOrder.setSize(1000);
     assertThrows(IllegalArgumentException.class, ()-> orderService.executeMarketOrder(marketOrder));
-
   }
 
   @Test
@@ -119,7 +119,6 @@ class OrderServiceTest {
     marketOrder.setSize(1000);
     assertThrows(IllegalArgumentException.class,
         () -> orderService.handleBuyMarketOrder(marketOrder, securityOrder, account));
-
   }
 
   @Test
@@ -128,7 +127,7 @@ class OrderServiceTest {
     marketOrder.setOption(SELL);
     marketOrder.setSize(900);
 
-    when(positionRepository.findByPositionId(new PositionId(anyInt(), anyString())))
+    when(positionRepository.findByPositionId(any(PositionId.class)))
         .thenReturn(optPosition);
     when(optPosition.isEmpty()).thenReturn(false);
     when(optPosition.get()).thenReturn(position);
@@ -143,6 +142,5 @@ class OrderServiceTest {
     marketOrder.setSize(1100);
     assertThrows(IllegalArgumentException.class,
         () -> orderService.handleSellMarketOrder(marketOrder, securityOrder, account));
-
   }
 }
