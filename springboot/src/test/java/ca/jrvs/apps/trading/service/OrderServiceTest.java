@@ -62,7 +62,6 @@ class OrderServiceTest {
 
   @BeforeEach
   void setUp() {
-
     marketOrder = new MarketOrder();
     marketOrder.setTicker("IBM");
     marketOrder.setTraderId(1);
@@ -83,14 +82,12 @@ class OrderServiceTest {
     securityOrder = new SecurityOrder();
     securityOrder.setStatus(String.valueOf(marketOrder.getOption()));
     securityOrder.setAccount(account);
-    securityOrder.setQuote(quote);
+    securityOrder.setTicker(quote.getTicker());
     securityOrder.setSize(marketOrder.getSize());
-
   }
 
   @Test
   void executeMarketOrderTest() {
-
     when(traderRepository.findAccountById(anyInt())).thenReturn(Optional.ofNullable(account));
     when(quoteRepository.findById(anyString())).thenReturn(Optional.ofNullable(quote));
 
@@ -110,9 +107,10 @@ class OrderServiceTest {
 
   @Test
   void handleBuyMarketOrder() {
-
     marketOrder.setOption(BUY);
     marketOrder.setSize(900);
+
+    when(quoteRepository.findById(anyString())).thenReturn(Optional.ofNullable(quote));
 
     assertDoesNotThrow(() -> orderService.handleBuyMarketOrder(marketOrder, securityOrder, account));
 
@@ -123,10 +121,10 @@ class OrderServiceTest {
 
   @Test
   void handleSellMarketOrderTest() {
-
     marketOrder.setOption(SELL);
     marketOrder.setSize(900);
 
+    when(quoteRepository.findById(anyString())).thenReturn(Optional.ofNullable(quote));
     when(positionRepository.findByPositionId(any(PositionId.class)))
         .thenReturn(optPosition);
     when(optPosition.isEmpty()).thenReturn(false);

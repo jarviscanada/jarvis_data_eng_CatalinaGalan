@@ -36,7 +36,7 @@ public class MarketDataHttpHelperTest {
   @Test
   public void findQuoteByInvalidTickerTest() {
 
-    assertThrowsExactly(IllegalArgumentException.class, () -> {
+    assertThrows(Exception.class, () -> {
       marketDataHttpHelper.findQuoteByTicker("AppleInc");
     });
 

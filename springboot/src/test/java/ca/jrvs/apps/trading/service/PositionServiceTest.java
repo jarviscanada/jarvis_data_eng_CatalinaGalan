@@ -72,7 +72,7 @@ public class PositionServiceTest {
 
     securityOrder = new SecurityOrder();
     securityOrder.setAccount(account);
-    securityOrder.setQuote(quote);
+    securityOrder.setTicker(quote.getTicker());
     securityOrder.setStatus("FILLED");
     securityOrder.setNotes("BUY");
     securityOrder.setPrice(200.00);
@@ -91,7 +91,7 @@ public class PositionServiceTest {
 
     securityOrder2 = new SecurityOrder();
     securityOrder2.setAccount(account);
-    securityOrder2.setQuote(quote2);
+    securityOrder2.setTicker(quote2.getTicker());
     securityOrder2.setStatus("FILLED");
     securityOrder2.setNotes("BUY");
     securityOrder2.setPrice(200.00);

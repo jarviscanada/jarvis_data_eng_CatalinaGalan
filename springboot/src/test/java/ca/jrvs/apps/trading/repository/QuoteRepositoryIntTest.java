@@ -24,7 +24,6 @@ public class QuoteRepositoryIntTest {
 
   @BeforeEach
   public void insertOneQuote() {
-
     Quote savedQuote = new Quote();
     savedQuote.setTicker("IBM");
     savedQuote.setAskPrice(200.5);
@@ -34,7 +33,6 @@ public class QuoteRepositoryIntTest {
     savedQuote.setLastPrice(200.00);
     savedQuote.setLastUpdated(Timestamp.from(Instant.now()));
     quoteRepository.save(savedQuote);
-
   }
 
   @AfterEach
@@ -44,43 +42,35 @@ public class QuoteRepositoryIntTest {
 
   @Test
   public void countTest() {
-
     long expected = 1;
     long actual = quoteRepository.count();
-    assertEquals(expected, actual);
 
+    assertEquals(expected, actual);
   }
 
   @Test
   public void listAllTest() {
-
     List<Quote> allQuotes = quoteRepository.findAll();
     assertFalse(allQuotes.isEmpty());
-
   }
 
   @Test
   public void findByIdTest() {
-
     Quote quote = quoteRepository.findById("IBM").get();
     Integer expected = 13;
     Integer actual = quote.getAskSize();
-    assertEquals(expected, actual);
 
+    assertEquals(expected, actual);
   }
 
   @Test
   public void deleteByIdTest() {
-
     quoteRepository.deleteById("IBM");
-    assertTrue(quoteRepository.findAll().isEmpty());
-
+    assertTrue(quoteRepository.findById("IBM").isEmpty());
   }
 
   @Test
   public void existByIdTest() {
-
     assertTrue(quoteRepository.existsById("IBM"));
-
   }
 }

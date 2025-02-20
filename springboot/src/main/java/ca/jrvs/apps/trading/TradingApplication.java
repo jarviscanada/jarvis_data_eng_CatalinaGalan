@@ -64,29 +64,28 @@ public class TradingApplication implements CommandLineRunner {
 			appController.greeting();
 			traderAccountController.createTrader("Carlos", "Fuentes",
 					"1990-10-21", "Spain", "carlos@carlos.carlos");
-			traderAccountService.deposit(1,150000.00);
+			traderAccountService.deposit(1,1500.00);
 			traderAccountController.createTrader("Alex", "WTV",
 					"1998-05-11", "Paraguay", "alex@alex.alex");
-			traderAccountService.deposit(1,150000.00);
-			traderAccountService.deposit(2,150000.00);
+			traderAccountService.deposit(2,1500.00);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e.getCause());
 		}
 
 		MarketOrder marketOrder0 = new MarketOrder();
-		marketOrder0.setSize(40);
+		marketOrder0.setSize(4);
 		marketOrder0.setOption(BUY);
 		marketOrder0.setTicker("IBM");
 		marketOrder0.setTraderId(1);
 
 		MarketOrder marketOrder1 = new MarketOrder();
-		marketOrder1.setSize(10);
+		marketOrder1.setSize(1);
 		marketOrder1.setOption(BUY);
 		marketOrder1.setTicker("MSFT");
 		marketOrder1.setTraderId(2);
 
 		MarketOrder marketOrder2 = new MarketOrder();
-		marketOrder2.setSize(15);
+		marketOrder2.setSize(2);
 		marketOrder2.setOption(SELL);
 		marketOrder2.setTicker("IBM");
 		marketOrder2.setTraderId(1);

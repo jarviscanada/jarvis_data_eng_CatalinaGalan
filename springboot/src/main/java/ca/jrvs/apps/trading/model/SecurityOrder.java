@@ -24,10 +24,8 @@ public class SecurityOrder {
   @JoinColumn(name = "account_id", nullable = false)
   private Account account;
 
-  @ManyToOne
   @NotNull
-  @JoinColumn(name = "ticker", nullable = false)
-  private Quote quote;
+  private String ticker;
 
   @NotNull
   private String status;
@@ -86,11 +84,11 @@ public class SecurityOrder {
     this.notes = notes;
   }
 
-  public Quote getQuote() {
-    return quote;
+  public String getTicker() {
+    return ticker;
   }
 
-  public void setQuote(Quote quote) {
-    this.quote = quote;
+  public void setTicker(String ticker) {
+    this.ticker = ticker;
   }
 }

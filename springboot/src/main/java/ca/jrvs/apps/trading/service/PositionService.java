@@ -49,7 +49,7 @@ public class PositionService {
     Set<Position> accountPositions = new HashSet<>();
 
     for (SecurityOrder order : orders) {
-      String ticker = order.getQuote().getTicker();
+      String ticker = order.getTicker();
       Optional<Position> position = positionRepository.findByPositionId(new PositionId(accountId, ticker));
       position.ifPresent(accountPositions::add);
     }

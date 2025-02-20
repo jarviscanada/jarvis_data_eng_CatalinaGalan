@@ -6,10 +6,8 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.sql.Timestamp;
-import java.util.Set;
 
 @Entity
 @Table(schema = "public")
@@ -17,9 +15,6 @@ public class Quote {
 
     @Id
     private String ticker;
-
-    @OneToMany(mappedBy = "quote")
-    private Set<SecurityOrder> orders;
 
     @Column(nullable = false)
     private Double lastPrice;

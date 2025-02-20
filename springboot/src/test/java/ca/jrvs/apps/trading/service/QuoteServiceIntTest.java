@@ -31,7 +31,6 @@ class QuoteServiceIntTest {
 
   @BeforeEach
   public void saveDemoQuote() {
-
     savedQuote = new Quote();
     savedQuote.setTicker("IBM");
     savedQuote.setAskPrice(200.5);

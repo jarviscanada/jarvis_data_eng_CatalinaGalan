@@ -28,8 +28,8 @@ public class Account {
   @MapsId
   private Trader trader;
 
-  @OneToMany(mappedBy = "account",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  public Set<SecurityOrder> orders = new HashSet<>();
+  @OneToMany(mappedBy = "account", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+  private Set<SecurityOrder> orders = new HashSet<>();
 
   public void setId(Integer id) {
     this.id = id;
