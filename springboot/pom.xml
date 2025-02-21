@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>ca.jrvs.apps</groupId>
-	<artifactId>trading</artifactId>
+	<artifactId>trading-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>trading</name>
+	<name>trading-app</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>

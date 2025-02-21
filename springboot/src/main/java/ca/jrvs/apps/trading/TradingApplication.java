@@ -1,14 +1,10 @@
 package ca.jrvs.apps.trading;
 
-import static ca.jrvs.apps.trading.model.MarketOrder.Option.BUY;
-import static ca.jrvs.apps.trading.model.MarketOrder.Option.SELL;
-
 import ca.jrvs.apps.trading.controller.AppController;
 import ca.jrvs.apps.trading.controller.DashboardController;
 import ca.jrvs.apps.trading.controller.OrderController;
 import ca.jrvs.apps.trading.controller.QuoteController;
 import ca.jrvs.apps.trading.controller.TraderAccountController;
-import ca.jrvs.apps.trading.model.MarketOrder;
 import ca.jrvs.apps.trading.service.TraderAccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,57 +48,14 @@ public class TradingApplication implements CommandLineRunner {
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e.getCause());
 		}
-
 	}
 
 	@Override
 	public void run(String... args){
-
-		System.out.println("Trading App running...");
-
 		try {
 			appController.greeting();
-			traderAccountController.createTrader("Carlos", "Fuentes",
-					"1990-10-21", "Spain", "carlos@carlos.carlos");
-			traderAccountService.deposit(1,1500.00);
-			traderAccountController.createTrader("Alex", "WTV",
-					"1998-05-11", "Paraguay", "alex@alex.alex");
-			traderAccountService.deposit(2,1500.00);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e.getCause());
-		}
-
-		MarketOrder marketOrder0 = new MarketOrder();
-		marketOrder0.setSize(4);
-		marketOrder0.setOption(BUY);
-		marketOrder0.setTicker("IBM");
-		marketOrder0.setTraderId(1);
-
-		MarketOrder marketOrder1 = new MarketOrder();
-		marketOrder1.setSize(1);
-		marketOrder1.setOption(BUY);
-		marketOrder1.setTicker("MSFT");
-		marketOrder1.setTraderId(2);
-
-		MarketOrder marketOrder2 = new MarketOrder();
-		marketOrder2.setSize(2);
-		marketOrder2.setOption(SELL);
-		marketOrder2.setTicker("IBM");
-		marketOrder2.setTraderId(1);
-
-		try {
-			quoteController.createNewQuote("IBM");
-			quoteController.createNewQuote("MSFT");
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-		}
-
-		try {
-			orderController.postMarketOrder(marketOrder0);
-			orderController.postMarketOrder(marketOrder1);
-			orderController.postMarketOrder(marketOrder2);
-		} catch (Exception e) {
-			logger.error(e.getMessage());
 		}
 	}
 }
