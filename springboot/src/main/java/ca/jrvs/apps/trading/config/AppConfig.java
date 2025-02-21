@@ -18,7 +18,7 @@ public class AppConfig {
   public MarketDataConfig marketDataConfig() {
 
     MarketDataConfig marketDataConfig = new MarketDataConfig();
-    marketDataConfig.setToken("NSX82Y1GPREVE1MI");
+    marketDataConfig.setToken(System.getenv("ALPHA_VANTAGE_API_KEY"));
     marketDataConfig.setDemoToken("demo");
 
     try {

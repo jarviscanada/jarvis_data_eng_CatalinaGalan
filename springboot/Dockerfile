@@ -1,8 +1,8 @@
-FROM maven:3.6-jdk-8-slim AS build
+FROM maven:3.9.9-eclipse-temurin-22-alpine AS build
 COPY src /build/src
 COPY pom.xml /build/
 RUN mvn -f /build/pom.xml clean package -DskipTests
 
-FROM openjdk:8-alpine
-COPY --from=build /build/target/trading-1.0-SNAPSHOT.jar /usr/local/app/trading/lib/trading_app.jar
+FROM eclipse-temurin:22-alpine
+COPY --from=build /build/target/trading-app-0.0.1-SNAPSHOT.jar /usr/local/app/trading/lib/trading_app.jar
 ENTRYPOINT ["java","-jar","/usr/local/app/trading/lib/trading_app.jar"]
