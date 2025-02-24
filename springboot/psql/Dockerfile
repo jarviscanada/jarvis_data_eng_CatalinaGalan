@@ -1,8 +1,7 @@
 FROM postgres:9.6-alpine
 
-#COPY init.sql /docker-entrypoint-initdb.d/
+COPY create-multiple-databases.sh /docker-entrypoint-initdb.d/
 
-ENV POSTGRES_USER postgres
-ENV POSTGRES_PASSWORD password
-ENV POSTGRES_MULTIPLE_DATABASES=jrvstrading
-ENV POSTGRES_MULTIPLE_DATABASES=jrvstrading_testing
+ENV POSTGRES_USER=postgres
+ENV POSTGRES_PASSWORD=password
+ENV POSTGRES_MULTIPLE_DATABASES=jrvstrading,jrvstrading_testing
