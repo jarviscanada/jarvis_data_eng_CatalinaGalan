@@ -49,4 +49,5 @@ public class AppConfig {
   public MarketDataHttpHelper marketDataHttpHelper() {
     return new MarketDataHttpHelper();
   }
+
 }

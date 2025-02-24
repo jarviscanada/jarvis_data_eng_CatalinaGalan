@@ -9,8 +9,10 @@ import org.apache.hc.client5.http.io.HttpClientConnectionManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 
 @SpringBootTest
+@TestPropertySource(locations = "classpath:application-test.properties")
 public class MarketDataHttpHelperTest {
 
   @Autowired
@@ -22,15 +24,11 @@ public class MarketDataHttpHelperTest {
   @Autowired
   private HttpClientConnectionManager connectionManager;
 
-  @Autowired
-  private ObjectMapper objectMapper;
-
   @Test
   void findQuoteByValidTickerTest() {
 
     AlphaQuote alphaQuote = marketDataHttpHelper.findQuoteByTicker("IBM").get();
     assertEquals("IBM", alphaQuote.getTicker());
-
   }
 
   @Test
@@ -39,7 +37,6 @@ public class MarketDataHttpHelperTest {
     assertThrows(Exception.class, () -> {
       marketDataHttpHelper.findQuoteByTicker("AppleInc");
     });
-
   }
 
 //  @Test

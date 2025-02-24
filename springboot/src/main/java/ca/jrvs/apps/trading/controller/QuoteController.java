@@ -82,7 +82,7 @@ public class QuoteController {
 
   @Operation(summary = "Create a new Quote.",
       description = "Add a new Quote to the Daily List. Fetch quote data from Api by its ticker.")
-  @PostMapping("/tickerId/{ticker}")
+  @PostMapping("/ticker/{ticker}")
   @ResponseStatus(HttpStatus.CREATED)
   @ResponseBody
   public Quote createNewQuote(@PathVariable String ticker) {
