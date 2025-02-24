@@ -52,7 +52,12 @@ docker images -f reference=catagalan/trading-app
 ```
 6. Get a free Api key from Alpha Vantage:  
 
-   https://www.alphavantage.co/support/#api-key
+   https://www.alphavantage.co/support/#api-key 
+\
+NOTE: There are some issues when manually creating and passing a json object in the Swagger UI 
+to create a new trader, execute a market order or update a quote (manually, for testing purposes 
+only). For correct functioning it is necessary to add a wrapper for each of these objects. 
+Detailed instructions are found in the description of each method.
 
 
 7. Set env variables for: 
