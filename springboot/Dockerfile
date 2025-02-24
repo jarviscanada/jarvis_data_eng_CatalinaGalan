@@ -11,4 +11,5 @@ RUN mvn -f /build/pom.xml clean package -DskipTests
 #
 FROM eclipse-temurin:22-alpine
 COPY --from=build /build/target/trading-app-0.0.1-SNAPSHOT.jar /usr/local/app/trading/lib/trading_app.jar
+
 ENTRYPOINT ["java","-jar","/usr/local/app/trading/lib/trading_app.jar"]

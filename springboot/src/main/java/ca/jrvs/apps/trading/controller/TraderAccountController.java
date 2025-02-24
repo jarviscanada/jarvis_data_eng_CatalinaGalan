@@ -44,7 +44,6 @@ public class TraderAccountController {
   public Trader createTrader(@RequestBody Trader trader) {
 
     try {
-      logger.info("New Trader and Account created.");
       return traderAccountService.createTraderAndAccount(trader);
     } catch (Exception e) {
       logger.debug(e.getMessage(), e.getCause());
@@ -72,7 +71,6 @@ public class TraderAccountController {
       trader.setCountry(country);
       trader.setEmail(email);
 
-      logger.info("New Trader and Account created.");
       return traderAccountService.createTraderAndAccount(trader);
 
     } catch (Exception e) {
@@ -106,7 +104,6 @@ public class TraderAccountController {
   public void deleteTrader(@PathVariable Integer traderId) {
 
     try {
-      logger.info("Trader " + traderId + " deleted.");
       traderAccountService.deleteTraderById(traderId);
     } catch (Exception e) {
       logger.debug(e.getMessage(), e.getCause());
@@ -123,7 +120,6 @@ public class TraderAccountController {
   public Account depositFunds(@PathVariable Integer traderId, @PathVariable Double amount) {
 
     try {
-      logger.info("Deposit made into account: " + traderId);
       return traderAccountService.deposit(traderId, amount);
     } catch (Exception e) {
       logger.debug(e.getMessage(), e.getCause());
@@ -140,7 +136,6 @@ public class TraderAccountController {
   public Account withdrawFunds(@PathVariable Integer traderId, @PathVariable Double amount) {
 
     try {
-      logger.info("Withdraw from account: " + traderId);
       return traderAccountService.withdraw(traderId, amount);
     } catch (Exception e) {
       logger.debug(e.getMessage(), e.getCause());

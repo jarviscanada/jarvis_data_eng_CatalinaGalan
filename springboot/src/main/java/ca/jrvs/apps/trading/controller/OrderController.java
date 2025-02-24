@@ -34,7 +34,6 @@ public class OrderController {
   public SecurityOrder postMarketOrder(@RequestBody MarketOrder marketOrder) {
 
     try {
-      logger.info("Market Order executed.");
       return orderService.executeMarketOrder(marketOrder);
     } catch (Exception e) {
       logger.debug(e.getMessage(), e.getCause());

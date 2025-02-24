@@ -33,7 +33,6 @@ public class DashboardController {
   public TraderAccountView showTraderProfile(@PathVariable Integer traderId) {
 
     try {
-      logger.info("Profile created.");
       return dashboardService.getTraderAccountViewByTraderId(traderId);
     } catch (Exception e) {
       logger.debug(e.getMessage(), e.getCause());

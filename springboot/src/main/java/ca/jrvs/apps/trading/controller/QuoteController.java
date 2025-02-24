@@ -37,7 +37,6 @@ public class QuoteController {
   @ResponseBody
   public AlphaQuote getQuote(@PathVariable String ticker) {
     try {
-      logger.info("New AlphaQuote fetched.");
       return quoteService.findAlphaQuoteByTicker(ticker);
     } catch (Exception e) {
       logger.debug(e.getMessage(), e.getCause());
@@ -53,7 +52,6 @@ public class QuoteController {
   @ResponseBody
   public void UpdateMarketData() {
     try {
-      logger.info("Daily List updated.");
       quoteService.updateMarketData();
     } catch (Exception e) {
       logger.debug(e.getMessage(), e.getCause());
@@ -71,7 +69,6 @@ public class QuoteController {
   @ResponseBody
   public Quote putQuote(@RequestBody Quote quote) {
     try {
-      logger.info("Quote updated.");
       return quoteService.saveQuote(quote);
     } catch (Exception e) {
       logger.debug(e.getMessage(), e.getCause());
@@ -87,7 +84,6 @@ public class QuoteController {
   @ResponseBody
   public Quote createNewQuote(@PathVariable String ticker) {
     try {
-      logger.info("New Quote created.");
       return quoteService.saveQuote(ticker);
     } catch (Exception e) {
       logger.debug(e.getMessage(), e.getCause());
