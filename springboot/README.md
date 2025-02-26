@@ -92,3 +92,5 @@ docker stop trading-psql-dev trading-app-dev
 ```bash
 docker container ls
 ```
+
+## Implementation
