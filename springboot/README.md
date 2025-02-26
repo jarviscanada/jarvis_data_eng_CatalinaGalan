@@ -19,6 +19,9 @@ The app can be used with the help of open.ai's Swagger UI.
 
 ## Quickstart
 
+#### Prerequisites:  
+* Docker 17 or higher.
+
 #### Disclaimer:
 Due to the nature of the free Api key we are using for this application, we need to take into 
 consideration that there is a maximum of 25 Api calls allowed per day, therefore some precautions 
@@ -54,8 +57,8 @@ docker images -f reference=catagalan/trading-app
 
    https://www.alphavantage.co/support/#api-key 
 \
-NOTE: There are some issues when manually creating and passing a json object in the Swagger UI 
-to create a new trader, execute a market order or update a quote (manually, for testing purposes 
+NOTE: There are some issues when manually editing and passing a json object in the Swagger UI 
+to create a new trader, execute a market order or update a quote (for testing purposes 
 only). For correct functioning it is necessary to add a wrapper for each of these objects. 
 Detailed instructions are found in the description of each method.
 
@@ -73,7 +76,7 @@ docker run --rm -d --name trading-psql-dev --network trading-net -p 5432:5432 \
 ```
 9. Create and start app container:  
 ```bash
-docker run --rm -d --name trading-app-dev --network trading-net -p 5432:5432 \
+docker run --rm -d --name trading-app-dev --network trading-net -p 8080:8080 \
    -e POSTGRES_USER -e POSTGRES_PASSWORD -e ALPHA_VANTAGE_API_KEY catagalan/trading-psql 
 ```   
 10. Verify running containers:  
@@ -82,6 +85,7 @@ docker container ps
 ```
 11. Access the app at:  
 http://localhost:8080/swagger-ui/index.html#/
+
 
 ## To stop the app:
 1. Stop docker containers:  

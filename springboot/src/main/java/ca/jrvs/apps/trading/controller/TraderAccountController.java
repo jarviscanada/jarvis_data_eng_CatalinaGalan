@@ -34,10 +34,11 @@ public class TraderAccountController {
   @Operation(summary = "Create a new Trader and Account.",
       description = "Create a new trader from JSON data mapped to Trader Object. "
           + "NOTE: Due to a problem with the Swagger UI it is necessary to "
-          + "manually edit the JSON for correct mapping: setting Id to null, "
-          + "adding a wrapper {\"Trader\": ... }, "
-          + "setting dob with format \"MMM dd yyyy (example: Oct 12 1990)\" "
-          + "and deleting the \"Account:\" field (and everything contained in it)")
+          + "manually edit the JSON for correct mapping: "
+          + "deleting the \"Account:\" field (and everything contained in it), "
+          + "setting ID to null, "
+          + "setting dob with format \"MMM dd yyyy\" (example: Oct 12 1990), "
+          + "and adding a wrapper {\"Trader\": ... }")
   @PostMapping("/")
   @ResponseStatus(HttpStatus.CREATED)
   @ResponseBody
