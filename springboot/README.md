@@ -2,11 +2,12 @@
 
 ## Overview
 
-The Trading App is designed for managing traders, their accounts and portfolios; executing market 
-orders for those clients; and fetching real world quote information from the Alpha Vantage Api to 
-build the Daily List. 
+The Trading App is a PoC (proof of concept) project for a trading platform. The MVP is a REST API 
+with microservices architecture and Springboot framework. 
+The project focuses on features rather than performance and security.
 
-The app can be used with the help of open.ai's Swagger UI.
+The application allows users to manage clients (traders) and their accounts, monitor portfolio 
+performance and trade securities. It uses real world quote information from the Alpha Vantage Api. 
 
 ## Technologies
 
@@ -21,12 +22,6 @@ The app can be used with the help of open.ai's Swagger UI.
 
 #### Prerequisites:  
 * Docker 17 or higher.
-
-#### Disclaimer:
-Due to the nature of the free Api key we are using for this application, we need to take into 
-consideration that there is a maximum of 25 Api calls allowed per day, therefore some precautions 
-need to be taken for the correct functioning of the application, such as avoiding updating the 
-Daily List multiple times a day, for example.
 
 ### To run the app from docker image:
 
@@ -83,11 +78,19 @@ docker run --rm -d --name trading-app-dev --network trading-net -p 8080:8080 \
 ```bash
 docker container ps
 ```
-11. Access the app at:  
+
+### Access the app at:  
 http://localhost:8080/swagger-ui/index.html#/
 
+![Trading_app_SwaggerUI_screenshot]()
+#### Disclaimer:
+Due to the nature of the free Api key we are using for this application, we need to take into
+consideration that there is a maximum of 25 Api calls allowed per day, therefore some precautions
+need to be taken for the correct functioning of the application, such as avoiding updating the
+Daily List multiple times a day, for example.
+![create_trader_and_account_example]()
 
-## To stop the app:
+### To stop the app:
 1. Stop docker containers:  
 ```bash
 docker stop trading-psql-dev trading-app-dev
