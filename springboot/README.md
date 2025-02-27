@@ -7,7 +7,7 @@ with microservices architecture and Springboot framework.
 The project focuses on features rather than performance and security.
 
 The application allows users to manage clients (traders) and their accounts, monitor portfolio 
-performance and trade securities. It uses real world quote information from the Alpha Vantage Api. 
+performance and trade securities. It uses real world quote information from the Alpha Vantage API. 
 
 ## Technologies
 
@@ -48,14 +48,9 @@ docker pull catagalan/trading-app
 docker images -f reference=catagalan/trading-psql   
 docker images -f reference=catagalan/trading-app
 ```
-6. Get a free Api key from Alpha Vantage:  
+6. Get a free API key from Alpha Vantage:  
 
    https://www.alphavantage.co/support/#api-key 
-\
-NOTE: There are some issues when manually editing and passing a json object in the Swagger UI 
-to create a new trader, execute a market order or update a quote (for testing purposes 
-only). For correct functioning it is necessary to add a wrapper for each of these objects. 
-Detailed instructions are found in the description of each method.
 
 
 7. Set env variables for: 
@@ -82,12 +77,21 @@ docker container ps
 ### Access the app at:  
 http://localhost:8080/swagger-ui/index.html#/
 
+
 ![Trading_app_SwaggerUI_screenshot]()
+
 #### Disclaimer:
-Due to the nature of the free Api key we are using for this application, we need to take into
-consideration that there is a maximum of 25 Api calls allowed per day, therefore some precautions
+Due to the nature of the free API key we are using for this application, we need to take into
+consideration that there is a maximum of 25 API calls allowed per day, therefore some precautions
 need to be taken for the correct functioning of the application, such as avoiding updating the
 Daily List multiple times a day, for example.
+
+
+_NOTE: There are some issues when manually editing and passing a json object in the Swagger UI 
+to create a new trader, execute a market order or update a quote (for testing purposes 
+only). For correct functioning it is necessary to add a wrapper for each of these objects. 
+Detailed instructions are found in the description of each method._  
+
 ![create_trader_and_account_example]()
 
 ### To stop the app:
@@ -100,4 +104,41 @@ docker stop trading-psql-dev trading-app-dev
 docker container ls
 ```
 
-## Implementation
+# Implementation
+## Architecture
+
+![trading_app_architecture_diagram]()
+
+The Trading App consists of a **Controller Layer** which handles HTTP Requests, a **Service Layer** 
+which handles the business logic, and a **Repository Layer** (or Data Access Layer) which persists 
+and retrieves data from a PostgreSQL database.
+
+This is a REST API application, therefor The Controller Layer returns JSON to the client 
+(instead of HTML.)
+
+* #### Springboot:
+* #### Controller Layer: 
+* #### Service Layer:
+* #### Repository Layer:
+* #### PSQL:
+* #### Alpha Vantage API:
+
+## REST API Usage
+
+### Swagger UI
+
+### Quote Controller
+
+### Trader Controller
+
+### Order Controller
+
+### App Controller
+
+### Dashboard Controller
+
+## Test
+
+## Deployment
+
+## Improvements
