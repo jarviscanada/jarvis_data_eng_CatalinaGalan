@@ -114,15 +114,14 @@ architecture pattern organizes the app into 3 layers: a **Controller Layer** whi
 Requests, a **Service Layer** which handles the business logic, and a **Repository/DAO Layer** which 
 persists and retrieves data from a PostgreSQL database.
 
-The Spring Boot framework provides an embedded Tomcat web servlet, simplifying deployment by reducing 
-configuration and improving the app's portability. It also provides _IoC_ (Inversion of Control) and 
-supports _Dependency Injection_, handling the instantiation, configuration and lifecycle of objects 
-and allowing for rich interdependencies between these objects. Configuration metadata for the Spring 
-IoC container is provided via annotations and a simple application.properties file.
-
-
-
-* #### Springboot:
+* #### Spring Boot:
+   Spring Boot is a framework for building applications and microservices using Java. It is an 
+extension of the Spring framework.
+   The Spring Boot framework provides an embedded Tomcat web servlet, simplifying deployment by reducing
+configuration and improving the app's portability. It also provides _IoC_ (Inversion of Control) and
+supports _Dependency Injection_, handling the instantiation, configuration and lifecycle of objects
+and allowing for rich interdependencies between these objects. Configuration metadata for Trading App
+is provided via annotations and a simple application.properties file.
 * #### Controller Layer: 
   Also called the Presentation Layer, this layer consists of all the app's controllers, which define 
 the endpoints of the REST API and handle HTTP requests. It receives the requests and communicates 
@@ -145,19 +144,62 @@ real world Quotes information.
 ## REST API Usage
 
 ### Swagger UI
+Swagger is a free based tool that allows users to interact with REST APIs. It provides visual 
+representation of the API and its documentation. The Trading App can be accessed via Swagger, which 
+displays all the available end-points and allows users to try out API calls on the browser. 
 
 ### Quote Controller
+The Quote Controller is responsible for providing the user Quote data from the Alpha Vantage API, 
+and persisting and updating this data to the Trading App's database. Alpha Quote data is fetched and 
+transformed into Quote entities, which are modeled in the Trading App and reflected in the database 
+Quote table.
+* #### GET /quote/DailyList
+   Show all tickers available to trade in this platform.
+* #### PUT /quote/alphaVantageMarketData
+   Fetches quotes from Alpha Vantage and updates Quote table in the database.
+* #### GET /quote/alphaVantage/ticker/{ticker}
+   Fetch and show a single quote from Alpha Vantage.
+* #### POST /quote/ticker/{ticker}
+   Create a new Quote in the database from Alpha Vantage data and add a new ticker to the Daily List.
+* #### PUT /quote/
+   Update a Quote from the Quote table manually (for debugging and testing purposes only.)
 
-### Trader Controller
+### TraderAccount Controller
+The Trader Controller manages creation of Traders and their accounts (each trader has only one account 
+and are created simultaneously.) This controller also allows for funds to be deposited or withdrawn 
+from a Trader's Account.
+* #### POST /trader/*
+   There are two end-points that allow creating a new Trader and Account: one uses an HTTP body request, 
+and the other uses a URL. 
+* #### GET /trader/traderId/{traderId}
+   Shows Trader and its Account information.
+* #### DELETE /trader/traderId/{traderId}
+   Deletes a Trader and its Account. All funds must be withdrawn to allow deletion.
+* #### PUT /trader/traderId/{traderId}/deposit/amount/{amount}
+   Adds funds to a Trader's Account.
+* #### PUT /trader/traderId/{traderId}/withdraw/amount/{amount}
+   Withdraws funds from a Trader's Account.
 
 ### Order Controller
-
-### App Controller
+The Order Controller allows the execution of Market Orders to buy or sell stock. It connects to the 
+Order Service which in turn has access to TraderAccount data and Quote data, in order to create 
+Security Orders.
+* #### POST /marketOrder
+   Buy or sell stock by executing a Market Order (HTTP body request.)
 
 ### Dashboard Controller
+The Dashboard Controller displays information about a Trader and its portfolio. To do this it calls 
+to the Dashboard Service to create View only objects displaying a Trader and Account profile, or a 
+portfolio consising of list of all the Trader's positions.
+* #### GET /dashboard/profile/trader/traderId/{traderId}
+   Show Trader and its Account information by trader id.
+* #### GET /dashboard/portfolio/trader/traderId/{traderId}
+   Show a list of all the trader positions by trader id.   
 
 ## Test
 
+
 ## Deployment
+
 
 ## Improvements
