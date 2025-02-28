@@ -109,19 +109,38 @@ docker container ls
 
 ![trading_app_architecture_diagram]()
 
-The Trading App consists of a **Controller Layer** which handles HTTP Requests, a **Service Layer** 
-which handles the business logic, and a **Repository Layer** (or Data Access Layer) which persists 
-and retrieves data from a PostgreSQL database.
+The Trading App is built in Spring Boot, following the Spring Boot 3-tiered architecture. This modular 
+architecture pattern organizes the app into 3 layers: a **Controller Layer** which handles HTTP 
+Requests, a **Service Layer** which handles the business logic, and a **Repository/DAO Layer** which 
+persists and retrieves data from a PostgreSQL database.
 
-This is a REST API application, therefor The Controller Layer returns JSON to the client 
-(instead of HTML.)
+The Spring Boot framework provides an embedded Tomcat web servlet, simplifying deployment by reducing 
+configuration and improving the app's portability. It also provides _IoC_ (Inversion of Control) and 
+supports _Dependency Injection_, handling the instantiation, configuration and lifecycle of objects 
+and allowing for rich interdependencies between these objects. Configuration metadata for the Spring 
+IoC container is provided via annotations and a simple application.properties file.
+
+
 
 * #### Springboot:
 * #### Controller Layer: 
+  Also called the Presentation Layer, this layer consists of all the app's controllers, which define 
+the endpoints of the REST API and handle HTTP requests. It receives the requests and communicates 
+with the Service Layer to retrieve or manipulate data.
+Because this is a REST API application, The Controller Layer returns JSON to the client (instead of HTML.) 
 * #### Service Layer:
+   Also called the Business Layer, this layer handles all the business logic of the app, communicating 
+with the Repository Layer to access data. It is the intermediary between Controllers and Repositories, 
+thus ensuring separation of concerns.
 * #### Repository Layer:
+   Also named Data Access layer, this is the layer that interacts with the PostgreSQL database (in 
+this case) to persist and retrieve information upon the request from the Service Layer. In the Trading 
+App it consists mainly of interfaces that extend the JpaRepository interface.
 * #### PSQL:
+   PostgreSQL is an open-source relational database used in this application via a docker container.
 * #### Alpha Vantage API:
+   Alpha Vantage is a financial market data provider. The Trading App uses its API for retrieving 
+real world Quotes information.
 
 ## REST API Usage
 
