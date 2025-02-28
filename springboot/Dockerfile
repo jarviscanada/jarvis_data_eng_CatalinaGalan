@@ -7,7 +7,7 @@ COPY pom.xml /build/
 RUN mvn -f /build/pom.xml clean package -DskipTests
 
 #
-# package stage
+# run stage
 #
 FROM eclipse-temurin:22-alpine
 COPY --from=build /build/target/trading-app-0.0.1-SNAPSHOT.jar /usr/local/app/trading/lib/trading_app.jar

@@ -198,8 +198,25 @@ portfolio consising of list of all the Trader's positions.
 
 ## Test
 
+The Trading App was tested for each component in the Service and Repository layers. The Controller 
+layer was tested manually using Postman and Swagger.  
+Integration Tests and Unit Tests were performed using JUnit5. Mockito was used for Unit Test isolation 
+providing mock instances of dependencies.
 
 ## Deployment
 
+![docker_diagram]()
+
+The Trading App was deployed using docker. The app consists of two docker containers connected via 
+a Network. 
+
+Both images are defined using Dockerfiles and were pushed to the Docker Hub:
+
+* #### catagalan/trading-psql
+   The first image docker's postgres:9.6-alpine as its base, and it creates the databases for the 
+Trading App when running the container.
+* #### catagalan/trading-app
+   The Trading App image is defined in two stages within the Dockerfile: the build stage with docker's 
+maven:3.9.9-eclipse-temurin-22-alpine as base, and then the run stage with eclipse-temurin:22-alpine.
 
 ## Improvements
