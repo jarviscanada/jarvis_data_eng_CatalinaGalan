@@ -220,3 +220,5 @@ Trading App when running the container.
 maven:3.9.9-eclipse-temurin-22-alpine as base, and then the run stage with eclipse-temurin:22-alpine.
 
 ## Improvements
+
+* 
