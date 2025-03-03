@@ -80,6 +80,7 @@ http://localhost:8080/swagger-ui/index.html#/
 
 ![Trading_app_SwaggerUI_screenshot](https://github.com/jarviscanada/jarvis_data_eng_CatalinaGalan/blob/springboot-README/springboot/src/main/resources/trading_app.png)
 
+
 #### Disclaimer:
 Due to the nature of the free API key we are using for this application, we need to take into
 consideration that there is a maximum of 25 API calls allowed per day, therefore some precautions
@@ -87,7 +88,8 @@ need to be taken for the correct functioning of the application, such as avoidin
 Daily List multiple times a day, for example.
 
 
-_NOTE: There are some issues when manually editing and passing a json object in the Swagger UI 
+
+\**_NOTE: There are some issues when manually editing and passing a json object in the Swagger UI 
 to create a new trader, execute a market order or update a quote manually (used for testing and debugging 
 purposes only). For correct functioning it is necessary to add a wrapper for each of these objects. 
 Detailed instructions are found in the description of each method._  
