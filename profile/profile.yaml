@@ -5,34 +5,35 @@ github_repo_root_url: https://github.com/jarviscanada/jarvis_data_eng_CatalinaGa
 
 # Introduce yourself, your academic and professional background.
 # What excites you about the software industry and your passion. At least 80 words
-summary: "I am a deeply curious individual and a dedicated lifelong learner. With a background in the arts and music, I earned my bachelor's degree in Music Composition, graduating with Great Distinction. In 2023 I successfully completed a Web Development bootcamp and have been continuing to learn and collaborate in projects ever since. Fascinated by both the arts and sciences, I continually seek opportunities to challenge my abilities and foster intellectual growth. My interest in software development stems from a strong desire to expand my knowledge and pursue a new, challenging career path. I am enthusiastic about the future of this journey and am eager to grow and excel in this industry."
+summary: "I am a deeply curious individual and a dedicated lifelong learner. With a background in the arts and music, I earned my bachelor's degree in Music Composition, graduating with Great Distinction. In 2023 I successfully completed a Web Development bootcamp and have continued to learn and collaborate in projects ever since. Fascinated by both the arts and sciences, I continually seek opportunities to challenge my abilities and foster intellectual growth. My interest in software development stems from a strong desire to expand my knowledge and pursue a new, challenging career path. I am enthusiastic about the future of this journey and am eager to grow and excel in this industry."
 # Group your skills by level.
 # Your skills can be anything software related (e.g. language, frameworks, methodologies, software, etc.).
 skills:
   # At least 5 skills
   proficient:
-    - Ruby
-    - Ruby on Rails
     - Java
-    - Agile/Scrum
+    - Spring Boot
+    - Maven
+    - Docker
+    - SQL/PostgreSQL
     - Git/GitHub
   # At least 5 skills
   competent:
-    - SQL/PostgreSQL
-    - Docker
-    - Maven
     - Linux/Bash
     - JavaScript
+    - Ruby
+    - Ruby on Rails
     - HTML/CSS
-    - Tailwind
+    - Agile/Scrum
 
   # At least 5 skills
   familiar:
-    - Spring Boot
+    - React
+    - Tailwind
+    - Bootstrap
     - GCP
     - AWS
     - Python
-    - React
 
 # List of Jarvis projects
 jarvis_projects:
@@ -52,9 +53,11 @@ jarvis_projects:
   #     - "Twitter App: Curabitur laoreet tristique leo, eget suscipit nisi. Sed in sodales ex. Maecenas vitae tincidunt dui, et eleifend quam."
        - "Grep App: This Java app mimics the functionality of the Linux command 'grep', which is used to search for a string or regex pattern within a file and returns all lines that contain the match. This app is designed to be run directly in the command line, outputting the results to a given file."
        - "JDBC App: Implementing JDBC, OkHttpHelper and PostgreSQL, the Stock Quote App is designed to simulate buying and selling stock based on real time data fetched from the Alpha Vantage API."
-  # - name: "Springboot App"
-  #   git_url: "/springboot"
-  #   description: ""
+  - name: "Spring Boot Trading App"
+    git_url: "/springboot"
+    description: "The Trading App is a PoC (proof of concept) project for a trading platform. The MVP is a REST API with microservices architecture and Springboot framework.
+The application allows users to manage clients (traders) and their accounts, monitor portfolio performance and trade securities. It uses real world quote information from the Alpha Vantage API.
+The project focuses on features rather than performance and security."
   # - name: "Python Data Analytics"
   #   git_url: "/python_data_anlytics"
   #   description: ""

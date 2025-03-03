@@ -44,6 +44,11 @@
       ],
       "git_url": "/core_java",
       "name": "Core Java Apps"
+    },
+    {
+      "description": "The Trading App is a PoC (proof of concept) project for a trading platform. The MVP is a REST API with microservices architecture and Springboot framework. The application allows users to manage clients (traders) and their accounts, monitor portfolio performance and trade securities. It uses real world quote information from the Alpha Vantage API. The project focuses on features rather than performance and security.",
+      "git_url": "/springboot",
+      "name": "Spring Boot Trading App"
     }
   ],
   "name": "Catalina Galan Vargas",
@@ -92,26 +97,27 @@
   ],
   "skills": {
     "competent": [
-      "SQL/PostgreSQL",
-      "Docker",
-      "Maven",
       "Linux/Bash",
       "JavaScript",
-      "HTML/CSS",
-      "Tailwind"
-    ],
-    "familiar": [
-      "Spring Boot",
-      "GCP",
-      "AWS",
-      "Python",
-      "React"
-    ],
-    "proficient": [
       "Ruby",
       "Ruby on Rails",
+      "HTML/CSS",
+      "Agile/Scrum"
+    ],
+    "familiar": [
+      "React",
+      "Tailwind",
+      "Bootstrap",
+      "GCP",
+      "AWS",
+      "Python"
+    ],
+    "proficient": [
       "Java",
-      "Agile/Scrum",
+      "Spring Boot",
+      "Maven",
+      "Docker",
+      "SQL/PostgreSQL",
       "Git/GitHub"
     ]
   },
