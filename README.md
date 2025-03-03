@@ -4,11 +4,11 @@ I am a deeply curious individual and a dedicated lifelong learner. With a backgr
 
 ## Skills
 
-**Proficient:** Ruby, Ruby on Rails, Java, Agile/Scrum, Git/GitHub
+**Proficient:** Java, Spring Boot, Maven, Docker, SQL/PostgreSQL, Git/GitHub
 
-**Competent:** SQL/PostgreSQL, Docker, Maven, Linux/Bash, JavaScript, HTML/CSS, Tailwind
+**Competent:** Linux/Bash, JavaScript, Ruby, Ruby on Rails, HTML/CSS, Agile/Scrum
 
-**Familiar:** Spring Boot, GCP, AWS, Python, React
+**Familiar:** React, Tailwind, Bootstrap, GCP, AWS, Python
 
 ## Jarvis Projects
 
@@ -23,6 +23,8 @@ Project source code: [https://github.com/jarviscanada/jarvis_data_eng_CatalinaGa
       
   - Grep App: This Java app mimics the functionality of the Linux command 'grep', which is used to search for a string or regex pattern within a file and returns all lines that contain the match. This app is designed to be run directly in the command line, outputting the results to a given file.
   - JDBC App: Implementing JDBC, OkHttpHelper and PostgreSQL, the Stock Quote App is designed to simulate buying and selling stock based on real time data fetched from the Alpha Vantage API.
+
+**Spring Boot Trading App** [[GitHub](https://github.com/jarviscanada/jarvis_data_eng_CatalinaGalan/tree/master/springboot)]: The Trading App is a PoC (proof of concept) project for a trading platform. The MVP is a REST API with microservices architecture and Springboot framework. The application allows users to manage clients (traders) and their accounts, monitor portfolio performance and trade securities. It uses real world quote information from the Alpha Vantage API. The project focuses on features rather than performance and security.
 
 
 ## Highlighted Projects
