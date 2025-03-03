@@ -109,7 +109,7 @@ docker container ls
 # Implementation
 ## Architecture
 
-![trading_app_architecture_diagram](https://github.com/jarviscanada/jarvis_data_eng_CatalinaGalan/blob/springboot-README/springboot/src/main/resources/Trading_app_diagram.png)
+![trading_app_architecture_diagram](https://github.com/jarviscanada/jarvis_data_eng_CatalinaGalan/blob/springboot-README/springboot/src/main/resources/trading_app_diagram.png)
 
 The Trading App is built in Spring Boot, following the Spring Boot 3-tiered architecture. This modular 
 architecture pattern organizes the app into 3 layers: a **Controller Layer** which handles HTTP 
