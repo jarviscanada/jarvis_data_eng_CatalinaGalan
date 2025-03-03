@@ -221,7 +221,6 @@ Trading App when running the container.
 * #### catagalan/trading-app
    The Trading App image is defined in two stages within the Dockerfile: the build stage with docker's 
 maven:3.9.9-eclipse-temurin-22-alpine as base, and then the run stage with eclipse-temurin:22-alpine.
-
 ## Improvements
 
 * 
