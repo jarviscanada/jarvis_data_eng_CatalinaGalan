@@ -67,7 +67,7 @@ docker run --rm -d --name trading-psql-dev --network trading-net -p 5432:5432 \
 9. Create and start app container:  
 ```bash
 docker run --rm -d --name trading-app-dev --network trading-net -p 8080:8080 \
--e POSTGRES_USER -e POSTGRES_PASSWORD -e ALPHA_VANTAGE_API_KEY catagalan/trading-psql 
+-e POSTGRES_USER -e POSTGRES_PASSWORD -e ALPHA_VANTAGE_API_KEY catagalan/trading-app
 ```   
 10. Verify running containers:  
 ```bash
