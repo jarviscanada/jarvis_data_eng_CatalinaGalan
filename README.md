@@ -4,11 +4,11 @@ I am a deeply curious individual and a dedicated lifelong learner. With a backgr
 
 ## Skills
 
-**Proficient:** Ruby, Ruby on Rails, HTML/CSS, Tailwind, Agile/Scrum, Git/GitHub
+**Proficient:** Java, Spring Boot, Maven, Docker, SQL/PostgreSQL, Git/GitHub
 
-**Competent:** SQL/PostgreSQL, Java, Linux/Bash, Python, JavaScript, Docker
+**Competent:** Linux/Bash, JavaScript, Ruby, Ruby on Rails, HTML/CSS, Agile/Scrum
 
-**Familiar:** Maven, GCP, AWS, React, Kubernetes, C
+**Familiar:** React, Tailwind, Bootstrap, GCP, AWS, Python
 
 ## Jarvis Projects
 
@@ -22,7 +22,9 @@ Project source code: [https://github.com/jarviscanada/jarvis_data_eng_CatalinaGa
 **Core Java Apps** [[GitHub](https://github.com/jarviscanada/jarvis_data_eng_CatalinaGalan/tree/master/core_java)]:
       
   - Grep App: This Java app mimics the functionality of the Linux command 'grep', which is used to search for a string or regex pattern within a file and returns all lines that contain the match. This app is designed to be run directly in the command line, outputting the results to a given file.
-  - JDBC App: TBD
+  - JDBC App: Implementing JDBC, OkHttpHelper and PostgreSQL, the Stock Quote App is designed to simulate buying and selling stock based on real time data fetched from the Alpha Vantage API.
+
+**Spring Boot Trading App** [[GitHub](https://github.com/jarviscanada/jarvis_data_eng_CatalinaGalan/tree/master/springboot)]: The Trading App is a PoC (proof of concept) project for a trading platform. The MVP is a REST API with microservices architecture and Springboot framework. The application allows users to manage clients (traders) and their accounts, monitor portfolio performance and trade securities. It uses real world quote information from the Alpha Vantage API. The project focuses on features rather than performance and security.
 
 
 ## Highlighted Projects
@@ -44,7 +46,7 @@ Project source code: [https://github.com/jarviscanada/jarvis_data_eng_CatalinaGa
 
 ## Education
 **Concordia University, Montreal (2017-2020)**, Bachelor of Fine Arts, Specialization in Music Composition, Music Theory and Composition
-- Campaign for the New Millenium Scholarship
+- Campaign for the New Millennium Scholarship
 - Ruth Leith Award in Classical Music Performance
 - Graduated with Great Distinction.
 - GPA: 4.14/4.30
@@ -52,6 +54,7 @@ Project source code: [https://github.com/jarviscanada/jarvis_data_eng_CatalinaGa
 
 ## Miscellaneous
 - Winner of the Concordia Composition Competition in 2018.
+- Volunteer at the Montreal ConFoo Developer Conference 2024.
 - Member of OPCM classical choir. Contralto voice.
 - Was a member of the organizing committee for the Women in Music Conference in Concordia University, 2018.
 - Volunteered as a band coach for Rock Camp Montreal in 2021, a summer camp for female and non-gendered youth.
